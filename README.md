@@ -40,3 +40,7 @@
 - Utilisation d'ESLint avec les paramètres par défaut
 - Javascript ES6 ou supérieur uniquement
 - Utilisation du Factory Design Pattern
+
+## Ressources
+
+- [JSON](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/FishEyeData.json)
