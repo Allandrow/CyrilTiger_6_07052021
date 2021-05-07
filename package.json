@@ -1,0 +1,25 @@
+{
+  "name": "openclassroom-p6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./scss:./dist/css",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Allandrow/CyrilTiger_6_07052021.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Allandrow/CyrilTiger_6_07052021/issues"
+  },
+  "homepage": "https://github.com/Allandrow/CyrilTiger_6_07052021#readme",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "sass": "^1.32.12"
+  }
+}
