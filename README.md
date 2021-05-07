@@ -22,7 +22,7 @@
   - Chaque média contient titre, date, prix et nombre de clichés
     - Le clic sur l'icone "like" incrémente le total de likes affichés
     - Le nombre total de clichés doit être compté et ajouté au total du profil du photographe
-  - Possibilité de tri des média par popularité (nombre de likes ?), date (croissant, décroissant ?), titre
+  - Possibilité de tri des média par popularité (nombre de likes), date (croissant, décroissant ?), titre
   - Lors du clic sur un media, ouverture d'une modale lightbox :
     - croix de fermeture de la modale
     - boutons de navigation pour passer d'un élément média à l'autre depuis la modale
