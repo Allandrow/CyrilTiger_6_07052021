@@ -1,5 +1,10 @@
 const getData = async (json) => {
-  const data = await fetch('../../fisheyedata.json');
+  const data = await fetch(
+    'https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/FishEyeData.json',
+    {
+      mode: 'no-cors',
+    }
+  );
   json = await data.json();
   return json;
 };
