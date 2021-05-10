@@ -3,3 +3,8 @@
 body {
   font-family: $font;
 }
+
+h1 {
+  font-size: 0.875rem;
+  color: map-get($colours, primary-400);
+}

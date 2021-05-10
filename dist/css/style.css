@@ -65,4 +65,9 @@ body {
   font-family: "DM Sans";
 }
 
+h1 {
+  font-size: 0.875rem;
+  color: #901c1c;
+}
+
 /*# sourceMappingURL=style.css.map */

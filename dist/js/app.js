@@ -1,5 +1,5 @@
 const getData = async (json) => {
-  const data = await fetch('./fisheyedata.json');
+  const data = await fetch('../../fisheyedata.json');
   json = await data.json();
   return json;
 };
