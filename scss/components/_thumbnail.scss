@@ -4,18 +4,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2rem;
+  max-width: 375px;
 
   &__link {
-    width: 200px;
-    display: block;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     img {
       border-radius: 50%;
-      width: 100%;
+      width: 200px;
       height: 200px;
       object-fit: cover;
       box-shadow: 0 0.25rem 0.75rem rgba($color-base-900, 0.25);
+      background-color: $color-base-400;
     }
 
     h2 {
