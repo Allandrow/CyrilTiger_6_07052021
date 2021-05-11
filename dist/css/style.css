@@ -183,7 +183,7 @@ header nav {
 }
 
 .back {
-  position: absolute;
+  position: fixed;
   top: 0.75rem;
   display: flex;
   left: 0;
