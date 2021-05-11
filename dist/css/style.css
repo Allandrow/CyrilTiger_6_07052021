@@ -63,11 +63,48 @@ select {
 }
 body {
   font-family: "DM Sans";
+  padding: 2rem 1.25rem;
 }
 
 h1 {
   font-size: 0.875rem;
   color: #901c1c;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+header nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+header ul {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+header ul li {
+  margin: 0 0.25rem 0.5rem;
+}
+
+.tag {
+  color: #901c1c;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid #c4c4c4;
+  border-radius: 1rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+.tag:hover, .tag:focus {
+  background-color: #901c1c;
+  color: #fff;
 }
 
 /*# sourceMappingURL=style.css.map */
