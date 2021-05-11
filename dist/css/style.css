@@ -80,6 +80,8 @@ body {
   font-family: "DM Sans";
   padding: 2rem 1.25rem;
   color: #901c1c;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 @media (min-width: 768px) {
   body {
@@ -90,6 +92,14 @@ body {
 h1 {
   font-size: 0.875rem;
   font-weight: 400;
+}
+
+@media (min-width: 1200px) {
+  .home {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 }
 
 header {

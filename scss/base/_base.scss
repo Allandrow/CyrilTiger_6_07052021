@@ -4,6 +4,8 @@ body {
   font-family: $font;
   padding: 2rem 1.25rem;
   color: $color-primary-400;
+  max-width: 1440px;
+  margin: 0 auto;
 
   @include mq(768px) {
     padding-top: 3.25rem;
@@ -13,4 +15,12 @@ body {
 h1 {
   font-size: 0.875rem;
   font-weight: 400;
+}
+
+.home {
+  @include mq(1200px) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 }
