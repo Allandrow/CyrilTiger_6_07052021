@@ -5,11 +5,27 @@ header {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 3rem;
 
   nav {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 2rem 0 3rem;
+    margin: 2rem 0 0;
+  }
+
+  @include mq(768px) {
+    img {
+      width: 200px;
+    }
+
+    h1 {
+      order: 1;
+    }
+
+    nav {
+      width: auto;
+      margin: 0;
+    }
   }
 }

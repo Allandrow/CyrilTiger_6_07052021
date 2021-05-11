@@ -4,6 +4,10 @@ body {
   font-family: $font;
   padding: 2rem 1.25rem;
   color: $color-primary-400;
+
+  @include mq(768px) {
+    padding-top: 3.25rem;
+  }
 }
 
 h1 {
