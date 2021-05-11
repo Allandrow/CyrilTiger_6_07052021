@@ -1,19 +1,19 @@
-const getData = async (json) => {
+const getData = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
-  json = await data.json();
+  const json = await data.json();
   return json;
 };
 
-const getNavigationTags = async (json) => {
-  let array = [];
+const getNavigationTags = async () => {
+  const tagSet = new Set();
 
-  const data = await getData(json);
-  await data.photographers.forEach((photograph) => {
+  const data = await getData();
+  data.photographers.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
-      array = [...new Set([...array, tag])];
+      tagSet.add(tag);
     });
   });
-  return array;
+  return tagSet;
 };
 
 const createItemListLink = (parent, textNode) => {
@@ -27,10 +27,10 @@ const createItemListLink = (parent, textNode) => {
   parent.appendChild(li);
 };
 
-const createNavigationList = async (json) => {
+const createNavigationList = async () => {
   const nav = document.getElementById('js-nav');
   const ul = document.createElement('ul');
-  const tags = await getNavigationTags(json);
+  const tags = await getNavigationTags();
 
   tags.forEach((tag) => {
     createItemListLink(ul, tag);
@@ -38,6 +38,4 @@ const createNavigationList = async (json) => {
   nav.appendChild(ul);
 };
 
-const json = [];
-
-createNavigationList(json);
+createNavigationList();
