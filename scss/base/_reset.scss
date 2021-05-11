@@ -46,6 +46,19 @@ select {
   font: inherit;
 }
 
+/* Inherit color + Removing underline on links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Removing the disc style and padding on ul*/
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {

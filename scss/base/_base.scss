@@ -3,9 +3,10 @@
 body {
   font-family: $font;
   padding: 2rem 1.25rem;
+  color: $color-primary-400;
 }
 
 h1 {
   font-size: 0.875rem;
-  color: map-get($colours, primary-400);
+  font-weight: 400;
 }

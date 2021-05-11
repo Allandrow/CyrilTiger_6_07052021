@@ -46,6 +46,19 @@ select {
   font: inherit;
 }
 
+/* Inherit color + Removing underline on links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Removing the disc style and padding on ul*/
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -61,14 +74,17 @@ select {
     scroll-behavior: auto !important;
   }
 }
+/* COLORS */
+/* FONT */
 body {
   font-family: "DM Sans";
   padding: 2rem 1.25rem;
+  color: #901c1c;
 }
 
 h1 {
   font-size: 0.875rem;
-  color: #901c1c;
+  font-weight: 400;
 }
 
 header {
@@ -81,22 +97,22 @@ header nav {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin: 2rem 0 3rem;
 }
-header ul {
+
+.tagList {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
 }
-header ul li {
-  margin: 0 0.25rem 0.5rem;
+.tagList li {
+  margin: 0.5rem 0.25rem 0;
 }
 
 .tag {
-  color: #901c1c;
   font-weight: 500;
-  text-decoration: none;
   border: 1px solid #c4c4c4;
   border-radius: 1rem;
   padding: 0.25rem 0.5rem;
@@ -105,6 +121,46 @@ header ul li {
 .tag:hover, .tag:focus {
   background-color: #901c1c;
   color: #fff;
+}
+
+.thumbnail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.thumbnail__link {
+  width: 200px;
+  display: block;
+  text-align: center;
+}
+.thumbnail__link img {
+  border-radius: 50%;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
+}
+.thumbnail__link h2 {
+  color: #d3573c;
+  margin-top: 1.75rem;
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.thumbnail p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.625rem;
+}
+.thumbnail__localisation {
+  font-size: 0.875rem;
+}
+.thumbnail__slogan {
+  color: #000;
+}
+.thumbnail__price {
+  color: #525252;
 }
 
 /*# sourceMappingURL=style.css.map */
