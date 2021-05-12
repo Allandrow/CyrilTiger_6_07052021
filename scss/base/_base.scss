@@ -20,11 +20,3 @@ h1 {
 main {
   padding: 0 1.25rem;
 }
-
-.home {
-  @include mq($desktop) {
-    display: grid;
-    grid-template-columns: repeat(3, 320px);
-    justify-content: space-between;
-  }
-}

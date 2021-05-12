@@ -99,14 +99,6 @@ main {
   padding: 0 1.25rem;
 }
 
-@media (min-width: 75rem) {
-  .home {
-    display: grid;
-    grid-template-columns: repeat(3, 320px);
-    justify-content: space-between;
-  }
-}
-
 header {
   display: flex;
   flex-wrap: wrap;
@@ -150,6 +142,21 @@ header nav {
   justify-content: center;
   padding: 0;
   gap: 0.5rem;
+}
+
+.thumbnail-list {
+  display: grid;
+}
+@media (min-width: 48rem) {
+  .thumbnail-list {
+    grid-template-columns: repeat(2, 320px);
+    justify-content: space-between;
+  }
+}
+@media (min-width: 60rem) {
+  .thumbnail-list {
+    grid-template-columns: repeat(3, 320px);
+  }
 }
 
 .tag {

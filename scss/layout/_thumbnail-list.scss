@@ -1,0 +1,14 @@
+@use '../abstracts/' as *;
+
+.thumbnail-list {
+  display: grid;
+
+  @include mq($tab) {
+    grid-template-columns: repeat(2, 320px);
+    justify-content: space-between;
+  }
+
+  @include mq($medium) {
+    grid-template-columns: repeat(3, 320px);
+  }
+}
