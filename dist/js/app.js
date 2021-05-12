@@ -1,13 +1,15 @@
-const getData = async () => {
+// DOM Elements
+const navUl = document.getElementById('js-nav');
+
+const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
   const json = await data.json();
   return json;
 };
 
-const getNavigationTags = async () => {
+const getPhotographTagSet = (data) => {
   const tagSet = new Set();
 
-  const data = await getData();
   data.photographers.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
       tagSet.add(tag);
@@ -16,26 +18,38 @@ const getNavigationTags = async () => {
   return tagSet;
 };
 
-const createItemListLink = (parent, textNode) => {
+const capitalize = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const createItemListLinkElement = (textNode) => {
   const li = document.createElement('li');
+
   const link = document.createElement('a');
-  link.setAttribute('href', '#');
+  link.classList += 'tag';
+
   const span = document.createElement('span');
-  span.appendChild(document.createTextNode(textNode));
+
+  const text = capitalize(textNode);
+
+  span.appendChild(document.createTextNode(`#${text}`));
+
   link.appendChild(span);
   li.appendChild(link);
-  parent.appendChild(li);
+
+  return li;
 };
 
-const createNavigationList = async () => {
-  const nav = document.getElementById('js-nav');
-  const ul = document.createElement('ul');
-  const tags = await getNavigationTags();
-
-  tags.forEach((tag) => {
-    createItemListLink(ul, tag);
-  });
-  nav.appendChild(ul);
+const generateDOMTagList = (collection, listDOM) => {
+  for (const item of collection) {
+    listDOM.appendChild(createItemListLinkElement(item));
+  }
 };
 
-createNavigationList();
+async function onLoad() {
+  const json = await getJSON();
+  const photographTagSet = await getPhotographTagSet(json);
+  await generateDOMTagList(photographTagSet, navUl);
+}
+
+document.addEventListener('DOMContentLoaded', onLoad());
