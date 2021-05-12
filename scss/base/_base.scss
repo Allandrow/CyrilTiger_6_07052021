@@ -2,12 +2,12 @@
 
 body {
   font-family: $font;
-  padding: 2rem 1.25rem;
+  padding: 2rem 0;
   color: $color-primary-400;
   max-width: 1440px;
   margin: 0 auto;
 
-  @include mq(768px) {
+  @include mq($tab) {
     padding-top: 3.25rem;
   }
 }
@@ -17,10 +17,14 @@ h1 {
   font-weight: 400;
 }
 
+main {
+  padding: 0 1.25rem;
+}
+
 .home {
-  @include mq(1200px) {
-    display: flex;
+  @include mq($desktop) {
+    display: grid;
+    grid-template-columns: repeat(3, 320px);
     justify-content: space-between;
-    flex-wrap: wrap;
   }
 }

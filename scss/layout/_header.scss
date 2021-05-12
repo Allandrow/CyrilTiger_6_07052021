@@ -6,6 +6,7 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
+  padding: 0 1.25rem;
 
   nav {
     display: flex;
@@ -14,18 +15,26 @@ header {
     margin: 2rem 0 0;
   }
 
-  @include mq(768px) {
+  @include mq($tab) {
     img {
       width: 200px;
     }
+  }
+
+  @include mq($medium) {
+    flex-wrap: nowrap;
+    gap: 1rem;
+    padding: 0 2rem;
 
     h1 {
       order: 1;
+      font-size: 2.25rem;
     }
 
     nav {
       width: auto;
       margin: 0;
+      flex: 1 20rem;
     }
   }
 }
