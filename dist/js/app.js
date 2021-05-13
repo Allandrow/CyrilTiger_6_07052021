@@ -15,6 +15,10 @@ const getPhotographTagSet = (data) => {
   return tagSet;
 };
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const createDOMItemListLinkElement = (textNode) => {
   const li = document.createElement('li');
 
@@ -23,7 +27,7 @@ const createDOMItemListLinkElement = (textNode) => {
 
   const span = document.createElement('span');
 
-  const text = capitalize(textNode);
+  const text = capitalizeFirstLetter(textNode);
 
   span.appendChild(document.createTextNode(`#${text}`));
 
@@ -42,15 +46,11 @@ const generateDOMNavigationTagList = (data) => {
   }
 };
 
-const capitalize = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 const createDOMThumbnailElement = (object) => {
   const thumbnail = 'thumbnail';
 
-  const div = document.createElement('div');
-  div.classList += thumbnail;
+  const article = document.createElement('article');
+  article.classList += thumbnail;
 
   const link = document.createElement('a');
   link.setAttribute('href', '#');
@@ -88,9 +88,9 @@ const createDOMThumbnailElement = (object) => {
     ul.appendChild(createDOMItemListLinkElement(tag));
   });
 
-  div.append(link, paragraph, ul);
+  article.append(link, paragraph, ul);
 
-  return div;
+  return article;
 };
 
 const generateDOMThumbnailList = (photographers) => {
