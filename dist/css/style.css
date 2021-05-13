@@ -77,6 +77,10 @@ ul {
 /* COLORS */
 /* FONT */
 /* BREAKPOINTS */
+* {
+  outline-color: #901c1c;
+}
+
 body {
   font-family: "DM Sans";
   padding: 2rem 0;

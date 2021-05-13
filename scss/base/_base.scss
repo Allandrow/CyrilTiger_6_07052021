@@ -1,5 +1,9 @@
 @use '../abstracts' as *;
 
+* {
+  outline-color: $color-primary-400;
+}
+
 body {
   font-family: $font;
   padding: 2rem 0;

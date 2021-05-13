@@ -24,8 +24,10 @@ const createDOMItemListLinkElement = (textNode) => {
 
   const link = document.createElement('a');
   link.classList += 'tag';
+  link.setAttribute('href', '#');
 
   const span = document.createElement('span');
+  span.setAttribute('aria-label', 'tag');
 
   const text = capitalizeFirstLetter(textNode);
 
