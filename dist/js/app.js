@@ -4,36 +4,33 @@ const getJSON = async () => {
   return json;
 };
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const getPhotographTagSet = (data) => {
   const tagSet = new Set();
 
   data.photographers.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
-      tagSet.add(tag);
+      tagSet.add(capitalizeFirstLetter(tag));
     });
   });
   return tagSet;
 };
 
-const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-const createDOMItemListLinkElement = (textNode) => {
+const createDOMItemListLinkElement = (tagText) => {
   const li = document.createElement('li');
 
   const link = document.createElement('a');
   link.classList += 'tag';
   link.setAttribute('href', '#');
+  link.setAttribute('aria-label', 'tag');
 
   const span = document.createElement('span');
-  span.setAttribute('aria-label', 'tag');
+  span.appendChild(document.createTextNode(tagText));
 
-  const text = capitalizeFirstLetter(textNode);
-
-  span.appendChild(document.createTextNode(`#${text}`));
-
-  link.appendChild(span);
+  link.append(document.createTextNode('#'), span);
   li.appendChild(link);
 
   return li;
@@ -49,14 +46,14 @@ const generateDOMNavigationTagList = (data) => {
 };
 
 const createDOMThumbnailElement = (object) => {
-  const thumbnail = 'thumbnail';
+  const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
-  article.classList += thumbnail;
+  article.classList += elementBEMName;
 
   const link = document.createElement('a');
   link.setAttribute('href', '#');
-  link.classList += `${thumbnail}__link`;
+  link.classList += `${elementBEMName}__link`;
 
   const img = document.createElement('img');
   img.setAttribute('src', `dist/img/thumbnails/${object.portrait}`);
@@ -70,15 +67,15 @@ const createDOMThumbnailElement = (object) => {
   const paragraph = document.createElement('p');
 
   const localisation = document.createElement('span');
-  localisation.classList += `${thumbnail}__localisation`;
+  localisation.classList += `${elementBEMName}__localisation`;
   localisation.appendChild(document.createTextNode(`${object.city}, ${object.country}`));
 
   const slogan = document.createElement('span');
-  slogan.classList += `${thumbnail}__slogan`;
+  slogan.classList += `${elementBEMName}__slogan`;
   slogan.appendChild(document.createTextNode(object.tagline));
 
   const price = document.createElement('span');
-  price.classList += `${thumbnail}__price`;
+  price.classList += `${elementBEMName}__price`;
   price.appendChild(document.createTextNode(`${object.price}&euro;/jour`));
 
   paragraph.append(localisation, slogan, price);
