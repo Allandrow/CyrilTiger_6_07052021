@@ -217,6 +217,9 @@ header nav {
 .thumbnail__price {
   color: #525252;
 }
+.thumbnail.hidden {
+  display: none;
+}
 
 .back {
   position: fixed;

@@ -4,7 +4,7 @@ const getJSON = async () => {
   return json;
 };
 
-const capitalizeFirstLetter = (string) => {
+const uppercaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
@@ -13,7 +13,7 @@ const getPhotographTagSet = (data) => {
 
   data.photographers.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
-      tagSet.add(capitalizeFirstLetter(tag));
+      tagSet.add(uppercaseFirstLetter(tag));
     });
   });
   return tagSet;
@@ -100,12 +100,37 @@ const generateDOMThumbnailList = (photographers) => {
   });
 };
 
+const filterThumbnailByTag = (tag) => {
+  const tagText = tag.textContent;
+  const photographers = document.querySelectorAll('.thumbnail');
+
+  photographers.forEach((photograph) => {
+    const tagList = photograph.lastElementChild.children;
+    photograph.classList.remove('hidden');
+
+    for (const tag of tagList) {
+      if (tag.textContent === tagText.toLowerCase()) {
+        return true;
+      }
+    }
+    photograph.classList.toggle('hidden');
+  });
+};
+
+const loadAllEventListeners = () => {
+  const tags = document.querySelectorAll('.tag');
+
+  tags.forEach((tag) => tag.addEventListener('click', () => filterThumbnailByTag(tag)));
+};
+
 async function onLoad() {
   const json = await getJSON();
 
   generateDOMNavigationTagList(json);
 
   generateDOMThumbnailList(json.photographers);
+
+  loadAllEventListeners();
 }
 
-document.addEventListener('DOMContentLoaded', onLoad());
+document.addEventListener('DOMContentLoaded', onLoad);
