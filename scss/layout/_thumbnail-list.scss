@@ -2,6 +2,7 @@
 
 .thumbnail-list {
   display: grid;
+  gap: 2rem 0;
 
   @include mq($tab) {
     grid-template-columns: repeat(2, 320px);

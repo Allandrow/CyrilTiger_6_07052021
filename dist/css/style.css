@@ -83,7 +83,7 @@ ul {
 
 body {
   font-family: "DM Sans";
-  padding: 2rem 0;
+  padding: 2rem 0 0;
   color: #901c1c;
   max-width: 1440px;
   margin: 0 auto;
@@ -150,6 +150,7 @@ header nav {
 
 .thumbnail-list {
   display: grid;
+  gap: 2rem 0;
 }
 @media (min-width: 48rem) {
   .thumbnail-list {
@@ -183,7 +184,6 @@ header nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2rem;
 }
 .thumbnail__link {
   display: flex;

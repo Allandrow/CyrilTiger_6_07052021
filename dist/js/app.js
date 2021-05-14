@@ -45,12 +45,12 @@ const generateDOMNavigationTagList = (data) => {
   }
 };
 
+// NEED REFACTO
 const createDOMThumbnailElement = (object) => {
   const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
   article.classList += elementBEMName;
-  article.setAttribute('data-active', 'false');
 
   const link = document.createElement('a');
   link.setAttribute('href', '#');
@@ -101,39 +101,34 @@ const generateDOMThumbnailList = (photographers) => {
   });
 };
 
-const filterThumbnailByTag = (tags, tag) => {
-  const photographers = document.querySelectorAll('.thumbnail');
-
-  const tagActiveArray = Array.from(tags).filter(
-    (string) => string.textContent.toLowerCase() === tag.textContent.toLowerCase()
-  );
-
-  tagActiveArray.forEach((tag) => {
-    tag.classList.toggle('active');
-    if (tag.closest('.thumbnail')) {
-      tag.closest('.thumbnail').setAttribute('data-active', 'true');
+// NEED REFACTO
+const filterThumbnailByTag = (tags, clickedTag) => {
+  // toggle active tags
+  tags.forEach((tag) => {
+    if (tag.classList.contains('active') || tag.textContent.toLowerCase() === clickedTag.textContent.toLowerCase()) {
+      tag.classList.toggle('active');
+      return;
     }
   });
 
-  // photographers.forEach((photograph) => {
-  //   const tagList = photograph.lastElementChild.children;
+  // Hide thumbnails
+  const thumbnails = document.querySelectorAll('.thumbnail');
 
-  //   for (const tag of tagList) {
-  //     tag.children[0].classList.contains('active') ? true : photograph.classList.toggle('hidden');
-  //   }
-  // });
+  thumbnails.forEach((thumbnail) => {
+    thumbnail.classList.add('hidden');
+  });
 
-  // photographers.forEach((photograph) => {
-  //   const tagList = photograph.lastElementChild.children;
-  //   photograph.classList.remove('hidden');
+  // Unhide active thumbnail
+  const activeTags = document.querySelectorAll('.active');
 
-  //   for (const tag of tagList) {
-  //     if (tag.textContent === tagText.toLowerCase()) {
-  //       return true;
-  //     }
-  //   }
-  //   photograph.classList.toggle('hidden');
-  // });
+  activeTags.forEach((tag) => {
+    const article = tag.closest('.thumbnail');
+    article !== null ? article.classList.remove('hidden') : 0;
+  });
+
+  if (activeTags.length === 0) {
+    thumbnails.forEach((thumbnail) => thumbnail.classList.remove('hidden'));
+  }
 };
 
 const loadAllEventListeners = () => {
