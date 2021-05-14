@@ -50,6 +50,7 @@ const createDOMThumbnailElement = (object) => {
 
   const article = document.createElement('article');
   article.classList += elementBEMName;
+  article.setAttribute('data-active', 'false');
 
   const link = document.createElement('a');
   link.setAttribute('href', '#');
@@ -100,27 +101,45 @@ const generateDOMThumbnailList = (photographers) => {
   });
 };
 
-const filterThumbnailByTag = (tag) => {
-  const tagText = tag.textContent;
+const filterThumbnailByTag = (tags, tag) => {
   const photographers = document.querySelectorAll('.thumbnail');
 
-  photographers.forEach((photograph) => {
-    const tagList = photograph.lastElementChild.children;
-    photograph.classList.remove('hidden');
+  const tagActiveArray = Array.from(tags).filter(
+    (string) => string.textContent.toLowerCase() === tag.textContent.toLowerCase()
+  );
 
-    for (const tag of tagList) {
-      if (tag.textContent === tagText.toLowerCase()) {
-        return true;
-      }
+  tagActiveArray.forEach((tag) => {
+    tag.classList.toggle('active');
+    if (tag.closest('.thumbnail')) {
+      tag.closest('.thumbnail').setAttribute('data-active', 'true');
     }
-    photograph.classList.toggle('hidden');
   });
+
+  // photographers.forEach((photograph) => {
+  //   const tagList = photograph.lastElementChild.children;
+
+  //   for (const tag of tagList) {
+  //     tag.children[0].classList.contains('active') ? true : photograph.classList.toggle('hidden');
+  //   }
+  // });
+
+  // photographers.forEach((photograph) => {
+  //   const tagList = photograph.lastElementChild.children;
+  //   photograph.classList.remove('hidden');
+
+  //   for (const tag of tagList) {
+  //     if (tag.textContent === tagText.toLowerCase()) {
+  //       return true;
+  //     }
+  //   }
+  //   photograph.classList.toggle('hidden');
+  // });
 };
 
 const loadAllEventListeners = () => {
   const tags = document.querySelectorAll('.tag');
 
-  tags.forEach((tag) => tag.addEventListener('click', () => filterThumbnailByTag(tag)));
+  tags.forEach((tag) => tag.addEventListener('click', () => filterThumbnailByTag(tags, tag)));
 };
 
 async function onLoad() {

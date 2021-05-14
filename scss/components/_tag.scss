@@ -7,6 +7,11 @@
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
 
+  &.active {
+    background-color: $color-primary-300;
+    color: $color-base-100;
+  }
+
   &:hover,
   &:focus {
     background-color: $color-primary-400;

@@ -170,6 +170,10 @@ header nav {
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
 }
+.tag.active {
+  background-color: #d3573c;
+  color: #fff;
+}
 .tag:hover, .tag:focus {
   background-color: #901c1c;
   color: #fff;
