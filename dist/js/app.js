@@ -19,7 +19,7 @@ const getPhotographTagSet = (data) => {
   return tagSet;
 };
 
-const createDOMItemListLinkElement = (tagText) => {
+const createTagDOMElement = (tagText) => {
   const li = document.createElement('li');
 
   const link = document.createElement('a');
@@ -36,18 +36,16 @@ const createDOMItemListLinkElement = (tagText) => {
   return li;
 };
 
-// utiliser append dans le nom de la fonction
-const generateDOMNavigationTagList = (data) => {
+const appendTagsToNavigation = (data) => {
   const navUl = document.getElementById('js-nav');
   const photographTagSet = getPhotographTagSet(data);
 
   for (const tag of photographTagSet) {
-    navUl.appendChild(createDOMItemListLinkElement(tag));
+    navUl.appendChild(createTagDOMElement(tag));
   }
 };
 
-// NEED REFACTO
-const createDOMThumbnailElement = (object) => {
+const createThumbnailDOMElement = (object) => {
   const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
@@ -86,7 +84,7 @@ const createDOMThumbnailElement = (object) => {
   ul.classList.add('tagList');
 
   object.tags.forEach((tag) => {
-    ul.appendChild(createDOMItemListLinkElement(tag));
+    ul.appendChild(createTagDOMElement(tag));
   });
 
   article.append(link, paragraph, ul);
@@ -94,15 +92,15 @@ const createDOMThumbnailElement = (object) => {
   return article;
 };
 
-const generateDOMThumbnailList = (photographers) => {
+const appendThumbnailsToThumbnailList = (photographers) => {
   const thumbnailList = document.getElementById('js-thumbnailList');
 
   photographers.forEach((photograph) => {
-    thumbnailList.appendChild(createDOMThumbnailElement(photograph));
+    thumbnailList.appendChild(createThumbnailDOMElement(photograph));
   });
 };
 
-// NEED REFACTO
+// NEED REFACTO - naming
 const filterThumbnailByTag = (tags, clickedTag) => {
   // toggle active tags
   //Array.from(tags).filter(t => t.classList.contains('active')).forEach(t => t.classList.remove('active))
@@ -127,8 +125,9 @@ const filterThumbnailByTag = (tags, clickedTag) => {
 
   activeTags.forEach((tag) => {
     const article = tag.closest('.thumbnail');
-    // mettre un if classique au lieu du ternary
-    article !== null ? article.classList.remove('hidden') : 0;
+    if (article !== null) {
+      article.classList.remove('hidden');
+    }
   });
 
   // Display all thumbnails if no active tag
@@ -146,9 +145,9 @@ const loadAllEventListeners = () => {
 async function onLoad() {
   const json = await getJSON();
 
-  generateDOMNavigationTagList(json.photographers);
+  appendTagsToNavigation(json.photographers);
 
-  generateDOMThumbnailList(json.photographers);
+  appendThumbnailsToThumbnailList(json.photographers);
 
   loadAllEventListeners();
 }
