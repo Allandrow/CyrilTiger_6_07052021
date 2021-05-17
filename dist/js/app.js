@@ -11,7 +11,7 @@ const uppercaseFirstLetter = (string) => {
 const getPhotographTagSet = (data) => {
   const tagSet = new Set();
 
-  data.photographers.forEach((photograph) => {
+  data.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
       tagSet.add(uppercaseFirstLetter(tag));
     });
@@ -23,7 +23,7 @@ const createDOMItemListLinkElement = (tagText) => {
   const li = document.createElement('li');
 
   const link = document.createElement('a');
-  link.classList += 'tag';
+  link.classList.add('tag');
   link.setAttribute('href', '#');
   link.setAttribute('aria-label', 'tag');
 
@@ -36,6 +36,7 @@ const createDOMItemListLinkElement = (tagText) => {
   return li;
 };
 
+// utiliser append dans le nom de la fonction
 const generateDOMNavigationTagList = (data) => {
   const navUl = document.getElementById('js-nav');
   const photographTagSet = getPhotographTagSet(data);
@@ -50,11 +51,11 @@ const createDOMThumbnailElement = (object) => {
   const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
-  article.classList += elementBEMName;
+  article.classList.add(elementBEMName);
 
   const link = document.createElement('a');
   link.setAttribute('href', '#');
-  link.classList += `${elementBEMName}__link`;
+  link.classList.add(`${elementBEMName}__link`);
 
   const img = document.createElement('img');
   img.setAttribute('src', `dist/img/thumbnails/${object.portrait}`);
@@ -68,21 +69,21 @@ const createDOMThumbnailElement = (object) => {
   const paragraph = document.createElement('p');
 
   const localisation = document.createElement('span');
-  localisation.classList += `${elementBEMName}__localisation`;
+  localisation.classList.add(`${elementBEMName}__localisation`);
   localisation.appendChild(document.createTextNode(`${object.city}, ${object.country}`));
 
   const slogan = document.createElement('span');
-  slogan.classList += `${elementBEMName}__slogan`;
+  slogan.classList.add(`${elementBEMName}__slogan`);
   slogan.appendChild(document.createTextNode(object.tagline));
 
   const price = document.createElement('span');
-  price.classList += `${elementBEMName}__price`;
+  price.classList.add(`${elementBEMName}__price`);
   price.appendChild(document.createTextNode(`${object.price}&euro;/jour`));
 
   paragraph.append(localisation, slogan, price);
 
   const ul = document.createElement('ul');
-  ul.classList += 'tagList';
+  ul.classList.add('tagList');
 
   object.tags.forEach((tag) => {
     ul.appendChild(createDOMItemListLinkElement(tag));
@@ -104,10 +105,11 @@ const generateDOMThumbnailList = (photographers) => {
 // NEED REFACTO
 const filterThumbnailByTag = (tags, clickedTag) => {
   // toggle active tags
+  //Array.from(tags).filter(t => t.classList.contains('active')).forEach(t => t.classList.remove('active))
+  // mettre les conditions dans des fonctions sémantiques dans le if
   tags.forEach((tag) => {
     if (tag.classList.contains('active') || tag.textContent.toLowerCase() === clickedTag.textContent.toLowerCase()) {
       tag.classList.toggle('active');
-      return;
     }
   });
 
@@ -119,13 +121,17 @@ const filterThumbnailByTag = (tags, clickedTag) => {
   });
 
   // Unhide active thumbnail
+  // mieux cibler via un meilleur naming de classe
+  // document.querySelectorAll('#js-thumbnailList .tag.active')
   const activeTags = document.querySelectorAll('.active');
 
   activeTags.forEach((tag) => {
     const article = tag.closest('.thumbnail');
+    // mettre un if classique au lieu du ternary
     article !== null ? article.classList.remove('hidden') : 0;
   });
 
+  // Display all thumbnails if no active tag
   if (activeTags.length === 0) {
     thumbnails.forEach((thumbnail) => thumbnail.classList.remove('hidden'));
   }
@@ -140,7 +146,7 @@ const loadAllEventListeners = () => {
 async function onLoad() {
   const json = await getJSON();
 
-  generateDOMNavigationTagList(json);
+  generateDOMNavigationTagList(json.photographers);
 
   generateDOMThumbnailList(json.photographers);
 
