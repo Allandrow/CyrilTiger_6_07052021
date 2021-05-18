@@ -103,7 +103,7 @@ const appendThumbnailsToThumbnailList = (photographers) => {
 
 const isSameTagText = (tag, tagClicked) => tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
 
-const handleTagActiveState = (tags, clickedTag) => {
+const switchTagActiveState = (tags, clickedTag) => {
   /*
     Parse all tags from Document
     Remove active class from tag if clicked tag is already active
@@ -138,26 +138,29 @@ const displayActiveTagThumbnails = () => {
   }
 };
 
+const handleTagClick = (tags, tag) => {
+  switchTagActiveState(tags, tag);
+  displayActiveTagThumbnails();
+};
+
+const displayBackToTopBtn = () => {
+  const html = document.querySelector('html');
+  const backTopBtn = document.getElementById('js-backToTop');
+
+  if (html.scrollTop <= 400) {
+    backTopBtn.classList.add('hidden');
+    return;
+  }
+  backTopBtn.classList.remove('hidden');
+};
+
 const loadAllEventListeners = () => {
   const tags = document.querySelectorAll('.tag');
 
-  tags.forEach((tag) =>
-    tag.addEventListener('click', () => {
-      handleTagActiveState(tags, tag);
-      displayActiveTagThumbnails();
-    })
-  );
+  tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
 
-  window.addEventListener('scroll', () => {
-    const html = document.querySelector('html');
-    const backTopBtn = document.getElementById('js-backToTop');
-
-    if (html.scrollTop <= 400) {
-      backTopBtn.classList.add('hidden');
-      return;
-    }
-    backTopBtn.classList.remove('hidden');
-  });
+  // REFACTOR CALLBACK INTO PROPER FUNCTION
+  window.addEventListener('scroll', displayBackToTopBtn);
 };
 
 async function onLoad() {
