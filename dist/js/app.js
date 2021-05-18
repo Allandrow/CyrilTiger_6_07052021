@@ -101,17 +101,22 @@ const appendThumbnailsToThumbnailList = (photographers) => {
   });
 };
 
-// NEED REFACTO - naming
-const filterThumbnailByTag = (tags, clickedTag) => {
-  // toggle active tags
-  //Array.from(tags).filter(t => t.classList.contains('active')).forEach(t => t.classList.remove('active))
-  // mettre les conditions dans des fonctions sémantiques dans le if
+const isSameTagText = (tag, tagClicked) => tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
+
+const handleTagActiveState = (tags, clickedTag) => {
+  /*
+    Parse all tags from Document
+    Remove active class from tag if clicked tag is already active
+    Add active class if tag is the same value as clicked tag
+  */
   tags.forEach((tag) => {
-    if (tag.classList.contains('active') || tag.textContent.toLowerCase() === clickedTag.textContent.toLowerCase()) {
+    if (tag.classList.contains('active') || isSameTagText(tag, clickedTag)) {
       tag.classList.toggle('active');
     }
   });
+};
 
+const displayActiveTagThumbnails = () => {
   // Hide thumbnails
   const thumbnails = document.querySelectorAll('.thumbnail');
 
@@ -119,16 +124,12 @@ const filterThumbnailByTag = (tags, clickedTag) => {
     thumbnail.classList.add('hidden');
   });
 
-  // Unhide active thumbnail
-  // mieux cibler via un meilleur naming de classe
-  // document.querySelectorAll('#js-thumbnailList .tag.active')
-  const activeTags = document.querySelectorAll('.active');
+  // Unhide thumbnails with active tag
+  const activeTags = document.querySelectorAll('#js-thumbnailList .active');
 
   activeTags.forEach((tag) => {
     const article = tag.closest('.thumbnail');
-    if (article !== null) {
-      article.classList.remove('hidden');
-    }
+    article.classList.remove('hidden');
   });
 
   // Display all thumbnails if no active tag
@@ -140,7 +141,23 @@ const filterThumbnailByTag = (tags, clickedTag) => {
 const loadAllEventListeners = () => {
   const tags = document.querySelectorAll('.tag');
 
-  tags.forEach((tag) => tag.addEventListener('click', () => filterThumbnailByTag(tags, tag)));
+  tags.forEach((tag) =>
+    tag.addEventListener('click', () => {
+      handleTagActiveState(tags, tag);
+      displayActiveTagThumbnails();
+    })
+  );
+
+  window.addEventListener('scroll', () => {
+    const html = document.querySelector('html');
+    const backTopBtn = document.getElementById('js-backToTop');
+
+    if (html.scrollTop <= 400) {
+      backTopBtn.classList.add('hidden');
+      return;
+    }
+    backTopBtn.classList.remove('hidden');
+  });
 };
 
 async function onLoad() {

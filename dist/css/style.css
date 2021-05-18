@@ -221,9 +221,6 @@ header nav {
 .thumbnail__price {
   color: #525252;
 }
-.thumbnail.hidden {
-  display: none;
-}
 
 .back {
   position: fixed;
@@ -240,6 +237,10 @@ header nav {
   font-size: 1.125rem;
   padding: 0.125rem 0.5rem;
   border-radius: 0.25rem;
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
