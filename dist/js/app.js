@@ -50,9 +50,10 @@ const createThumbnailDOMElement = (object) => {
 
   const article = document.createElement('article');
   article.classList.add(elementBEMName);
+  article.setAttribute('data-id', object.id);
 
   const link = document.createElement('a');
-  link.setAttribute('href', '#');
+  link.setAttribute('href', `photographer.html?id=${object.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
   const img = document.createElement('img');
