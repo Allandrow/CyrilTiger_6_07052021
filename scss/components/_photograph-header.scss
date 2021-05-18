@@ -1,0 +1,59 @@
+@use '../abstracts/' as *;
+
+.photograph-header {
+  display: flex;
+  justify-content: space-between;
+
+  &__infos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: start;
+
+    h1 {
+      font-size: 2.25rem;
+      color: $color-primary-300;
+      line-height: 1;
+    }
+
+    p {
+      font-size: 0.75rem;
+
+      span {
+        display: block;
+      }
+    }
+
+    &__slogan {
+      color: $color-base-700;
+    }
+
+    .tagList {
+      justify-content: flex-start;
+    }
+  }
+  img {
+    @include profile-photo(100px);
+    min-width: 100px;
+    margin-top: -1rem;
+  }
+
+  @include mq($tab) {
+    background-color: $color-base-300;
+    padding: 4.5rem 3rem 3.5rem;
+
+    &__infos {
+      gap: 1rem;
+      max-height: 200px;
+      flex-wrap: wrap;
+
+      h1 {
+        font-size: 4rem;
+      }
+    }
+
+    img {
+      @include profile-photo(200px);
+    }
+  }
+}

@@ -101,7 +101,9 @@ const appendThumbnailsToThumbnailList = (photographers) => {
   });
 };
 
-const isSameTagText = (tag, tagClicked) => tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
+const isSameTagText = (tag, tagClicked) => {
+  return tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
+};
 
 const switchTagActiveState = (tags, clickedTag) => {
   /*
@@ -159,7 +161,6 @@ const loadAllEventListeners = () => {
 
   tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
 
-  // REFACTOR CALLBACK INTO PROPER FUNCTION
   window.addEventListener('scroll', displayBackToTopBtn);
 };
 

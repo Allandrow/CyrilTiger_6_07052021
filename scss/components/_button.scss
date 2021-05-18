@@ -1,0 +1,28 @@
+@use '../abstracts/' as *;
+
+.button {
+  border: 0;
+  background-color: $color-primary-400;
+  color: $color-base-100;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  padding: 0.25rem 1rem;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 700;
+
+  &:hover {
+    background-color: $color-primary-200;
+    color: $color-base-900;
+  }
+
+  @include mq($medium) {
+    position: relative;
+    bottom: initial;
+    left: initial;
+    transform: translateX(0);
+    padding: 1rem;
+  }
+}
