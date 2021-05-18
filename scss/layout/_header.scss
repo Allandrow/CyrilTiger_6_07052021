@@ -19,6 +19,9 @@ header {
     img {
       width: 200px;
     }
+    h1 {
+      font-size: 2.25rem;
+    }
   }
 
   @include mq($medium) {
@@ -28,7 +31,6 @@ header {
 
     h1 {
       order: 1;
-      font-size: 2.25rem;
     }
 
     nav {

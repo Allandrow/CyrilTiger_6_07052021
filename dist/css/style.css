@@ -121,6 +121,9 @@ header nav {
   header img {
     width: 200px;
   }
+  header h1 {
+    font-size: 2.25rem;
+  }
 }
 @media (min-width: 60rem) {
   header {
@@ -130,7 +133,6 @@ header nav {
   }
   header h1 {
     order: 1;
-    font-size: 2.25rem;
   }
   header nav {
     width: auto;
