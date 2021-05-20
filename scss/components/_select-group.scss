@@ -1,0 +1,13 @@
+@use '../abstracts/' as *;
+
+.select-group {
+  label {
+    color: $color-base-900;
+    font-size: 1rem;
+  }
+
+  select {
+    background: none;
+    border: none;
+  }
+}
