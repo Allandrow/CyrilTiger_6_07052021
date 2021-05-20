@@ -7,11 +7,12 @@
   border-radius: 0.25rem;
   font-size: 1.125rem;
   padding: 0.25rem 1rem;
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 700;
+  z-index: 1;
 
   &:hover {
     background-color: $color-primary-200;

@@ -77,7 +77,7 @@ const createThumbnailDOMElement = (object) => {
 
   const price = document.createElement('span');
   price.classList.add(`${elementBEMName}__price`);
-  price.appendChild(document.createTextNode(`${object.price}&euro;/jour`));
+  price.appendChild(document.createTextNode(`${object.price}€/jour`));
 
   paragraph.append(localisation, slogan, price);
 

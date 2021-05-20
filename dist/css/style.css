@@ -308,11 +308,12 @@ header nav {
   border-radius: 0.25rem;
   font-size: 1.125rem;
   padding: 0.25rem 1rem;
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   font-weight: 700;
+  z-index: 1;
 }
 .button:hover {
   background-color: #db8876;
@@ -326,6 +327,24 @@ header nav {
     transform: translateX(0);
     padding: 1rem;
   }
+}
+
+.metas-infos {
+  display: flex;
+  background-color: #db8876;
+  border-radius: 0.25rem;
+  color: #000;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  margin: 2rem 0;
+  font-weight: 500;
+}
+.metas-infos__likes {
+  display: flex;
+}
+.metas-infos__likes img {
+  margin-left: 0.5rem;
 }
 
 .hidden {
