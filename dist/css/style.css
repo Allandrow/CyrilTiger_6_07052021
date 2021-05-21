@@ -327,6 +327,7 @@ header nav {
   transform: translateX(-50%);
   font-weight: 700;
   z-index: 1;
+  cursor: pointer;
 }
 .button:hover {
   background-color: #db8876;

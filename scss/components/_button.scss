@@ -13,6 +13,7 @@
   transform: translateX(-50%);
   font-weight: 700;
   z-index: 1;
+  cursor: pointer;
 
   &:hover {
     background-color: $color-primary-200;
