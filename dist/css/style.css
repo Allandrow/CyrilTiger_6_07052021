@@ -360,13 +360,66 @@ header nav {
   }
 }
 
+.select-group {
+  display: none;
+  align-items: center;
+  margin: 0.5rem 0 2rem;
+}
 .select-group label {
   color: #000;
-  font-size: 1rem;
+  font-size: 1.125rem;
+  margin-right: 1rem;
+  font-weight: 700;
 }
-.select-group select {
-  background: none;
+.select-group .select {
+  color: #fff;
+  position: relative;
+  font-weight: 700;
+}
+.select-group .select button {
+  background-color: inherit;
   border: none;
+  color: inherit;
+  padding: 1rem 3rem 1rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #901c1c;
+}
+.select-group .select ul {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: none;
+  background-color: #901c1c;
+  border-radius: 0.25rem;
+  padding: 1rem 0.75rem 0 0.75rem;
+}
+.select-group .select li {
+  padding: 1rem 2.25rem 1rem 0.25rem;
+}
+.select-group .select li:first-of-type {
+  padding-top: 0;
+}
+.select-group .select li:nth-child(2) {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+.select-group .select img {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  z-index: 2;
+  transition: transform 100ms linear;
+}
+.select-group .select:hover ul {
+  display: block;
+}
+.select-group .select:hover img {
+  transform: rotate(180deg);
+}
+@media (min-width: 60rem) {
+  .select-group {
+    display: flex;
+  }
 }
 
 .hidden {

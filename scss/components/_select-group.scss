@@ -1,13 +1,74 @@
 @use '../abstracts/' as *;
 
 .select-group {
+  display: none;
+  align-items: center;
+  margin: 0.5rem 0 2rem;
+
   label {
     color: $color-base-900;
-    font-size: 1rem;
+    font-size: 1.125rem;
+    margin-right: 1rem;
+    font-weight: 700;
   }
 
-  select {
-    background: none;
-    border: none;
+  .select {
+    color: $color-base-100;
+    position: relative;
+    font-weight: 700;
+
+    button {
+      background-color: inherit;
+      border: none;
+      color: inherit;
+      padding: 1rem 3rem 1rem 1rem;
+      border-radius: 0.25rem;
+      background-color: $color-primary-400;
+    }
+
+    ul {
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      display: none;
+      background-color: $color-primary-400;
+      border-radius: 0.25rem;
+      padding: 1rem 0.75rem 0 0.75rem;
+    }
+
+    li {
+      padding: 1rem 2.25rem 1rem 0.25rem;
+
+      &:first-of-type {
+        padding-top: 0;
+      }
+
+      &:nth-child(2) {
+        border-top: 1px solid $color-base-100;
+        border-bottom: 1px solid $color-base-100;
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 1.5rem;
+      right: 1rem;
+      z-index: 2;
+      transition: transform 100ms linear;
+    }
+
+    &:hover {
+      ul {
+        display: block;
+      }
+
+      img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  @include mq($medium) {
+    display: flex;
   }
 }

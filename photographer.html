@@ -50,105 +50,111 @@
         <span>300€ / jour</span>
       </div>
       <div class="select-group">
-        <label for="js-sort">Trier par</label>
-        <select name="sort" id="js-sort">
-          <option value="Popularité">Popularité</option>
-          <option value="Date">Date</option>
-          <option value="Titre">Titre</option>
-        </select>
-        <figure role="group">
-          <figure>
-            <a href="">
-              <picture>
-                <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
-                <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
-              </picture>
-            </a>
-            <figcaption>
-              <p>Arc-en-ciel</p>
-              <div>
-                <span>12</span>
-                <img src="dist/img/like-icon.svg" alt="likes" />
-              </div>
-            </figcaption>
-          </figure>
-          <figure>
-            <a href="">
-              <picture>
-                <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
-                <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
-              </picture>
-            </a>
-            <figcaption>
-              <p>Arc-en-ciel</p>
-              <div>
-                <span>12</span>
-                <img src="dist/img/like-icon.svg" alt="likes" />
-              </div>
-            </figcaption>
-          </figure>
-          <figure>
-            <a href="">
-              <picture>
-                <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
-                <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
-              </picture>
-            </a>
-            <figcaption>
-              <p>Arc-en-ciel</p>
-              <div>
-                <span>12</span>
-                <img src="dist/img/like-icon.svg" alt="likes" />
-              </div>
-            </figcaption>
-          </figure>
-          <figure>
-            <a href="">
-              <picture>
-                <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
-                <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
-              </picture>
-            </a>
-            <figcaption>
-              <p>Arc-en-ciel</p>
-              <div>
-                <span>12</span>
-                <img src="dist/img/like-icon.svg" alt="likes" />
-              </div>
-            </figcaption>
-          </figure>
-          <figure>
-            <a href="">
-              <picture>
-                <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
-                <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
-              </picture>
-            </a>
-            <figcaption>
-              <p>Arc-en-ciel</p>
-              <div>
-                <span>12</span>
-                <img src="dist/img/like-icon.svg" alt="likes" />
-              </div>
-            </figcaption>
-          </figure>
-          <figure>
-            <a href="">
-              <picture>
-                <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
-                <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
-              </picture>
-            </a>
-            <figcaption>
-              <p>Arc-en-ciel</p>
-              <div>
-                <span>12</span>
-                <img src="dist/img/like-icon.svg" alt="likes" />
-              </div>
-            </figcaption>
-          </figure>
-        </figure>
+        <label for="js-sort" id="ariaLabel">Trier par</label>
+        <div class="select">
+          <button id="js-sort" role="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ariaLabel">
+            Popularité
+          </button>
+          <ul id="select-list" role="listbox" aria-activedescendant="sort-likes">
+            <li role="option" id="sort-likes" aria-selected="true" aria-labelledby="ariaLabel">Popularité</li>
+            <li role="option" id="sort-date" aria-labelledby="ariaLabel">Date</li>
+            <li role="option" id="sort-title" aria-labelledby="ariaLabel">Titre</li>
+          </ul>
+          <img src="dist/img/expand-more.svg" alt="expand list indicator" />
+        </div>
       </div>
+      <figure role="group">
+        <figure>
+          <a href="">
+            <picture>
+              <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
+              <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
+            </picture>
+          </a>
+          <figcaption>
+            <p>Arc-en-ciel</p>
+            <div>
+              <span>12</span>
+              <img src="dist/img/like-icon.svg" alt="likes" />
+            </div>
+          </figcaption>
+        </figure>
+        <figure>
+          <a href="">
+            <picture>
+              <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
+              <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
+            </picture>
+          </a>
+          <figcaption>
+            <p>Arc-en-ciel</p>
+            <div>
+              <span>12</span>
+              <img src="dist/img/like-icon.svg" alt="likes" />
+            </div>
+          </figcaption>
+        </figure>
+        <figure>
+          <a href="">
+            <picture>
+              <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
+              <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
+            </picture>
+          </a>
+          <figcaption>
+            <p>Arc-en-ciel</p>
+            <div>
+              <span>12</span>
+              <img src="dist/img/like-icon.svg" alt="likes" />
+            </div>
+          </figcaption>
+        </figure>
+        <figure>
+          <a href="">
+            <picture>
+              <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
+              <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
+            </picture>
+          </a>
+          <figcaption>
+            <p>Arc-en-ciel</p>
+            <div>
+              <span>12</span>
+              <img src="dist/img/like-icon.svg" alt="likes" />
+            </div>
+          </figcaption>
+        </figure>
+        <figure>
+          <a href="">
+            <picture>
+              <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
+              <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
+            </picture>
+          </a>
+          <figcaption>
+            <p>Arc-en-ciel</p>
+            <div>
+              <span>12</span>
+              <img src="dist/img/like-icon.svg" alt="likes" />
+            </div>
+          </figcaption>
+        </figure>
+        <figure>
+          <a href="">
+            <picture>
+              <source media="(min-width:60rem)" srcset="dist/img/Mimi/Animals_Rainbow.jpg" />
+              <img src="dist/img/Mimi/Animals_Rainbow-min.jpg" alt="" />
+            </picture>
+          </a>
+          <figcaption>
+            <p>Arc-en-ciel</p>
+            <div>
+              <span>12</span>
+              <img src="dist/img/like-icon.svg" alt="likes" />
+            </div>
+          </figcaption>
+        </figure>
+      </figure>
     </main>
   </body>
 </html>
