@@ -445,7 +445,6 @@ header nav {
   height: calc(100% - 2rem);
   width: 100%;
   display: block;
-  border-radius: 0.25rem;
 }
 .figure a picture,
 .figure a img {
@@ -456,6 +455,7 @@ header nav {
 .figure a img {
   object-fit: cover;
   object-position: 0% 15%;
+  border-radius: 0.25rem;
 }
 .figure figcaption {
   display: flex;

@@ -8,7 +8,6 @@
     height: calc(100% - 2rem);
     width: 100%;
     display: block;
-    border-radius: 0.25rem;
 
     picture,
     img {
@@ -20,6 +19,7 @@
     img {
       object-fit: cover;
       object-position: 0% 15%; //TODO : check si viable pour toutes les photos
+      border-radius: 0.25rem;
     }
   }
 
