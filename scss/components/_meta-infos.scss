@@ -6,16 +6,28 @@
   border-radius: 0.25rem;
   color: $color-base-900;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   font-size: 1.5rem;
-  margin: 2rem 0;
+  margin: 0;
   font-weight: 500;
+  visibility: hidden;
+  height: 0;
+  position: fixed;
+  bottom: 0;
+  right: 1rem;
+  gap: 3rem;
 
   &__likes {
     display: flex;
+    flex: 1;
 
     img {
       margin-left: 0.5rem;
     }
+  }
+
+  @include mq($medium) {
+    visibility: visible;
+    height: auto;
   }
 }
