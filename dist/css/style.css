@@ -166,6 +166,19 @@ header nav {
   }
 }
 
+.figure-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 60rem) {
+  .figure-group {
+    gap: 1.25rem 5rem;
+  }
+}
+
 .tag {
   font-weight: 500;
   border: 1px solid #c4c4c4;
@@ -363,7 +376,7 @@ header nav {
 .select-group {
   display: none;
   align-items: center;
-  margin: 0.5rem 0 2rem;
+  margin-top: 0.5rem;
 }
 .select-group label {
   color: #000;
@@ -419,6 +432,44 @@ header nav {
 @media (min-width: 60rem) {
   .select-group {
     display: flex;
+  }
+}
+
+.figure {
+  flex: 1 350px;
+  height: 13.75rem;
+}
+.figure a {
+  height: calc(100% - 2rem);
+  width: 100%;
+  display: block;
+  border-radius: 0.25rem;
+}
+.figure a picture,
+.figure a img {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+.figure a img {
+  object-fit: cover;
+  object-position: 0% 15%;
+}
+.figure figcaption {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  font-weight: 500;
+}
+.figure figcaption div {
+  display: flex;
+}
+.figure figcaption span {
+  margin-right: 0.5rem;
+}
+@media (min-width: 60rem) {
+  .figure {
+    height: 350px;
   }
 }
 

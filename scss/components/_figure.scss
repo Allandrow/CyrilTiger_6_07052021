@@ -1,0 +1,44 @@
+@use '../abstracts/' as *;
+
+.figure {
+  flex: 1 350px;
+  height: 13.75rem;
+
+  a {
+    height: calc(100% - 2rem);
+    width: 100%;
+    display: block;
+    border-radius: 0.25rem;
+
+    picture,
+    img {
+      height: 100%;
+      width: 100%;
+      display: block;
+    }
+
+    img {
+      object-fit: cover;
+      object-position: 0% 15%; //TODO : check si viable pour toutes les photos
+    }
+  }
+
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    font-weight: 500;
+
+    div {
+      display: flex;
+    }
+
+    span {
+      margin-right: 0.5rem;
+    }
+  }
+
+  @include mq($medium) {
+    height: 350px;
+  }
+}
