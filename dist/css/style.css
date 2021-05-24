@@ -304,6 +304,15 @@ header nav {
   .photograph-header__infos h1 {
     font-size: 4rem;
   }
+  .photograph-header__infos__localisation {
+    font-size: 1.5rem;
+  }
+  .photograph-header__infos__slogan {
+    font-size: 1.125rem;
+  }
+  .photograph-header__infos .tag {
+    font-size: 1.125rem;
+  }
   .photograph-header img {
     border-radius: 50%;
     width: 200px;
