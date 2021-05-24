@@ -246,24 +246,29 @@ const displayPageByURLQuery = (json, URLQuery) => {
   const id = parseInt(URLParams.get('id'));
 
   if (isNaN(id)) {
+    // HOMEPAGE
     appendTagsToNavigation(json.photographers);
 
     appendPhotographerArticlesToList(json.photographers);
 
     loadAllEventListeners();
   } else {
+    // PAGE PHOTOGRAPHE
     json.photographers.forEach((photographer) => {
       if (photographer.id === id) {
+        // Set page title
+        document.title = `Fisheye - ${photographer.name}`;
+
         appendPhotographHeaderSectionToMain(photographer);
       }
     });
 
     // Logging photographer object and medias relative to id from url
-    // json.media.forEach((media) => {
-    //   if (media.photographerId === id) {
-    //     console.log(media);
-    //   }
-    // });
+    json.media.forEach((media) => {
+      if (media.photographerId === id) {
+        console.log(media);
+      }
+    });
   }
 };
 
