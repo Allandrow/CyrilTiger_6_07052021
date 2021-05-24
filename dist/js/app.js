@@ -45,6 +45,40 @@ const appendTagsToNavigation = (data) => {
   }
 };
 
+const createPhotographerPortrait = (object) => {
+  const img = document.createElement('img');
+  img.setAttribute('src', `dist/img/thumbnails/${object.portrait}`);
+  img.setAttribute('alt', object.name);
+  return img;
+};
+
+const createPhotographerTitle = (object, heading) => {
+  const title = document.createElement(heading);
+  title.appendChild(document.createTextNode(object.name));
+  return title;
+};
+
+const createPhotographerLocalisation = (object, className) => {
+  const localisation = document.createElement('span');
+  localisation.classList.add(`${className}__localisation`);
+  localisation.appendChild(document.createTextNode(`${object.city}, ${object.country}`));
+  return localisation;
+};
+
+const createPhotographerSlogan = (object, className) => {
+  const slogan = document.createElement('span');
+  slogan.classList.add(`${className}__slogan`);
+  slogan.appendChild(document.createTextNode(object.tagline));
+  return slogan;
+};
+
+const createPhotographerPrice = (object, className) => {
+  const price = document.createElement('span');
+  price.classList.add(`${className}__price`);
+  price.appendChild(document.createTextNode(`${object.price}€/jour`));
+  return price;
+};
+
 const createPhotographerArticle = (object) => {
   const elementBEMName = 'thumbnail';
 
@@ -55,28 +89,19 @@ const createPhotographerArticle = (object) => {
   link.setAttribute('href', `photographer.html?id=${object.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const img = document.createElement('img');
-  img.setAttribute('src', `dist/img/thumbnails/${object.portrait}`);
-  img.setAttribute('alt', object.name);
+  const portrait = createPhotographerPortrait(object);
 
-  const title = document.createElement('h2');
-  title.appendChild(document.createTextNode(object.name));
+  const title = createPhotographerTitle(object, 'h2');
 
-  link.append(img, title);
+  link.append(portrait, title);
 
   const paragraph = document.createElement('p');
 
-  const localisation = document.createElement('span');
-  localisation.classList.add(`${elementBEMName}__localisation`);
-  localisation.appendChild(document.createTextNode(`${object.city}, ${object.country}`));
+  const localisation = createPhotographerLocalisation(object, elementBEMName);
 
-  const slogan = document.createElement('span');
-  slogan.classList.add(`${elementBEMName}__slogan`);
-  slogan.appendChild(document.createTextNode(object.tagline));
+  const slogan = createPhotographerSlogan(object, elementBEMName);
 
-  const price = document.createElement('span');
-  price.classList.add(`${elementBEMName}__price`);
-  price.appendChild(document.createTextNode(`${object.price}€/jour`));
+  const price = createPhotographerPrice(object, elementBEMName);
 
   paragraph.append(localisation, slogan, price);
 
@@ -92,8 +117,8 @@ const createPhotographerArticle = (object) => {
   return article;
 };
 
-const appendThumbnailsToThumbnailList = (photographers) => {
-  const thumbnailList = document.getElementById('js-thumbnailList');
+const appendPhotographerArticlesToList = (photographers) => {
+  const thumbnailList = document.getElementById('js-articleList');
 
   photographers.forEach((photograph) => {
     thumbnailList.appendChild(createPhotographerArticle(photograph));
@@ -171,7 +196,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
   if (isNaN(id)) {
     appendTagsToNavigation(json.photographers);
 
-    appendThumbnailsToThumbnailList(json.photographers);
+    appendPhotographerArticlesToList(json.photographers);
 
     loadAllEventListeners();
   } else {
