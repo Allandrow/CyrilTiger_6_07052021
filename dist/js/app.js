@@ -151,7 +151,7 @@ const displayThumbnailsByActiveTag = () => {
   });
 
   // Unhide thumbnails with active tag
-  const activeTags = document.querySelectorAll('#js-thumbnailList .active');
+  const activeTags = document.querySelectorAll('#js-articleList .active');
 
   activeTags.forEach((tag) => {
     const article = tag.closest('.thumbnail');
