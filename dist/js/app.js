@@ -45,12 +45,11 @@ const appendTagsToNavigation = (data) => {
   }
 };
 
-const createThumbnailDOMElement = (object) => {
+const createPhotographerArticle = (object) => {
   const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
   article.classList.add(elementBEMName);
-  article.setAttribute('data-id', object.id);
 
   const link = document.createElement('a');
   link.setAttribute('href', `photographer.html?id=${object.id}`);
@@ -97,7 +96,7 @@ const appendThumbnailsToThumbnailList = (photographers) => {
   const thumbnailList = document.getElementById('js-thumbnailList');
 
   photographers.forEach((photograph) => {
-    thumbnailList.appendChild(createThumbnailDOMElement(photograph));
+    thumbnailList.appendChild(createPhotographerArticle(photograph));
   });
 };
 
@@ -118,7 +117,7 @@ const switchTagActiveState = (tags, clickedTag) => {
   });
 };
 
-const displayActiveTagThumbnails = () => {
+const displayThumbnailsByActiveTag = () => {
   // Hide thumbnails
   const thumbnails = document.querySelectorAll('.thumbnail');
 
@@ -142,7 +141,7 @@ const displayActiveTagThumbnails = () => {
 
 const handleTagClick = (tags, tag) => {
   switchTagActiveState(tags, tag);
-  displayActiveTagThumbnails();
+  displayThumbnailsByActiveTag();
 };
 
 const displayBackToTopBtn = () => {
@@ -156,6 +155,7 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
+// TODO : modify to adapt eventlisterners used according to page
 const loadAllEventListeners = () => {
   const tags = document.querySelectorAll('.tag');
 
@@ -164,14 +164,36 @@ const loadAllEventListeners = () => {
   window.addEventListener('scroll', displayBackToTopBtn);
 };
 
+const displayPageByURLQuery = (json, URLQuery) => {
+  const URLParams = new URLSearchParams(URLQuery);
+  const id = parseInt(URLParams.get('id'));
+
+  if (isNaN(id)) {
+    appendTagsToNavigation(json.photographers);
+
+    appendThumbnailsToThumbnailList(json.photographers);
+
+    loadAllEventListeners();
+  } else {
+    // Logging photographer object and medias relative to id from url
+    json.photographers.forEach((photographer) => {
+      if (photographer.id === id) {
+        console.log(photographer);
+      }
+    });
+    json.media.forEach((media) => {
+      if (media.photographerId === id) {
+        console.log(media);
+      }
+    });
+  }
+};
+
 async function onLoad() {
   const json = await getJSON();
+  const URLQuery = window.location.search;
 
-  appendTagsToNavigation(json.photographers);
-
-  appendThumbnailsToThumbnailList(json.photographers);
-
-  loadAllEventListeners();
+  displayPageByURLQuery(json, URLQuery);
 }
 
 document.addEventListener('DOMContentLoaded', onLoad);
