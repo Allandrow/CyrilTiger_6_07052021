@@ -90,6 +90,14 @@ const createPhotographerTagList = (object) => {
   return ul;
 };
 
+const createContactBtn = () => {
+  const btn = document.createElement('button');
+  btn.classList.add('button');
+  btn.appendChild(document.createTextNode('Contactez-moi'));
+
+  return btn;
+};
+
 const createPhotographerArticle = (object) => {
   const elementBEMName = 'thumbnail';
 
@@ -126,6 +134,9 @@ const createPhotographerArticle = (object) => {
 const createPhotographerHeader = (object) => {
   const elementBEMName = 'photograph-header__infos';
 
+  const section = document.createElement('section');
+  section.classList.add('photograph-header');
+
   const div = document.createElement('div');
   div.classList.add(`${elementBEMName}`);
 
@@ -141,9 +152,15 @@ const createPhotographerHeader = (object) => {
 
   const ul = createPhotographerTagList(object);
 
-  div.append(title, paragraph, ul);
+  const contact = createContactBtn();
 
-  return div;
+  div.append(title, paragraph, ul, contact);
+
+  const portrait = createPhotographerPortrait(object);
+
+  section.append(div, portrait);
+
+  return section;
 };
 
 const appendPhotographerArticlesToList = (photographers) => {
@@ -154,10 +171,10 @@ const appendPhotographerArticlesToList = (photographers) => {
   });
 };
 
-const appendPhotographHeaderToSection = (photographer) => {
-  const photographSection = document.getElementById('js-photographHeader');
+const appendPhotographHeaderSectionToMain = (photographer) => {
+  const photographMain = document.getElementById('js-main');
 
-  photographSection.appendChild(createPhotographerHeader(photographer));
+  photographMain.appendChild(createPhotographerHeader(photographer));
 };
 
 const isSameTagText = (tag, tagClicked) => {
@@ -237,7 +254,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
   } else {
     json.photographers.forEach((photographer) => {
       if (photographer.id === id) {
-        appendPhotographHeaderToSection(photographer);
+        appendPhotographHeaderSectionToMain(photographer);
       }
     });
 
