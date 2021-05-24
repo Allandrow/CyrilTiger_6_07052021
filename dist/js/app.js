@@ -79,6 +79,17 @@ const createPhotographerPrice = (object, className) => {
   return price;
 };
 
+const createPhotographerTagList = (object) => {
+  const ul = document.createElement('ul');
+  ul.classList.add('tagList');
+
+  object.tags.forEach((tag) => {
+    ul.appendChild(createTagDOMElement(tag));
+  });
+
+  return ul;
+};
+
 const createPhotographerArticle = (object) => {
   const elementBEMName = 'thumbnail';
 
@@ -105,16 +116,34 @@ const createPhotographerArticle = (object) => {
 
   paragraph.append(localisation, slogan, price);
 
-  const ul = document.createElement('ul');
-  ul.classList.add('tagList');
-
-  object.tags.forEach((tag) => {
-    ul.appendChild(createTagDOMElement(tag));
-  });
+  const ul = createPhotographerTagList(object);
 
   article.append(link, paragraph, ul);
 
   return article;
+};
+
+const createPhotographerHeader = (object) => {
+  const elementBEMName = 'photograph-header__infos';
+
+  const div = document.createElement('div');
+  div.classList.add(`${elementBEMName}`);
+
+  const title = createPhotographerTitle(object, 'h1');
+
+  const paragraph = document.createElement('p');
+
+  const localisation = createPhotographerLocalisation(object, elementBEMName);
+
+  const slogan = createPhotographerSlogan(object, elementBEMName);
+
+  paragraph.append(localisation, slogan);
+
+  const ul = createPhotographerTagList(object);
+
+  div.append(title, paragraph, ul);
+
+  return div;
 };
 
 const appendPhotographerArticlesToList = (photographers) => {
@@ -123,6 +152,12 @@ const appendPhotographerArticlesToList = (photographers) => {
   photographers.forEach((photograph) => {
     thumbnailList.appendChild(createPhotographerArticle(photograph));
   });
+};
+
+const appendPhotographHeaderToSection = (photographer) => {
+  const photographSection = document.getElementById('js-photographHeader');
+
+  photographSection.appendChild(createPhotographerHeader(photographer));
 };
 
 const isSameTagText = (tag, tagClicked) => {
@@ -200,17 +235,18 @@ const displayPageByURLQuery = (json, URLQuery) => {
 
     loadAllEventListeners();
   } else {
-    // Logging photographer object and medias relative to id from url
     json.photographers.forEach((photographer) => {
       if (photographer.id === id) {
-        console.log(photographer);
+        appendPhotographHeaderToSection(photographer);
       }
     });
-    json.media.forEach((media) => {
-      if (media.photographerId === id) {
-        console.log(media);
-      }
-    });
+
+    // Logging photographer object and medias relative to id from url
+    // json.media.forEach((media) => {
+    //   if (media.photographerId === id) {
+    //     console.log(media);
+    //   }
+    // });
   }
 };
 
