@@ -463,7 +463,6 @@ header nav {
 }
 .figure a img {
   object-fit: cover;
-  object-position: 0% 15%;
   border-radius: 0.25rem;
 }
 .figure figcaption {

@@ -163,18 +163,90 @@ const createPhotographerHeader = (object) => {
   return section;
 };
 
+const createPicture = (id, image) => {
+  const picture = document.createElement('picture');
+
+  const source = document.createElement('source');
+  source.setAttribute('media', '(min-width:60rem)');
+  source.setAttribute('srcset', `dist/img/${id}/${image}`);
+
+  const separatorIndex = image.indexOf('.');
+  const imageMin = [image.slice(0, separatorIndex), '-min', image.slice(separatorIndex)].join('');
+  const img = document.createElement('img');
+  img.setAttribute('src', `dist/img/${id}/${imageMin}`);
+
+  picture.append(source, img);
+  return picture;
+};
+
+// const createVideo = (id, video) => {
+//   console.log(video);
+// };
+
+const createCaption = (title, likes) => {
+  const figcaption = document.createElement('figcaption');
+
+  const paragraph = document.createElement('p');
+  paragraph.appendChild(document.createTextNode(title));
+
+  const div = document.createElement('div');
+
+  const span = document.createElement('span');
+  span.appendChild(document.createTextNode(likes));
+
+  const img = document.createElement('img');
+  img.setAttribute('src', 'dist/img/like-icon.svg');
+  img.setAttribute('alt', 'likes');
+
+  div.append(span, img);
+
+  figcaption.append(paragraph, div);
+
+  return figcaption;
+};
+
+const createFigure = (object) => {
+  const figure = document.createElement('figure');
+  figure.classList.add('figure');
+
+  const link = document.createElement('a');
+  link.setAttribute('href', '');
+
+  let media;
+  if (object.image !== undefined) {
+    media = createPicture(object.photographerId, object.image);
+
+    link.append(media);
+  } else {
+    // media = createVideo(object.photographerId, object.video);
+  }
+
+  const caption = createCaption(object.title, object.likes);
+
+  // link.appendChild(media);
+  figure.append(link, caption);
+  return figure;
+};
+
+const createFigureGroup = (array) => {
+  const figureGroup = document.createElement('figure');
+  figureGroup.setAttribute('role', 'group');
+  figureGroup.setAttribute('id', 'js-figureGroup');
+  figureGroup.classList.add('figure-group');
+
+  array.forEach((media) => {
+    figureGroup.appendChild(createFigure(media));
+  });
+
+  return figureGroup;
+};
+
 const appendPhotographerArticlesToList = (photographers) => {
   const thumbnailList = document.getElementById('js-articleList');
 
   photographers.forEach((photograph) => {
     thumbnailList.appendChild(createPhotographerArticle(photograph));
   });
-};
-
-const appendPhotographHeaderSectionToMain = (photographer) => {
-  const photographMain = document.getElementById('js-main');
-
-  photographMain.appendChild(createPhotographerHeader(photographer));
 };
 
 const isSameTagText = (tag, tagClicked) => {
@@ -202,7 +274,7 @@ const displayThumbnailsByActiveTag = () => {
     thumbnail.classList.add('hidden');
   });
 
-  // Unhide thumbnails with active tag
+  // Display thumbnails with active tag
   const activeTags = document.querySelectorAll('#js-articleList .active');
 
   activeTags.forEach((tag) => {
@@ -254,21 +326,23 @@ const displayPageByURLQuery = (json, URLQuery) => {
     loadAllEventListeners();
   } else {
     // PAGE PHOTOGRAPHE
+    const photographMain = document.getElementById('js-main');
+
     json.photographers.forEach((photographer) => {
       if (photographer.id === id) {
-        // Set page title
         document.title = `Fisheye - ${photographer.name}`;
-
-        appendPhotographHeaderSectionToMain(photographer);
+        photographMain.appendChild(createPhotographerHeader(photographer));
       }
     });
+    const medias = [];
 
-    // Logging photographer object and medias relative to id from url
     json.media.forEach((media) => {
       if (media.photographerId === id) {
-        console.log(media);
+        medias.push(media);
       }
     });
+
+    photographMain.appendChild(createFigureGroup(medias));
   }
 };
 
