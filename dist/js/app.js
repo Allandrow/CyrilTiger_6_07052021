@@ -179,9 +179,16 @@ const createPicture = (id, image) => {
   return picture;
 };
 
-// const createVideo = (id, video) => {
-//   console.log(video);
-// };
+const createVideo = (id, video) => {
+  const media = document.createElement('video');
+
+  const source = document.createElement('source');
+  source.setAttribute('src', `dist/img/${id}/${video}`);
+  source.setAttribute('type', 'video/mp4');
+
+  media.appendChild(source);
+  return media;
+};
 
 const createCaption = (title, likes) => {
   const figcaption = document.createElement('figcaption');
@@ -215,15 +222,13 @@ const createFigure = (object) => {
   let media;
   if (object.image !== undefined) {
     media = createPicture(object.photographerId, object.image);
-
-    link.append(media);
   } else {
-    // media = createVideo(object.photographerId, object.video);
+    media = createVideo(object.photographerId, object.video);
   }
+  link.appendChild(media);
 
   const caption = createCaption(object.title, object.likes);
 
-  // link.appendChild(media);
   figure.append(link, caption);
   return figure;
 };

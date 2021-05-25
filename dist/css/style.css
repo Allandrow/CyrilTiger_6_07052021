@@ -456,12 +456,14 @@ header nav {
   display: block;
 }
 .figure a picture,
-.figure a img {
+.figure a img,
+.figure a video {
   height: 100%;
   width: 100%;
   display: block;
 }
-.figure a img {
+.figure a img,
+.figure a video {
   object-fit: cover;
   border-radius: 0.25rem;
 }
