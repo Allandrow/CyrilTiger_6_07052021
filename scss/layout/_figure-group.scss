@@ -1,12 +1,11 @@
 @use '../abstracts/' as *;
 
 .figure-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
   margin-top: 2rem;
   padding-bottom: 5rem;
-
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(335px, 1fr));
+  gap: 1rem;
   @include mq($medium) {
     gap: 1.25rem 5rem;
   }
