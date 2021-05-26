@@ -101,6 +101,7 @@ h1 {
 
 main {
   padding: 0 1.25rem;
+  position: relative;
 }
 
 header {
@@ -352,7 +353,7 @@ header nav {
   }
 }
 
-.metas-infos {
+.meta-infos {
   display: flex;
   background-color: #db8876;
   border-radius: 0.25rem;
@@ -369,15 +370,15 @@ header nav {
   right: 1rem;
   gap: 3rem;
 }
-.metas-infos__likes {
+.meta-infos__likes {
   display: flex;
   flex: 1;
 }
-.metas-infos__likes img {
+.meta-infos__likes img {
   margin-left: 0.5rem;
 }
 @media (min-width: 60rem) {
-  .metas-infos {
+  .meta-infos {
     visibility: visible;
     height: auto;
   }

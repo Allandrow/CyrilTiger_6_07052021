@@ -246,6 +246,32 @@ const createFigureGroup = (array) => {
   return figureGroup;
 };
 
+const createMetasInfos = () => {
+  const elementBEMName = 'meta-infos';
+
+  const divParent = document.createElement('div');
+  divParent.classList.add(elementBEMName);
+
+  const divLikes = document.createElement('div');
+  divLikes.classList.add(`${elementBEMName}__likes`);
+
+  const span = document.createElement('span');
+  span.appendChild(document.createTextNode('25')); //TODO : DYNAMIC VALUE
+
+  const img = document.createElement('img');
+  img.setAttribute('src', 'dist/img/like-icon-black.svg');
+  img.setAttribute('alt', 'likes');
+
+  divLikes.append(span, img);
+
+  const spanPrice = document.createElement('span');
+  spanPrice.appendChild(document.createTextNode('300€ / jour')); // TODO : DYNAMIC VALUE
+
+  divParent.append(divLikes, spanPrice);
+
+  return divParent;
+};
+
 const appendPhotographerArticlesToList = (photographers) => {
   const thumbnailList = document.getElementById('js-articleList');
 
@@ -348,6 +374,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
     });
 
     photographMain.appendChild(createFigureGroup(medias));
+    photographMain.appendChild(createMetasInfos());
   }
 };
 
