@@ -4,6 +4,49 @@ const getJSON = async () => {
   return json;
 };
 
+// DOM ELEMENTS UTILITY FUNCTIONS
+
+const createDIVElement = (className = null) => {
+  const div = document.createElement('div');
+  if (className !== null) {
+    div.classList.add(className);
+  }
+  return div;
+};
+
+const createHeadingElement = (name, heading = 'h2') => {
+  const title = document.createElement(heading);
+  title.appendChild(document.createTextNode(name));
+  return title;
+};
+
+const createIMGElement = (path, alt = '') => {
+  const img = document.createElement('img');
+  img.setAttribute('src', `dist/img/${path}`);
+  img.setAttribute('alt', alt);
+  return img;
+};
+
+const createSPANElement = (text, className = null) => {
+  const span = document.createElement('span');
+  if (className !== null) {
+    span.classList.add(className);
+  }
+  span.appendChild(document.createTextNode(text));
+  return span;
+};
+
+const createSelectLIElement = (id, text, ariaSelected = false) => {
+  const li = document.createElement('li');
+  li.setAttribute('role', 'option');
+  li.setAttribute('id', `sort-${id}`);
+  li.setAttribute('aria-selected', ariaSelected);
+  li.setAttribute('aria-labelledBy', 'ariaLabel');
+  li.appendChild(document.createTextNode(text));
+
+  return li;
+};
+
 const uppercaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -19,7 +62,7 @@ const getPhotographTagSet = (data) => {
   return tagSet;
 };
 
-const createTagDOMElement = (tagText) => {
+const createTag = (tagText) => {
   const li = document.createElement('li');
 
   const link = document.createElement('a');
@@ -27,8 +70,7 @@ const createTagDOMElement = (tagText) => {
   link.setAttribute('href', '#');
   link.setAttribute('aria-label', 'tag');
 
-  const span = document.createElement('span');
-  span.appendChild(document.createTextNode(tagText));
+  const span = createSPANElement(tagText);
 
   link.append(document.createTextNode('#'), span);
   li.appendChild(link);
@@ -36,55 +78,12 @@ const createTagDOMElement = (tagText) => {
   return li;
 };
 
-const appendTagsToNavigation = (data) => {
-  const navUl = document.getElementById('js-nav');
-  const photographTagSet = getPhotographTagSet(data);
-
-  for (const tag of photographTagSet) {
-    navUl.appendChild(createTagDOMElement(tag));
-  }
-};
-
-const createPhotographerPortrait = (object) => {
-  const img = document.createElement('img');
-  img.setAttribute('src', `dist/img/thumbnails/${object.portrait}`);
-  img.setAttribute('alt', object.name);
-  return img;
-};
-
-const createPhotographerTitle = (object, heading) => {
-  const title = document.createElement(heading);
-  title.appendChild(document.createTextNode(object.name));
-  return title;
-};
-
-const createPhotographerLocalisation = (object, className) => {
-  const localisation = document.createElement('span');
-  localisation.classList.add(`${className}__localisation`);
-  localisation.appendChild(document.createTextNode(`${object.city}, ${object.country}`));
-  return localisation;
-};
-
-const createPhotographerSlogan = (object, className) => {
-  const slogan = document.createElement('span');
-  slogan.classList.add(`${className}__slogan`);
-  slogan.appendChild(document.createTextNode(object.tagline));
-  return slogan;
-};
-
-const createPhotographerPrice = (object, className) => {
-  const price = document.createElement('span');
-  price.classList.add(`${className}__price`);
-  price.appendChild(document.createTextNode(`${object.price}€/jour`));
-  return price;
-};
-
 const createPhotographerTagList = (object) => {
   const ul = document.createElement('ul');
   ul.classList.add('tagList');
 
   object.tags.forEach((tag) => {
-    ul.appendChild(createTagDOMElement(tag));
+    ul.appendChild(createTag(tag));
   });
 
   return ul;
@@ -108,19 +107,17 @@ const createPhotographerArticle = (object) => {
   link.setAttribute('href', `photographer.html?id=${object.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = createPhotographerPortrait(object);
+  const portrait = createIMGElement(`thumbnails/${object.portrait}`, object.name);
 
-  const title = createPhotographerTitle(object, 'h2');
+  const title = createHeadingElement(object.name, 'h2');
 
   link.append(portrait, title);
 
   const paragraph = document.createElement('p');
 
-  const localisation = createPhotographerLocalisation(object, elementBEMName);
-
-  const slogan = createPhotographerSlogan(object, elementBEMName);
-
-  const price = createPhotographerPrice(object, elementBEMName);
+  const localisation = createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
+  const slogan = createSPANElement(object.tagline, `${elementBEMName}__slogan`);
+  const price = createSPANElement(`${object.price}€/jour`, `${elementBEMName}__price`);
 
   paragraph.append(localisation, slogan, price);
 
@@ -137,16 +134,13 @@ const createPhotographerHeader = (object) => {
   const section = document.createElement('section');
   section.classList.add('photograph-header');
 
-  const div = document.createElement('div');
-  div.classList.add(`${elementBEMName}`);
-
-  const title = createPhotographerTitle(object, 'h1');
+  const div = createDIVElement(elementBEMName);
+  const title = createHeadingElement(object.name, 'h1');
 
   const paragraph = document.createElement('p');
 
-  const localisation = createPhotographerLocalisation(object, elementBEMName);
-
-  const slogan = createPhotographerSlogan(object, elementBEMName);
+  const localisation = createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
+  const slogan = createSPANElement(object.tagline, `${elementBEMName}__slogan`);
 
   paragraph.append(localisation, slogan);
 
@@ -156,7 +150,7 @@ const createPhotographerHeader = (object) => {
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = createPhotographerPortrait(object);
+  const portrait = createIMGElement(`thumbnails/${object.portrait}`, object.name);
 
   section.append(div, portrait);
 
@@ -172,8 +166,7 @@ const createPicture = (id, image) => {
 
   const separatorIndex = image.indexOf('.');
   const imageMin = [image.slice(0, separatorIndex), '-min', image.slice(separatorIndex)].join('');
-  const img = document.createElement('img');
-  img.setAttribute('src', `dist/img/${id}/${imageMin}`);
+  const img = createIMGElement(`${id}/${imageMin}`);
 
   picture.append(source, img);
   return picture;
@@ -190,25 +183,15 @@ const createVideo = (id, video) => {
   return media;
 };
 
-const createCaption = (title, likes) => {
+const createFigcaption = (title, likes) => {
   const figcaption = document.createElement('figcaption');
+  const span = createSPANElement(title);
+  const div = createDIVElement();
+  const likesSpan = createSPANElement(likes);
+  const img = createIMGElement('like-icon.svg', 'likes');
 
-  const paragraph = document.createElement('p');
-  paragraph.appendChild(document.createTextNode(title));
-
-  const div = document.createElement('div');
-
-  const span = document.createElement('span');
-  span.appendChild(document.createTextNode(likes));
-
-  const img = document.createElement('img');
-  img.setAttribute('src', 'dist/img/like-icon.svg');
-  img.setAttribute('alt', 'likes');
-
-  div.append(span, img);
-
-  figcaption.append(paragraph, div);
-
+  div.append(likesSpan, img);
+  figcaption.append(span, div);
   return figcaption;
 };
 
@@ -227,23 +210,21 @@ const createFigure = (object) => {
   }
   link.appendChild(media);
 
-  const caption = createCaption(object.title, object.likes);
+  const caption = createFigcaption(object.title, object.likes);
 
   figure.append(link, caption);
   return figure;
 };
 
 const createSelectGroup = () => {
-  const divGroup = document.createElement('div');
-  divGroup.classList.add('select-group');
+  const divGroup = createDIVElement('select-group');
 
   const label = document.createElement('label');
   label.setAttribute('for', 'js-sort');
   label.setAttribute('id', 'ariaLabel');
   label.appendChild(document.createTextNode('Trier par'));
 
-  const divSelect = document.createElement('div');
-  divSelect.classList.add('select');
+  const divSelect = createDIVElement('select');
 
   const btn = document.createElement('button');
   btn.setAttribute('id', 'js-sort');
@@ -258,32 +239,12 @@ const createSelectGroup = () => {
   ul.setAttribute('role', 'listbox');
   ul.setAttribute('aria-activedescendant', 'sort-likes');
 
-  const liLikes = document.createElement('li');
-  liLikes.setAttribute('role', 'option');
-  liLikes.setAttribute('id', 'sort-likes');
-  liLikes.setAttribute('aria-selected', 'true');
-  liLikes.setAttribute('aria-labelledBy', 'ariaLabel');
-  liLikes.appendChild(document.createTextNode('Popularité'));
-
-  const liDate = document.createElement('li');
-  liDate.setAttribute('role', 'option');
-  liDate.setAttribute('id', 'sort-date');
-  liDate.setAttribute('aria-selected', 'false');
-  liDate.setAttribute('aria-labelledBy', 'ariaLabel');
-  liDate.appendChild(document.createTextNode('Date'));
-
-  const liTitle = document.createElement('li');
-  liTitle.setAttribute('role', 'option');
-  liTitle.setAttribute('id', 'sort-title');
-  liTitle.setAttribute('aria-selected', 'false');
-  liTitle.setAttribute('aria-labelledBy', 'ariaLabel');
-  liTitle.appendChild(document.createTextNode('Titre'));
-
+  const liLikes = createSelectLIElement('likes', 'Popularité', true);
+  const liDate = createSelectLIElement('date', 'Date');
+  const liTitle = createSelectLIElement('titre', 'Titre');
   ul.append(liLikes, liDate, liTitle);
 
-  const img = document.createElement('img');
-  img.setAttribute('src', 'dist/img/expand-more.svg');
-  img.setAttribute('alt', 'expand list indicator');
+  const img = createIMGElement('expand-more.svg', 'expand list indicator');
 
   divSelect.append(btn, ul, img);
   divGroup.append(label, divSelect);
@@ -314,30 +275,12 @@ const getTotalLikes = (medias) => {
 };
 
 const createTotalLikesDiv = (medias) => {
-  const div = document.createElement('div');
-  div.classList.add('meta-infos__likes');
-  const span = document.createElement('span');
-  span.appendChild(document.createTextNode(getTotalLikes(medias)));
-  const img = document.createElement('img');
-  img.setAttribute('src', 'dist/img/like-icon-black.svg');
-  img.setAttribute('alt', 'likes');
+  const div = createDIVElement('meta-infos__likes');
+  const totalLikes = getTotalLikes(medias);
+  const span = createSPANElement(totalLikes);
+  const img = createIMGElement('like-icon-black.svg', 'likes');
   div.append(span, img);
   return div;
-};
-
-const createMetaInfos = () => {
-  const div = document.createElement('div');
-  div.classList.add('meta-infos');
-
-  return div;
-};
-
-const appendPhotographerArticlesToList = (photographers) => {
-  const thumbnailList = document.getElementById('js-articleList');
-
-  photographers.forEach((photograph) => {
-    thumbnailList.appendChild(createPhotographerArticle(photograph));
-  });
 };
 
 const isSameTagText = (tag, tagClicked) => {
@@ -395,7 +338,43 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
-// TODO : modify to adapt eventlisterners used according to page
+const constructHomepage = (photographers) => {
+  const navUl = document.getElementById('js-nav');
+  const photographTagSet = getPhotographTagSet(photographers);
+  const thumbnailList = document.getElementById('js-articleList');
+
+  for (const tag of photographTagSet) {
+    navUl.appendChild(createTag(tag));
+  }
+
+  photographers.forEach((photograph) => {
+    thumbnailList.appendChild(createPhotographerArticle(photograph));
+  });
+};
+
+const constructPhotographPage = (json, id) => {
+  const photographMain = document.getElementById('js-main');
+  const medias = [];
+  let metaInfos = createDIVElement('meta-infos');
+
+  json.photographers.forEach((photographer) => {
+    if (photographer.id === id) {
+      document.title = `Fisheye - ${photographer.name}`;
+      photographMain.appendChild(createPhotographerHeader(photographer));
+      metaInfos.appendChild(createSPANElement(`${photographer.price}€/jour`));
+    }
+  });
+
+  json.media.forEach((media) => {
+    if (media.photographerId === id) {
+      medias.push(media);
+    }
+  });
+
+  metaInfos.prepend(createTotalLikesDiv(medias));
+  photographMain.append(createSelectGroup(), createFigureGroup(medias), metaInfos);
+};
+
 const loadAllEventListeners = () => {
   const tags = document.querySelectorAll('.tag');
 
@@ -410,35 +389,11 @@ const displayPageByURLQuery = (json, URLQuery) => {
 
   if (isNaN(id)) {
     // HOMEPAGE
-    appendTagsToNavigation(json.photographers);
-
-    appendPhotographerArticlesToList(json.photographers);
-
+    constructHomepage(json.photographers);
     loadAllEventListeners();
   } else {
-    // PAGE PHOTOGRAPHE
-    const photographMain = document.getElementById('js-main');
-    let metaInfos = createMetaInfos();
-    json.photographers.forEach((photographer) => {
-      if (photographer.id === id) {
-        document.title = `Fisheye - ${photographer.name}`;
-        photographMain.appendChild(createPhotographerHeader(photographer));
-        metaInfos.appendChild(createPhotographerPrice(photographer, 'meta-infos'));
-      }
-    });
-    const medias = [];
-
-    json.media.forEach((media) => {
-      if (media.photographerId === id) {
-        medias.push(media);
-      }
-    });
-
-    photographMain.append(createSelectGroup(), createFigureGroup(medias));
-
-    const totalLikes = createTotalLikesDiv(medias);
-    metaInfos.prepend(totalLikes);
-    photographMain.appendChild(metaInfos);
+    // PHOTOGRAPHE PAGE
+    constructPhotographPage(json, id);
   }
 };
 
