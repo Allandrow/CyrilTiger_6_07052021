@@ -233,6 +233,64 @@ const createFigure = (object) => {
   return figure;
 };
 
+const createSelectGroup = () => {
+  const divGroup = document.createElement('div');
+  divGroup.classList.add('select-group');
+
+  const label = document.createElement('label');
+  label.setAttribute('for', 'js-sort');
+  label.setAttribute('id', 'ariaLabel');
+  label.appendChild(document.createTextNode('Trier par'));
+
+  const divSelect = document.createElement('div');
+  divSelect.classList.add('select');
+
+  const btn = document.createElement('button');
+  btn.setAttribute('id', 'js-sort');
+  btn.setAttribute('role', 'button');
+  btn.setAttribute('aria-haspopup', 'listbox');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-labelledBy', 'ariaLabel');
+  btn.appendChild(document.createTextNode('Popularité'));
+
+  const ul = document.createElement('ul');
+  ul.setAttribute('id', 'select-list');
+  ul.setAttribute('role', 'listbox');
+  ul.setAttribute('aria-activedescendant', 'sort-likes');
+
+  const liLikes = document.createElement('li');
+  liLikes.setAttribute('role', 'option');
+  liLikes.setAttribute('id', 'sort-likes');
+  liLikes.setAttribute('aria-selected', 'true');
+  liLikes.setAttribute('aria-labelledBy', 'ariaLabel');
+  liLikes.appendChild(document.createTextNode('Popularité'));
+
+  const liDate = document.createElement('li');
+  liDate.setAttribute('role', 'option');
+  liDate.setAttribute('id', 'sort-date');
+  liDate.setAttribute('aria-selected', 'false');
+  liDate.setAttribute('aria-labelledBy', 'ariaLabel');
+  liDate.appendChild(document.createTextNode('Date'));
+
+  const liTitle = document.createElement('li');
+  liTitle.setAttribute('role', 'option');
+  liTitle.setAttribute('id', 'sort-title');
+  liTitle.setAttribute('aria-selected', 'false');
+  liTitle.setAttribute('aria-labelledBy', 'ariaLabel');
+  liTitle.appendChild(document.createTextNode('Titre'));
+
+  ul.append(liLikes, liDate, liTitle);
+
+  const img = document.createElement('img');
+  img.setAttribute('src', 'dist/img/expand-more.svg');
+  img.setAttribute('alt', 'expand list indicator');
+
+  divSelect.append(btn, ul, img);
+  divGroup.append(label, divSelect);
+
+  return divGroup;
+};
+
 const createFigureGroup = (array) => {
   const figureGroup = document.createElement('figure');
   figureGroup.setAttribute('role', 'group');
@@ -259,7 +317,7 @@ const createTotalLikesDiv = (medias) => {
   const div = document.createElement('div');
   div.classList.add('meta-infos__likes');
   const span = document.createElement('span');
-  span.appendChild(document.createTextNode(getTotalLikes(medias))); //TODO : DYNAMIC VALUE
+  span.appendChild(document.createTextNode(getTotalLikes(medias)));
   const img = document.createElement('img');
   img.setAttribute('src', 'dist/img/like-icon-black.svg');
   img.setAttribute('alt', 'likes');
@@ -267,13 +325,7 @@ const createTotalLikesDiv = (medias) => {
   return div;
 };
 
-const createPriceSpan = (price) => {
-  const span = document.createElement('span');
-  span.appendChild(document.createTextNode(`${price}€ / jour`)); // TODO : DYNAMIC VALUE
-  return span;
-};
-
-const createMetasInfos = () => {
+const createMetaInfos = () => {
   const div = document.createElement('div');
   div.classList.add('meta-infos');
 
@@ -366,12 +418,12 @@ const displayPageByURLQuery = (json, URLQuery) => {
   } else {
     // PAGE PHOTOGRAPHE
     const photographMain = document.getElementById('js-main');
-    let metaInfos = createMetasInfos();
+    let metaInfos = createMetaInfos();
     json.photographers.forEach((photographer) => {
       if (photographer.id === id) {
         document.title = `Fisheye - ${photographer.name}`;
         photographMain.appendChild(createPhotographerHeader(photographer));
-        metaInfos.appendChild(createPriceSpan(photographer.price));
+        metaInfos.appendChild(createPhotographerPrice(photographer, 'meta-infos'));
       }
     });
     const medias = [];
@@ -382,7 +434,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
       }
     });
 
-    photographMain.appendChild(createFigureGroup(medias));
+    photographMain.append(createSelectGroup(), createFigureGroup(medias));
 
     const totalLikes = createTotalLikesDiv(medias);
     metaInfos.prepend(totalLikes);
