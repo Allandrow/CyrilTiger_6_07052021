@@ -246,30 +246,38 @@ const createFigureGroup = (array) => {
   return figureGroup;
 };
 
-const createMetasInfos = () => {
-  const elementBEMName = 'meta-infos';
+const getTotalLikes = (medias) => {
+  let totalLikes = 0;
+  medias.forEach((media) => {
+    totalLikes += media.likes;
+  });
 
-  const divParent = document.createElement('div');
-  divParent.classList.add(elementBEMName);
+  return totalLikes;
+};
 
-  const divLikes = document.createElement('div');
-  divLikes.classList.add(`${elementBEMName}__likes`);
-
+const createTotalLikesDiv = (medias) => {
+  const div = document.createElement('div');
+  div.classList.add('meta-infos__likes');
   const span = document.createElement('span');
-  span.appendChild(document.createTextNode('25')); //TODO : DYNAMIC VALUE
-
+  span.appendChild(document.createTextNode(getTotalLikes(medias))); //TODO : DYNAMIC VALUE
   const img = document.createElement('img');
   img.setAttribute('src', 'dist/img/like-icon-black.svg');
   img.setAttribute('alt', 'likes');
+  div.append(span, img);
+  return div;
+};
 
-  divLikes.append(span, img);
+const createPriceSpan = (price) => {
+  const span = document.createElement('span');
+  span.appendChild(document.createTextNode(`${price}€ / jour`)); // TODO : DYNAMIC VALUE
+  return span;
+};
 
-  const spanPrice = document.createElement('span');
-  spanPrice.appendChild(document.createTextNode('300€ / jour')); // TODO : DYNAMIC VALUE
+const createMetasInfos = () => {
+  const div = document.createElement('div');
+  div.classList.add('meta-infos');
 
-  divParent.append(divLikes, spanPrice);
-
-  return divParent;
+  return div;
 };
 
 const appendPhotographerArticlesToList = (photographers) => {
@@ -358,11 +366,12 @@ const displayPageByURLQuery = (json, URLQuery) => {
   } else {
     // PAGE PHOTOGRAPHE
     const photographMain = document.getElementById('js-main');
-
+    let metaInfos = createMetasInfos();
     json.photographers.forEach((photographer) => {
       if (photographer.id === id) {
         document.title = `Fisheye - ${photographer.name}`;
         photographMain.appendChild(createPhotographerHeader(photographer));
+        metaInfos.appendChild(createPriceSpan(photographer.price));
       }
     });
     const medias = [];
@@ -374,7 +383,10 @@ const displayPageByURLQuery = (json, URLQuery) => {
     });
 
     photographMain.appendChild(createFigureGroup(medias));
-    photographMain.appendChild(createMetasInfos());
+
+    const totalLikes = createTotalLikesDiv(medias);
+    metaInfos.prepend(totalLikes);
+    photographMain.appendChild(metaInfos);
   }
 };
 
