@@ -1,3 +1,5 @@
+import * as DOM from '/dist/js/domUtils.js';
+
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
   const json = await data.json();
@@ -5,47 +7,6 @@ const getJSON = async () => {
 };
 
 // DOM ELEMENTS UTILITY FUNCTIONS
-
-const createDIVElement = (className = null) => {
-  const div = document.createElement('div');
-  if (className !== null) {
-    div.classList.add(className);
-  }
-  return div;
-};
-
-const createHeadingElement = (name, heading = 'h2') => {
-  const title = document.createElement(heading);
-  title.appendChild(document.createTextNode(name));
-  return title;
-};
-
-const createIMGElement = (path, alt = '') => {
-  const img = document.createElement('img');
-  img.setAttribute('src', `dist/img/${path}`);
-  img.setAttribute('alt', alt);
-  return img;
-};
-
-const createSPANElement = (text, className = null) => {
-  const span = document.createElement('span');
-  if (className !== null) {
-    span.classList.add(className);
-  }
-  span.appendChild(document.createTextNode(text));
-  return span;
-};
-
-const createSelectLIElement = (id, text, ariaSelected = false) => {
-  const li = document.createElement('li');
-  li.setAttribute('role', 'option');
-  li.setAttribute('id', `sort-${id}`);
-  li.setAttribute('aria-selected', ariaSelected);
-  li.setAttribute('aria-labelledBy', 'ariaLabel');
-  li.appendChild(document.createTextNode(text));
-
-  return li;
-};
 
 const uppercaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -70,7 +31,7 @@ const createTag = (tagText) => {
   link.setAttribute('href', '#');
   link.setAttribute('aria-label', 'tag');
 
-  const span = createSPANElement(tagText);
+  const span = DOM.createSPANElement(tagText);
 
   link.append(document.createTextNode('#'), span);
   li.appendChild(link);
@@ -107,17 +68,17 @@ const createPhotographerArticle = (object) => {
   link.setAttribute('href', `photographer.html?id=${object.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = createIMGElement(`thumbnails/${object.portrait}`, object.name);
+  const portrait = DOM.createIMGElement(`thumbnails/${object.portrait}`, object.name);
 
-  const title = createHeadingElement(object.name, 'h2');
+  const title = DOM.createHeadingElement(object.name, 'h2');
 
   link.append(portrait, title);
 
   const paragraph = document.createElement('p');
 
-  const localisation = createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
-  const slogan = createSPANElement(object.tagline, `${elementBEMName}__slogan`);
-  const price = createSPANElement(`${object.price}€/jour`, `${elementBEMName}__price`);
+  const localisation = DOM.createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
+  const slogan = DOM.createSPANElement(object.tagline, `${elementBEMName}__slogan`);
+  const price = DOM.createSPANElement(`${object.price}€/jour`, `${elementBEMName}__price`);
 
   paragraph.append(localisation, slogan, price);
 
@@ -134,13 +95,13 @@ const createPhotographerHeader = (object) => {
   const section = document.createElement('section');
   section.classList.add('photograph-header');
 
-  const div = createDIVElement(elementBEMName);
-  const title = createHeadingElement(object.name, 'h1');
+  const div = DOM.createDIVElement(elementBEMName);
+  const title = DOM.createHeadingElement(object.name, 'h1');
 
   const paragraph = document.createElement('p');
 
-  const localisation = createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
-  const slogan = createSPANElement(object.tagline, `${elementBEMName}__slogan`);
+  const localisation = DOM.createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
+  const slogan = DOM.createSPANElement(object.tagline, `${elementBEMName}__slogan`);
 
   paragraph.append(localisation, slogan);
 
@@ -150,7 +111,7 @@ const createPhotographerHeader = (object) => {
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = createIMGElement(`thumbnails/${object.portrait}`, object.name);
+  const portrait = DOM.createIMGElement(`thumbnails/${object.portrait}`, object.name);
 
   section.append(div, portrait);
 
@@ -166,7 +127,7 @@ const createPicture = (id, image) => {
 
   const separatorIndex = image.indexOf('.');
   const imageMin = [image.slice(0, separatorIndex), '-min', image.slice(separatorIndex)].join('');
-  const img = createIMGElement(`${id}/${imageMin}`);
+  const img = DOM.createIMGElement(`${id}/${imageMin}`);
 
   picture.append(source, img);
   return picture;
@@ -185,10 +146,10 @@ const createVideo = (id, video) => {
 
 const createFigcaption = (title, likes) => {
   const figcaption = document.createElement('figcaption');
-  const span = createSPANElement(title);
-  const div = createDIVElement();
-  const likesSpan = createSPANElement(likes);
-  const img = createIMGElement('like-icon.svg', 'likes');
+  const span = DOM.createSPANElement(title);
+  const div = DOM.createDIVElement();
+  const likesSpan = DOM.createSPANElement(likes);
+  const img = DOM.createIMGElement('like-icon.svg', 'likes');
 
   div.append(likesSpan, img);
   figcaption.append(span, div);
@@ -218,14 +179,14 @@ const createFigure = (object) => {
 };
 
 const createSelectGroup = () => {
-  const divGroup = createDIVElement('select-group');
+  const divGroup = DOM.createDIVElement('select-group');
 
   const label = document.createElement('label');
   label.setAttribute('for', 'js-sort');
   label.setAttribute('id', 'ariaLabel');
   label.appendChild(document.createTextNode('Trier par'));
 
-  const divSelect = createDIVElement('select');
+  const divSelect = DOM.createDIVElement('select');
 
   const btn = document.createElement('button');
   btn.setAttribute('id', 'js-sort');
@@ -240,12 +201,12 @@ const createSelectGroup = () => {
   ul.setAttribute('role', 'listbox');
   ul.setAttribute('aria-activedescendant', 'sort-likes');
 
-  const liLikes = createSelectLIElement('likes', 'Popularité', true);
-  const liDate = createSelectLIElement('date', 'Date');
-  const liTitle = createSelectLIElement('titre', 'Titre');
+  const liLikes = DOM.createSelectLIElement('likes', 'Popularité', true);
+  const liDate = DOM.createSelectLIElement('date', 'Date');
+  const liTitle = DOM.createSelectLIElement('titre', 'Titre');
   ul.append(liLikes, liDate, liTitle);
 
-  const img = createIMGElement('expand-more.svg', 'expand list indicator');
+  const img = DOM.createIMGElement('expand-more.svg', 'expand list indicator');
 
   divSelect.append(btn, ul, img);
   divGroup.append(label, divSelect);
@@ -276,10 +237,10 @@ const getTotalLikes = (medias) => {
 };
 
 const createTotalLikesDiv = (medias) => {
-  const div = createDIVElement('meta-infos__likes');
+  const div = DOM.createDIVElement('meta-infos__likes');
   const totalLikes = getTotalLikes(medias);
-  const span = createSPANElement(totalLikes);
-  const img = createIMGElement('like-icon-black.svg', 'likes');
+  const span = DOM.createSPANElement(totalLikes);
+  const img = DOM.createIMGElement('like-icon-black.svg', 'likes');
   div.append(span, img);
   return div;
 };
@@ -362,14 +323,14 @@ const constructHomepage = (photographers) => {
 const constructPhotographPage = (json, id) => {
   const photographMain = document.getElementById('js-main');
   const medias = [];
-  const metaInfos = createDIVElement('meta-infos');
+  const metaInfos = DOM.createDIVElement('meta-infos');
 
   // filter()
   json.photographers.forEach((photographer) => {
     if (photographer.id === id) {
       document.title = `Fisheye - ${photographer.name}`;
       photographMain.appendChild(createPhotographerHeader(photographer));
-      metaInfos.appendChild(createSPANElement(`${photographer.price}€/jour`));
+      metaInfos.appendChild(DOM.createSPANElement(`${photographer.price}€/jour`));
     }
   });
 
@@ -387,8 +348,6 @@ const constructPhotographPage = (json, id) => {
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
-
-  console.log(isFinite(id));
 
   if (isFinite(id)) {
     // PHOTOGRAPHE PAGE
