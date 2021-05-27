@@ -1,4 +1,5 @@
 import * as DOM from './dom.js';
+import * as utils from './utils.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
@@ -6,16 +7,12 @@ const getJSON = async () => {
   return json;
 };
 
-const uppercaseFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 const getPhotographTagSet = (data) => {
   const tagSet = new Set();
 
   data.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
-      tagSet.add(uppercaseFirstLetter(tag));
+      tagSet.add(utils.uppercaseFirstLetter(tag));
     });
   });
   return tagSet;
@@ -162,8 +159,7 @@ const createFigure = (object) => {
   link.setAttribute('href', '');
 
   let media;
-  // use semantic function isImage()
-  if (object.image !== undefined) {
+  if (utils.isImage(object)) {
     media = createPicture(object.photographerId, object.image);
   } else {
     media = createVideo(object.photographerId, object.video);
@@ -225,6 +221,7 @@ const createFigureGroup = (array) => {
   return figureGroup;
 };
 
+// reduce ?
 const getTotalLikes = (medias) => {
   let totalLikes = 0;
   medias.forEach((media) => {
@@ -243,10 +240,6 @@ const createTotalLikesDiv = (medias) => {
   return div;
 };
 
-const isSameTagText = (tag, tagClicked) => {
-  return tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
-};
-
 const switchTagActiveState = (tags, clickedTag) => {
   /*
     Parse all tags from Document
@@ -254,7 +247,7 @@ const switchTagActiveState = (tags, clickedTag) => {
     OR if tag is the same value as clicked tag
   */
   tags.forEach((tag) => {
-    if (tag.classList.contains('active') || isSameTagText(tag, clickedTag)) {
+    if (tag.classList.contains('active') || utils.isSameTagText(tag, clickedTag)) {
       tag.classList.toggle('active');
     }
   });
