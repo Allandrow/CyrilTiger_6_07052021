@@ -1,5 +1,5 @@
 import * as DOM from './dom.js';
-import * as utils from './utils.js';
+import * as UTILS from './utils.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
@@ -7,106 +7,88 @@ const getJSON = async () => {
   return json;
 };
 
-const getPhotographTagSet = (data) => {
+const getPhotographTagSet = (photographers) => {
   const tagSet = new Set();
 
-  data.forEach((photograph) => {
+  photographers.forEach((photograph) => {
     photograph.tags.forEach((tag) => {
-      tagSet.add(utils.uppercaseFirstLetter(tag));
+      tagSet.add(UTILS.uppercaseFirstLetter(tag));
     });
   });
   return tagSet;
 };
 
-const createTag = (tagText) => {
-  const li = document.createElement('li');
-
-  const link = document.createElement('a');
-  link.classList.add('tag');
-  link.setAttribute('href', '#');
-  link.setAttribute('aria-label', 'tag');
-
-  const span = DOM.createSPAN(tagText);
-
-  link.append(document.createTextNode('#'), span);
-  li.appendChild(link);
-
-  return li;
-};
-
-const createPhotographerTagList = (object) => {
+const createPhotographerTagList = (photographer) => {
   const ul = document.createElement('ul');
   ul.classList.add('tagList');
 
-  object.tags.forEach((tag) => {
-    ul.appendChild(createTag(tag));
+  photographer.tags.forEach((tag) => {
+    ul.appendChild(DOM.createTag(tag));
   });
 
   return ul;
 };
 
-const createContactBtn = () => {
-  const btn = document.createElement('button');
-  btn.classList.add('button');
-  btn.appendChild(document.createTextNode('Contactez-moi'));
-
-  return btn;
-};
-
-const createPhotographerArticle = (object) => {
+const createPhotographerArticle = (photographer) => {
   const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
   article.classList.add(elementBEMName);
 
   const link = document.createElement('a');
-  link.setAttribute('href', `photographer.html?id=${object.id}`);
+  link.setAttribute('href', `photographer.html?id=${photographer.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = DOM.createIMG(`thumbnails/${object.portrait}`, object.name);
+  const portrait = DOM.createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
 
-  const title = DOM.createHeading(object.name, 'h2');
+  const title = DOM.createHeading(photographer.name, 'h2');
 
   link.append(portrait, title);
 
   const paragraph = document.createElement('p');
 
-  const localisation = DOM.createSPAN(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
-  const slogan = DOM.createSPAN(object.tagline, `${elementBEMName}__slogan`);
-  const price = DOM.createSPAN(`${object.price}€/jour`, `${elementBEMName}__price`);
+  const localisation = DOM.createSPAN(
+    `${photographer.city}, ${photographer.country}`,
+    `${elementBEMName}__localisation`
+  );
+  const slogan = DOM.createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
+  const price = DOM.createSPAN(`${photographer.price}€/jour`, `${elementBEMName}__price`);
 
   paragraph.append(localisation, slogan, price);
 
-  const ul = createPhotographerTagList(object);
+  const ul = createPhotographerTagList(photographer);
 
   article.append(link, paragraph, ul);
 
   return article;
 };
 
-const createPhotographerHeader = (object) => {
+const createPhotographerHeader = (photographer) => {
   const elementBEMName = 'photograph-header__infos';
 
   const section = document.createElement('section');
   section.classList.add('photograph-header');
 
   const div = DOM.createDIV(elementBEMName);
-  const title = DOM.createHeading(object.name, 'h1');
+  const title = DOM.createHeading(photographer.name, 'h1');
 
   const paragraph = document.createElement('p');
 
-  const localisation = DOM.createSPAN(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
-  const slogan = DOM.createSPAN(object.tagline, `${elementBEMName}__slogan`);
+  const localisation = DOM.createSPAN(
+    `${photographer.city}, ${photographer.country}`,
+    `${elementBEMName}__localisation`
+  );
+  const slogan = DOM.createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
 
   paragraph.append(localisation, slogan);
 
-  const ul = createPhotographerTagList(object);
+  const ul = createPhotographerTagList(photographer);
 
-  const contact = createContactBtn();
+  const contact = DOM.createContactBtn();
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = DOM.createIMG(`thumbnails/${object.portrait}`, object.name);
+  const portrait = DOM.createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
 
   section.append(div, portrait);
 
@@ -151,22 +133,22 @@ const createFigcaption = (title, likes) => {
   return figcaption;
 };
 
-const createFigure = (object) => {
+const createFigure = (media) => {
   const figure = document.createElement('figure');
   figure.classList.add('figure');
 
   const link = document.createElement('a');
   link.setAttribute('href', '');
 
-  let media;
-  if (utils.isImage(object)) {
-    media = createPicture(object.photographerId, object.image);
+  let mediaElement;
+  if (UTILS.isImage(media)) {
+    mediaElement = createPicture(media.photographerId, media.image);
   } else {
-    media = createVideo(object.photographerId, object.video);
+    mediaElement = createVideo(media.photographerId, media.video);
   }
-  link.appendChild(media);
+  link.appendChild(mediaElement);
 
-  const caption = createFigcaption(object.title, object.likes);
+  const caption = createFigcaption(media.title, media.likes);
 
   figure.append(link, caption);
   return figure;
@@ -208,13 +190,13 @@ const createSelectGroup = () => {
   return divGroup;
 };
 
-const createFigureGroup = (array) => {
+const createFigureGroup = (medias) => {
   const figureGroup = document.createElement('figure');
   figureGroup.setAttribute('role', 'group');
   figureGroup.setAttribute('id', 'js-figureGroup');
   figureGroup.classList.add('figure-group');
 
-  array.forEach((media) => {
+  medias.forEach((media) => {
     figureGroup.appendChild(createFigure(media));
   });
 
@@ -247,7 +229,7 @@ const switchTagActiveState = (tags, clickedTag) => {
     OR if tag is the same value as clicked tag
   */
   tags.forEach((tag) => {
-    if (tag.classList.contains('active') || utils.isSameTagText(tag, clickedTag)) {
+    if (tag.classList.contains('active') || UTILS.isSameTagText(tag, clickedTag)) {
       tag.classList.toggle('active');
     }
   });
@@ -294,14 +276,15 @@ const displayBackToTopBtn = () => {
 const constructHomepage = (photographers) => {
   const navUl = document.getElementById('js-nav');
   const photographTagSet = getPhotographTagSet(photographers);
+  // change to querySelector('main')
   const thumbnailList = document.getElementById('js-articleList');
 
   for (const tag of photographTagSet) {
-    navUl.appendChild(createTag(tag));
+    navUl.appendChild(DOM.createTag(tag));
   }
 
-  photographers.forEach((photograph) => {
-    thumbnailList.appendChild(createPhotographerArticle(photograph));
+  photographers.forEach((photographer) => {
+    thumbnailList.appendChild(createPhotographerArticle(photographer));
   });
 
   const tags = document.querySelectorAll('.tag');
