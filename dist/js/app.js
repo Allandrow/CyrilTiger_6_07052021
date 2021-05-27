@@ -1,4 +1,4 @@
-import * as DOM from '/dist/js/domUtils.js';
+import * as DOM from './domUtils.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
