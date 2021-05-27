@@ -203,6 +203,7 @@ const createFigure = (object) => {
   link.setAttribute('href', '');
 
   let media;
+  // use semantic function isImage()
   if (object.image !== undefined) {
     media = createPicture(object.photographerId, object.image);
   } else {
@@ -290,8 +291,8 @@ const isSameTagText = (tag, tagClicked) => {
 const switchTagActiveState = (tags, clickedTag) => {
   /*
     Parse all tags from Document
-    Remove active class from tag if clicked tag is already active
-    Add active class if tag is the same value as clicked tag
+    Toggle active class from tag if clicked tag is already active
+    OR if tag is the same value as clicked tag
   */
   tags.forEach((tag) => {
     if (tag.classList.contains('active') || isSameTagText(tag, clickedTag)) {
@@ -350,13 +351,20 @@ const constructHomepage = (photographers) => {
   photographers.forEach((photograph) => {
     thumbnailList.appendChild(createPhotographerArticle(photograph));
   });
+
+  const tags = document.querySelectorAll('.tag');
+
+  tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
+
+  window.addEventListener('scroll', displayBackToTopBtn);
 };
 
 const constructPhotographPage = (json, id) => {
   const photographMain = document.getElementById('js-main');
   const medias = [];
-  let metaInfos = createDIVElement('meta-infos');
+  const metaInfos = createDIVElement('meta-infos');
 
+  // filter()
   json.photographers.forEach((photographer) => {
     if (photographer.id === id) {
       document.title = `Fisheye - ${photographer.name}`;
@@ -365,6 +373,7 @@ const constructPhotographPage = (json, id) => {
     }
   });
 
+  // filter()
   json.media.forEach((media) => {
     if (media.photographerId === id) {
       medias.push(media);
@@ -375,25 +384,18 @@ const constructPhotographPage = (json, id) => {
   photographMain.append(createSelectGroup(), createFigureGroup(medias), metaInfos);
 };
 
-const loadAllEventListeners = () => {
-  const tags = document.querySelectorAll('.tag');
-
-  tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
-
-  window.addEventListener('scroll', displayBackToTopBtn);
-};
-
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
 
-  if (isNaN(id)) {
-    // HOMEPAGE
-    constructHomepage(json.photographers);
-    loadAllEventListeners();
-  } else {
+  console.log(isFinite(id));
+
+  if (isFinite(id)) {
     // PHOTOGRAPHE PAGE
     constructPhotographPage(json, id);
+  } else {
+    // HOMEPAGE
+    constructHomepage(json.photographers);
   }
 };
 
