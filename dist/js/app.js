@@ -1,12 +1,10 @@
-import * as DOM from './domUtils.js';
+import * as DOM from './dom.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
   const json = await data.json();
   return json;
 };
-
-// DOM ELEMENTS UTILITY FUNCTIONS
 
 const uppercaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -31,7 +29,7 @@ const createTag = (tagText) => {
   link.setAttribute('href', '#');
   link.setAttribute('aria-label', 'tag');
 
-  const span = DOM.createSPANElement(tagText);
+  const span = DOM.createSPAN(tagText);
 
   link.append(document.createTextNode('#'), span);
   li.appendChild(link);
@@ -68,17 +66,17 @@ const createPhotographerArticle = (object) => {
   link.setAttribute('href', `photographer.html?id=${object.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = DOM.createIMGElement(`thumbnails/${object.portrait}`, object.name);
+  const portrait = DOM.createIMG(`thumbnails/${object.portrait}`, object.name);
 
-  const title = DOM.createHeadingElement(object.name, 'h2');
+  const title = DOM.createHeading(object.name, 'h2');
 
   link.append(portrait, title);
 
   const paragraph = document.createElement('p');
 
-  const localisation = DOM.createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
-  const slogan = DOM.createSPANElement(object.tagline, `${elementBEMName}__slogan`);
-  const price = DOM.createSPANElement(`${object.price}€/jour`, `${elementBEMName}__price`);
+  const localisation = DOM.createSPAN(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
+  const slogan = DOM.createSPAN(object.tagline, `${elementBEMName}__slogan`);
+  const price = DOM.createSPAN(`${object.price}€/jour`, `${elementBEMName}__price`);
 
   paragraph.append(localisation, slogan, price);
 
@@ -95,13 +93,13 @@ const createPhotographerHeader = (object) => {
   const section = document.createElement('section');
   section.classList.add('photograph-header');
 
-  const div = DOM.createDIVElement(elementBEMName);
-  const title = DOM.createHeadingElement(object.name, 'h1');
+  const div = DOM.createDIV(elementBEMName);
+  const title = DOM.createHeading(object.name, 'h1');
 
   const paragraph = document.createElement('p');
 
-  const localisation = DOM.createSPANElement(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
-  const slogan = DOM.createSPANElement(object.tagline, `${elementBEMName}__slogan`);
+  const localisation = DOM.createSPAN(`${object.city}, ${object.country}`, `${elementBEMName}__localisation`);
+  const slogan = DOM.createSPAN(object.tagline, `${elementBEMName}__slogan`);
 
   paragraph.append(localisation, slogan);
 
@@ -111,7 +109,7 @@ const createPhotographerHeader = (object) => {
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = DOM.createIMGElement(`thumbnails/${object.portrait}`, object.name);
+  const portrait = DOM.createIMG(`thumbnails/${object.portrait}`, object.name);
 
   section.append(div, portrait);
 
@@ -127,7 +125,7 @@ const createPicture = (id, image) => {
 
   const separatorIndex = image.indexOf('.');
   const imageMin = [image.slice(0, separatorIndex), '-min', image.slice(separatorIndex)].join('');
-  const img = DOM.createIMGElement(`${id}/${imageMin}`);
+  const img = DOM.createIMG(`${id}/${imageMin}`);
 
   picture.append(source, img);
   return picture;
@@ -146,10 +144,10 @@ const createVideo = (id, video) => {
 
 const createFigcaption = (title, likes) => {
   const figcaption = document.createElement('figcaption');
-  const span = DOM.createSPANElement(title);
-  const div = DOM.createDIVElement();
-  const likesSpan = DOM.createSPANElement(likes);
-  const img = DOM.createIMGElement('like-icon.svg', 'likes');
+  const span = DOM.createSPAN(title);
+  const div = DOM.createDIV();
+  const likesSpan = DOM.createSPAN(likes);
+  const img = DOM.createIMG('like-icon.svg', 'likes');
 
   div.append(likesSpan, img);
   figcaption.append(span, div);
@@ -179,14 +177,14 @@ const createFigure = (object) => {
 };
 
 const createSelectGroup = () => {
-  const divGroup = DOM.createDIVElement('select-group');
+  const divGroup = DOM.createDIV('select-group');
 
   const label = document.createElement('label');
   label.setAttribute('for', 'js-sort');
   label.setAttribute('id', 'ariaLabel');
   label.appendChild(document.createTextNode('Trier par'));
 
-  const divSelect = DOM.createDIVElement('select');
+  const divSelect = DOM.createDIV('select');
 
   const btn = document.createElement('button');
   btn.setAttribute('id', 'js-sort');
@@ -201,12 +199,12 @@ const createSelectGroup = () => {
   ul.setAttribute('role', 'listbox');
   ul.setAttribute('aria-activedescendant', 'sort-likes');
 
-  const liLikes = DOM.createSelectLIElement('likes', 'Popularité', true);
-  const liDate = DOM.createSelectLIElement('date', 'Date');
-  const liTitle = DOM.createSelectLIElement('titre', 'Titre');
+  const liLikes = DOM.createSelectLI('likes', 'Popularité', true);
+  const liDate = DOM.createSelectLI('date', 'Date');
+  const liTitle = DOM.createSelectLI('titre', 'Titre');
   ul.append(liLikes, liDate, liTitle);
 
-  const img = DOM.createIMGElement('expand-more.svg', 'expand list indicator');
+  const img = DOM.createIMG('expand-more.svg', 'expand list indicator');
 
   divSelect.append(btn, ul, img);
   divGroup.append(label, divSelect);
@@ -237,10 +235,10 @@ const getTotalLikes = (medias) => {
 };
 
 const createTotalLikesDiv = (medias) => {
-  const div = DOM.createDIVElement('meta-infos__likes');
+  const div = DOM.createDIV('meta-infos__likes');
   const totalLikes = getTotalLikes(medias);
-  const span = DOM.createSPANElement(totalLikes);
-  const img = DOM.createIMGElement('like-icon-black.svg', 'likes');
+  const span = DOM.createSPAN(totalLikes);
+  const img = DOM.createIMG('like-icon-black.svg', 'likes');
   div.append(span, img);
   return div;
 };
@@ -323,14 +321,14 @@ const constructHomepage = (photographers) => {
 const constructPhotographPage = (json, id) => {
   const photographMain = document.getElementById('js-main');
   const medias = [];
-  const metaInfos = DOM.createDIVElement('meta-infos');
+  const metaInfos = DOM.createDIV('meta-infos');
 
   // filter()
   json.photographers.forEach((photographer) => {
     if (photographer.id === id) {
       document.title = `Fisheye - ${photographer.name}`;
       photographMain.appendChild(createPhotographerHeader(photographer));
-      metaInfos.appendChild(DOM.createSPANElement(`${photographer.price}€/jour`));
+      metaInfos.appendChild(DOM.createSPAN(`${photographer.price}€/jour`));
     }
   });
 
