@@ -8,7 +8,7 @@ export const createDIV = (className = null) => {
   return div;
 };
 
-export const createHeading = (name, heading = 'h2') => {
+const createHeading = (name, heading = 'h2') => {
   const title = document.createElement(heading);
   title.appendChild(document.createTextNode(name));
   return title;
@@ -22,7 +22,7 @@ export const createIMG = (path, alt = '') => {
   return img;
 };
 
-export const createSPAN = (text, className = null) => {
+const createSPAN = (text, className = null) => {
   const span = document.createElement('span');
   if (className !== null) {
     span.classList.add(className);
@@ -58,7 +58,7 @@ export const createTag = (tagText) => {
   return li;
 };
 
-export const createContactBtn = () => {
+const createContactBtn = () => {
   const btn = document.createElement('button');
   btn.classList.add('button');
   btn.appendChild(document.createTextNode('Contactez-moi'));
@@ -66,7 +66,7 @@ export const createContactBtn = () => {
   return btn;
 };
 
-export const createPhotographerTagList = (photographer) => {
+const createPhotographerTagList = (photographer) => {
   const ul = document.createElement('ul');
   ul.classList.add('tagList');
 
@@ -137,7 +137,7 @@ export const createPhotographerHeader = (photographer) => {
   return section;
 };
 
-export const createPicture = (id, image) => {
+const createPicture = (id, image) => {
   const picture = document.createElement('picture');
 
   const source = document.createElement('source');
@@ -153,7 +153,7 @@ export const createPicture = (id, image) => {
   return picture;
 };
 
-export const createVideo = (id, video) => {
+const createVideo = (id, video) => {
   const media = document.createElement('video');
 
   const source = document.createElement('source');
@@ -164,7 +164,7 @@ export const createVideo = (id, video) => {
   return media;
 };
 
-export const createFigcaption = (title, likes) => {
+const createFigcaption = (title, likes) => {
   const figcaption = document.createElement('figcaption');
 
   const span = createSPAN(title);
@@ -178,7 +178,7 @@ export const createFigcaption = (title, likes) => {
   return figcaption;
 };
 
-export const createFigure = (media) => {
+const createFigure = (media) => {
   const figure = document.createElement('figure');
   figure.classList.add('figure');
 
@@ -210,4 +210,23 @@ export const createFigureGroup = (medias) => {
   });
 
   return figureGroup;
+};
+
+const createTotalLikesDiv = (medias) => {
+  let totalLikes = 0;
+  medias.forEach((media) => {
+    totalLikes += media.likes;
+  });
+
+  const div = createDIV('meta-infos__likes');
+  const span = createSPAN(totalLikes);
+  const img = createIMG('like-icon-black.svg', 'likes');
+  div.append(span, img);
+  return div;
+};
+
+export const createMetaInfos = (medias, photographer) => {
+  const div = createDIV('meta-infos');
+  div.append(createTotalLikesDiv(medias), createSPAN(`${photographer.price}€/jour`));
+  return div;
 };

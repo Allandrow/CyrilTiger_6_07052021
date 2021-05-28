@@ -54,25 +54,6 @@ const createSelectGroup = () => {
   return divGroup;
 };
 
-// TODO reduce ?
-const getTotalLikes = (medias) => {
-  let totalLikes = 0;
-  medias.forEach((media) => {
-    totalLikes += media.likes;
-  });
-
-  return totalLikes;
-};
-
-const createTotalLikesDiv = (medias) => {
-  const div = DOM.createDIV('meta-infos__likes');
-  const totalLikes = getTotalLikes(medias);
-  const span = DOM.createSPAN(totalLikes);
-  const img = DOM.createIMG('like-icon-black.svg', 'likes');
-  div.append(span, img);
-  return div;
-};
-
 const switchTagActiveState = (tags, clickedTag) => {
   /*
     Parse all tags from Document
@@ -150,14 +131,10 @@ const constructPhotographPage = (json, id) => {
   const photographer = json.photographers.find((photographer) => photographer.id === id);
   const medias = json.media.filter((media) => media.photographerId === id);
 
-  const metaInfos = DOM.createDIV('meta-infos');
-
   document.title = `Fisheye - ${photographer.name}`;
   photographMain.appendChild(DOM.createPhotographerHeader(photographer));
-  metaInfos.appendChild(DOM.createSPAN(`${photographer.price}€/jour`));
 
-  metaInfos.prepend(createTotalLikesDiv(medias));
-  photographMain.append(createSelectGroup(), DOM.createFigureGroup(medias), metaInfos);
+  photographMain.append(createSelectGroup(), DOM.createFigureGroup(medias), DOM.createMetaInfos(medias, photographer));
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
