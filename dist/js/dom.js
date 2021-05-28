@@ -66,13 +66,13 @@ const createContactBtn = () => {
   return btn;
 };
 
-const createPhotographerTagList = (photographer) => {
+const createTagList = (tags) => {
   const ul = document.createElement('ul');
-  ul.classList.add('tagList');
+  ul.classList.add('tag-list');
 
-  photographer.tags.forEach((tag) => {
+  for (const tag of tags) {
     ul.appendChild(createTag(tag));
-  });
+  }
 
   return ul;
 };
@@ -84,7 +84,7 @@ export const createPhotographerArticle = (photographer) => {
   article.classList.add(elementBEMName);
 
   const link = document.createElement('a');
-  link.setAttribute('href', `photographer.html?id=${photographer.id}`);
+  link.setAttribute('href', `index.html?id=${photographer.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
   const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
@@ -101,7 +101,7 @@ export const createPhotographerArticle = (photographer) => {
 
   paragraph.append(localisation, slogan, price);
 
-  const ul = createPhotographerTagList(photographer);
+  const ul = createTagList(photographer.tags);
 
   article.append(link, paragraph, ul);
 
@@ -124,7 +124,7 @@ export const createPhotographerHeader = (photographer) => {
 
   paragraph.append(localisation, slogan);
 
-  const ul = createPhotographerTagList(photographer);
+  const ul = createTagList(photographer.tags);
 
   const contact = createContactBtn();
 
@@ -229,4 +229,36 @@ export const createMetaInfos = (medias, photographer) => {
   const div = createDIV('meta-infos');
   div.append(createTotalLikesDiv(medias), createSPAN(`${photographer.price}€/jour`));
   return div;
+};
+
+const createLogo = () => {
+  const logo = document.createElement('a');
+  logo.href = 'index.html';
+  logo.appendChild(createIMG('logo.svg', 'FishEye Home Page'));
+  return logo;
+};
+
+const createNav = (photographers) => {
+  const photographTagSet = UTILS.getPhotographTagSet(photographers);
+
+  const nav = document.createElement('nav');
+  nav.ariaLabel = 'photographer categories';
+
+  const ul = createTagList(photographTagSet);
+
+  nav.appendChild(ul);
+
+  return nav;
+};
+
+export const createHeader = (id, photographers = null) => {
+  const header = document.createElement('header');
+  header.setAttribute('role', 'banner');
+  header.appendChild(createLogo());
+
+  if (!isFinite(id)) {
+    header.append(createHeading('Nos photographes', 'h1'), createNav(photographers));
+  }
+
+  return header;
 };

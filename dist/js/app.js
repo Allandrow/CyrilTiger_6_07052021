@@ -7,17 +7,6 @@ const getJSON = async () => {
   return json;
 };
 
-const getPhotographTagSet = (photographers) => {
-  const tagSet = new Set();
-
-  photographers.forEach((photograph) => {
-    photograph.tags.forEach((tag) => {
-      tagSet.add(UTILS.uppercaseFirstLetter(tag));
-    });
-  });
-  return tagSet;
-};
-
 const createSelectGroup = () => {
   const divGroup = DOM.createDIV('select-group');
 
@@ -76,7 +65,7 @@ const displayThumbnailsByActiveTag = () => {
   });
 
   // Display thumbnails with active tag
-  const activeTags = document.querySelectorAll('#js-articleList .active');
+  const activeTags = document.querySelectorAll('#js-main .active');
 
   activeTags.forEach((tag) => {
     const article = tag.closest('.thumbnail');
@@ -105,18 +94,14 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
-const constructHomepage = (photographers) => {
-  const navUl = document.getElementById('js-nav');
-  const photographTagSet = getPhotographTagSet(photographers);
-  // change to querySelector('main')
-  const thumbnailList = document.getElementById('js-articleList');
+const constructHomepage = (photographers, id) => {
+  document.body.prepend(DOM.createHeader(id, photographers));
 
-  for (const tag of photographTagSet) {
-    navUl.appendChild(DOM.createTag(tag));
-  }
+  const main = document.getElementById('js-main');
+  main.classList.add('thumbnail-list');
 
   photographers.forEach((photographer) => {
-    thumbnailList.appendChild(DOM.createPhotographerArticle(photographer));
+    main.appendChild(DOM.createPhotographerArticle(photographer));
   });
 
   const tags = document.querySelectorAll('.tag');
@@ -127,14 +112,20 @@ const constructHomepage = (photographers) => {
 };
 
 const constructPhotographPage = (json, id) => {
-  const photographMain = document.getElementById('js-main');
   const photographer = json.photographers.find((photographer) => photographer.id === id);
   const medias = json.media.filter((media) => media.photographerId === id);
 
-  document.title = `Fisheye - ${photographer.name}`;
-  photographMain.appendChild(DOM.createPhotographerHeader(photographer));
+  document.title += ` - ${photographer.name}`;
 
-  photographMain.append(createSelectGroup(), DOM.createFigureGroup(medias), DOM.createMetaInfos(medias, photographer));
+  document.body.prepend(DOM.createHeader(id));
+
+  const main = document.getElementById('js-main');
+  main.append(
+    DOM.createPhotographerHeader(photographer),
+    createSelectGroup(),
+    DOM.createFigureGroup(medias),
+    DOM.createMetaInfos(medias, photographer)
+  );
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
@@ -146,7 +137,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
     constructPhotographPage(json, id);
   } else {
     // HOMEPAGE
-    constructHomepage(json.photographers);
+    constructHomepage(json.photographers, id);
   }
 };
 
