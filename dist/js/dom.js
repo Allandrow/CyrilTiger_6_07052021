@@ -16,6 +16,7 @@ export const createIMG = (path, alt = '') => {
   const img = document.createElement('img');
   img.setAttribute('src', `dist/img/${path}`);
   img.setAttribute('alt', alt);
+  img.setAttribute('loading', 'lazy');
   return img;
 };
 
