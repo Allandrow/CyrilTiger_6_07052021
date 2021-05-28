@@ -18,142 +18,6 @@ const getPhotographTagSet = (photographers) => {
   return tagSet;
 };
 
-const createPhotographerTagList = (photographer) => {
-  const ul = document.createElement('ul');
-  ul.classList.add('tagList');
-
-  photographer.tags.forEach((tag) => {
-    ul.appendChild(DOM.createTag(tag));
-  });
-
-  return ul;
-};
-
-const createPhotographerArticle = (photographer) => {
-  const elementBEMName = 'thumbnail';
-
-  const article = document.createElement('article');
-  article.classList.add(elementBEMName);
-
-  const link = document.createElement('a');
-  link.setAttribute('href', `photographer.html?id=${photographer.id}`);
-  link.classList.add(`${elementBEMName}__link`);
-
-  const portrait = DOM.createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
-
-  const title = DOM.createHeading(photographer.name, 'h2');
-
-  link.append(portrait, title);
-
-  const paragraph = document.createElement('p');
-
-  const localisation = DOM.createSPAN(
-    `${photographer.city}, ${photographer.country}`,
-    `${elementBEMName}__localisation`
-  );
-  const slogan = DOM.createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
-  const price = DOM.createSPAN(`${photographer.price}€/jour`, `${elementBEMName}__price`);
-
-  paragraph.append(localisation, slogan, price);
-
-  const ul = createPhotographerTagList(photographer);
-
-  article.append(link, paragraph, ul);
-
-  return article;
-};
-
-const createPhotographerHeader = (photographer) => {
-  const elementBEMName = 'photograph-header__infos';
-
-  const section = document.createElement('section');
-  section.classList.add('photograph-header');
-
-  const div = DOM.createDIV(elementBEMName);
-  const title = DOM.createHeading(photographer.name, 'h1');
-
-  const paragraph = document.createElement('p');
-
-  const localisation = DOM.createSPAN(
-    `${photographer.city}, ${photographer.country}`,
-    `${elementBEMName}__localisation`
-  );
-  const slogan = DOM.createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
-
-  paragraph.append(localisation, slogan);
-
-  const ul = createPhotographerTagList(photographer);
-
-  const contact = DOM.createContactBtn();
-
-  div.append(title, paragraph, ul, contact);
-
-  const portrait = DOM.createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
-
-  section.append(div, portrait);
-
-  return section;
-};
-
-const createPicture = (id, image) => {
-  const picture = document.createElement('picture');
-
-  const source = document.createElement('source');
-  source.setAttribute('media', '(min-width:60rem)');
-  source.setAttribute('srcset', `dist/img/${id}/${image}`);
-
-  const separatorIndex = image.indexOf('.');
-  const imageMin = [image.slice(0, separatorIndex), '-min', image.slice(separatorIndex)].join('');
-  const img = DOM.createIMG(`${id}/${imageMin}`);
-
-  picture.append(source, img);
-  return picture;
-};
-
-const createVideo = (id, video) => {
-  const media = document.createElement('video');
-
-  const source = document.createElement('source');
-  source.setAttribute('src', `dist/img/${id}/${video}`);
-  source.setAttribute('type', 'video/mp4');
-
-  media.appendChild(source);
-  return media;
-};
-
-const createFigcaption = (title, likes) => {
-  const figcaption = document.createElement('figcaption');
-  const span = DOM.createSPAN(title);
-  const div = DOM.createDIV();
-  const likesSpan = DOM.createSPAN(likes);
-  const img = DOM.createIMG('like-icon.svg', 'likes');
-
-  div.append(likesSpan, img);
-  figcaption.append(span, div);
-  return figcaption;
-};
-
-const createFigure = (media) => {
-  const figure = document.createElement('figure');
-  figure.classList.add('figure');
-
-  const link = document.createElement('a');
-  link.setAttribute('href', '');
-
-  let mediaElement;
-  if (UTILS.isImage(media)) {
-    mediaElement = createPicture(media.photographerId, media.image);
-  } else {
-    mediaElement = createVideo(media.photographerId, media.video);
-  }
-  link.appendChild(mediaElement);
-
-  const caption = createFigcaption(media.title, media.likes);
-
-  figure.append(link, caption);
-  return figure;
-};
-
 const createSelectGroup = () => {
   const divGroup = DOM.createDIV('select-group');
 
@@ -190,20 +54,7 @@ const createSelectGroup = () => {
   return divGroup;
 };
 
-const createFigureGroup = (medias) => {
-  const figureGroup = document.createElement('figure');
-  figureGroup.setAttribute('role', 'group');
-  figureGroup.setAttribute('id', 'js-figureGroup');
-  figureGroup.classList.add('figure-group');
-
-  medias.forEach((media) => {
-    figureGroup.appendChild(createFigure(media));
-  });
-
-  return figureGroup;
-};
-
-// reduce ?
+// TODO reduce ?
 const getTotalLikes = (medias) => {
   let totalLikes = 0;
   medias.forEach((media) => {
@@ -284,7 +135,7 @@ const constructHomepage = (photographers) => {
   }
 
   photographers.forEach((photographer) => {
-    thumbnailList.appendChild(createPhotographerArticle(photographer));
+    thumbnailList.appendChild(DOM.createPhotographerArticle(photographer));
   });
 
   const tags = document.querySelectorAll('.tag');
@@ -299,16 +150,16 @@ const constructPhotographPage = (json, id) => {
   const medias = [];
   const metaInfos = DOM.createDIV('meta-infos');
 
-  // filter()
+  // TODO filter()
   json.photographers.forEach((photographer) => {
     if (photographer.id === id) {
       document.title = `Fisheye - ${photographer.name}`;
-      photographMain.appendChild(createPhotographerHeader(photographer));
+      photographMain.appendChild(DOM.createPhotographerHeader(photographer));
       metaInfos.appendChild(DOM.createSPAN(`${photographer.price}€/jour`));
     }
   });
 
-  // filter()
+  // TODO filter()
   json.media.forEach((media) => {
     if (media.photographerId === id) {
       medias.push(media);
@@ -316,7 +167,7 @@ const constructPhotographPage = (json, id) => {
   });
 
   metaInfos.prepend(createTotalLikesDiv(medias));
-  photographMain.append(createSelectGroup(), createFigureGroup(medias), metaInfos);
+  photographMain.append(createSelectGroup(), DOM.createFigureGroup(medias), metaInfos);
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
