@@ -147,24 +147,14 @@ const constructHomepage = (photographers) => {
 
 const constructPhotographPage = (json, id) => {
   const photographMain = document.getElementById('js-main');
-  const medias = [];
+  const photographer = json.photographers.find((photographer) => photographer.id === id);
+  const medias = json.media.filter((media) => media.photographerId === id);
+
   const metaInfos = DOM.createDIV('meta-infos');
 
-  // TODO filter()
-  json.photographers.forEach((photographer) => {
-    if (photographer.id === id) {
-      document.title = `Fisheye - ${photographer.name}`;
-      photographMain.appendChild(DOM.createPhotographerHeader(photographer));
-      metaInfos.appendChild(DOM.createSPAN(`${photographer.price}€/jour`));
-    }
-  });
-
-  // TODO filter()
-  json.media.forEach((media) => {
-    if (media.photographerId === id) {
-      medias.push(media);
-    }
-  });
+  document.title = `Fisheye - ${photographer.name}`;
+  photographMain.appendChild(DOM.createPhotographerHeader(photographer));
+  metaInfos.appendChild(DOM.createSPAN(`${photographer.price}€/jour`));
 
   metaInfos.prepend(createTotalLikesDiv(medias));
   photographMain.append(createSelectGroup(), DOM.createFigureGroup(medias), metaInfos);
