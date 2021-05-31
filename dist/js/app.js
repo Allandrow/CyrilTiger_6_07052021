@@ -8,10 +8,6 @@ const getJSON = async () => {
 };
 
 class Select {
-  constructor(filters) {
-    this.filters = filters;
-  }
-
   static createSelect(filters) {
     return DOM.createSelectGroup(filters);
   }
@@ -81,6 +77,12 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
+// const toggleListBox = (btn, select) => {
+//   select.classList.toggle('open');
+//   console.log('focus');
+//   btn.setAttribute('aria-expanded', 'true');
+// };
+
 const constructHomepage = (photographers, id, main) => {
   document.body.prepend(DOM.createHeader(id, photographers), main);
   main.classList.add('thumbnail-list');
@@ -104,8 +106,6 @@ const constructPhotographPage = (json, id, main) => {
 
   document.title += ` - ${photographer.name}`;
 
-  // const main = document.getElementById('js-main');
-
   main.append(
     DOM.createPhotographerHeader(photographer),
     Select.createSelect(selectFilters),
@@ -117,6 +117,11 @@ const constructPhotographPage = (json, id, main) => {
 
   const selectLis = document.querySelectorAll('#select-list li');
   const sortBtn = document.getElementById('js-sort');
+  const select = document.getElementById('select-list');
+
+  // sortBtn.addEventListener('click', () => {
+  //   toggleListBox(sortBtn, select);
+  // });
 
   selectLis.forEach((option) => {
     option.addEventListener('click', () => {

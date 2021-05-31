@@ -26,6 +26,13 @@
       background-color: $color-primary-400;
       width: 145px;
       text-align: left;
+      cursor: pointer;
+
+      &:focus + ul {
+        // display: block;
+        width: 148px;
+        left: -1px;
+      }
     }
 
     ul {
@@ -35,12 +42,14 @@
       display: none;
       background-color: $color-primary-400;
       border-radius: 0.25rem;
-      padding: 1rem 0.75rem 0 0.75rem;
       width: 145px;
     }
 
+    ul.open {
+      display: block;
+    }
+
     li {
-      padding: 1rem 2.25rem 1rem 0.25rem;
       cursor: pointer;
 
       &:first-of-type {
@@ -63,7 +72,7 @@
 
     &:hover {
       ul {
-        display: block;
+        // display: block;
       }
 
       img {

@@ -410,6 +410,11 @@ header nav {
   background-color: #901c1c;
   width: 145px;
   text-align: left;
+  cursor: pointer;
+}
+.select-group .select button:focus + ul {
+  width: 148px;
+  left: -1px;
 }
 .select-group .select ul {
   position: absolute;
@@ -418,11 +423,12 @@ header nav {
   display: none;
   background-color: #901c1c;
   border-radius: 0.25rem;
-  padding: 1rem 0.75rem 0 0.75rem;
   width: 145px;
 }
+.select-group .select ul.open {
+  display: block;
+}
 .select-group .select li {
-  padding: 1rem 2.25rem 1rem 0.25rem;
   cursor: pointer;
 }
 .select-group .select li:first-of-type {
@@ -438,9 +444,6 @@ header nav {
   right: 1rem;
   z-index: 2;
   transition: transform 100ms linear;
-}
-.select-group .select:hover ul {
-  display: block;
 }
 .select-group .select:hover img {
   transform: rotate(180deg);

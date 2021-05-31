@@ -37,7 +37,11 @@ export const createSelectLI = (id, text) => {
   li.setAttribute('id', `sort-${id}`);
   li.setAttribute('aria-selected', 'false');
   li.setAttribute('aria-labelledBy', 'ariaLabel');
-  li.appendChild(document.createTextNode(text));
+
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode(text));
+
+  li.appendChild(button);
 
   return li;
 };
@@ -290,7 +294,7 @@ export const createSelectGroup = (filters) => {
   btn.setAttribute('id', 'js-sort');
   btn.setAttribute('role', 'button');
   btn.setAttribute('aria-haspopup', 'listbox');
-  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-expanded', 'false'); // TODO, change this value on focus/hover
   btn.setAttribute('aria-labelledBy', 'ariaLabel');
   btn.appendChild(document.createTextNode(filters[0]));
 
@@ -313,7 +317,7 @@ export const createSelectGroup = (filters) => {
   });
 
   ul.firstElementChild.setAttribute('aria-selected', 'true');
-  ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
+  ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id')); // TODO : change this value
 
   const img = createIMG('expand-more.svg', 'expand list indicator');
 
