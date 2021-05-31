@@ -133,10 +133,8 @@ const displayPageByURLQuery = (json, URLQuery) => {
   const id = parseInt(URLParams.get('id'));
 
   if (isFinite(id)) {
-    // PHOTOGRAPHE PAGE
     constructPhotographPage(json, id);
   } else {
-    // HOMEPAGE
     constructHomepage(json.photographers, id);
   }
 };
