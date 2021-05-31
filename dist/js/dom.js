@@ -1,8 +1,8 @@
-import * as UTILS from './utils.js';
+import * as utils from './utils.js';
 
-export const createDIV = (className = null) => {
+export const createDIV = (className) => {
   const div = document.createElement('div');
-  if (className !== null) {
+  if (className !== undefined) {
     div.classList.add(className);
   }
   return div;
@@ -22,9 +22,9 @@ export const createIMG = (path, alt = '') => {
   return img;
 };
 
-const createSPAN = (text, className = null) => {
+const createSPAN = (text, className) => {
   const span = document.createElement('span');
-  if (className !== null) {
+  if (className !== undefined) {
     span.classList.add(className);
   }
   span.appendChild(document.createTextNode(text));
@@ -104,7 +104,10 @@ export const createPhotographerArticle = (photographer) => {
   link.setAttribute('href', `index.html?id=${photographer.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
+  const portrait = createIMG(
+    `thumbnails/${photographer.portrait}`,
+    photographer.name
+  );
 
   const title = createHeading(photographer.name, 'h2');
 
@@ -112,9 +115,15 @@ export const createPhotographerArticle = (photographer) => {
 
   const paragraph = document.createElement('p');
 
-  const localisation = createSPAN(`${photographer.city}, ${photographer.country}`, `${elementBEMName}__localisation`);
+  const localisation = createSPAN(
+    `${photographer.city}, ${photographer.country}`,
+    `${elementBEMName}__localisation`
+  );
   const slogan = createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
-  const price = createSPAN(`${photographer.price}€/jour`, `${elementBEMName}__price`);
+  const price = createSPAN(
+    `${photographer.price}€/jour`,
+    `${elementBEMName}__price`
+  );
 
   paragraph.append(localisation, slogan, price);
 
@@ -136,7 +145,10 @@ export const createPhotographerHeader = (photographer) => {
 
   const paragraph = document.createElement('p');
 
-  const localisation = createSPAN(`${photographer.city}, ${photographer.country}`, `${elementBEMName}__localisation`);
+  const localisation = createSPAN(
+    `${photographer.city}, ${photographer.country}`,
+    `${elementBEMName}__localisation`
+  );
   const slogan = createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
 
   paragraph.append(localisation, slogan);
@@ -147,7 +159,10 @@ export const createPhotographerHeader = (photographer) => {
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
+  const portrait = createIMG(
+    `thumbnails/${photographer.portrait}`,
+    photographer.name
+  );
 
   section.append(div, portrait);
 
@@ -163,7 +178,11 @@ const createPicture = (id, image) => {
 
   // TODO fonction sémantique utilitaire
   const separatorIndex = image.indexOf('.');
-  const imageMin = [image.slice(0, separatorIndex), '-min', image.slice(separatorIndex)].join('');
+  const imageMin = [
+    image.slice(0, separatorIndex),
+    '-min',
+    image.slice(separatorIndex),
+  ].join('');
   const img = createIMG(`${id}/${imageMin}`);
 
   picture.append(source, img);
@@ -203,7 +222,7 @@ const createFigure = (media) => {
   link.setAttribute('href', '');
 
   let mediaElement;
-  if (UTILS.isImage(media)) {
+  if (utils.isImage(media)) {
     mediaElement = createPicture(media.photographerId, media.image);
   } else {
     mediaElement = createVideo(media.photographerId, media.video);
@@ -242,9 +261,13 @@ const createTotalLikesDiv = (medias) => {
   return div;
 };
 
+// TODO : change name
 export const createMetaInfos = (medias, photographer) => {
   const div = createDIV('meta-infos');
-  div.append(createTotalLikesDiv(medias), createSPAN(`${photographer.price}€/jour`));
+  div.append(
+    createTotalLikesDiv(medias),
+    createSPAN(`${photographer.price}€/jour`)
+  );
   return div;
 };
 
@@ -256,7 +279,7 @@ const createLogo = () => {
 };
 
 const createNav = (photographers) => {
-  const photographTagSet = UTILS.getPhotographTagSet(photographers);
+  const photographTagSet = utils.getPhotographTagSet(photographers);
 
   const nav = document.createElement('nav');
   nav.ariaLabel = 'photographer categories';
@@ -268,13 +291,16 @@ const createNav = (photographers) => {
   return nav;
 };
 
-export const createHeader = (id, photographers = null) => {
+export const createHeader = (id, photographers) => {
   const header = document.createElement('header');
   header.setAttribute('role', 'banner');
   header.appendChild(createLogo());
 
   if (!isFinite(id)) {
-    header.append(createHeading('Nos photographes', 'h1'), createNav(photographers));
+    header.append(
+      createHeading('Nos photographes', 'h1'),
+      createNav(photographers)
+    );
   }
 
   return header;
@@ -317,7 +343,10 @@ export const createSelectGroup = (filters) => {
   });
 
   ul.firstElementChild.setAttribute('aria-selected', 'true');
-  ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id')); // TODO : change this value
+  ul.setAttribute(
+    'aria-activedescendant',
+    ul.firstElementChild.getAttribute('id')
+  ); // TODO : change this value
 
   const img = createIMG('expand-more.svg', 'expand list indicator');
 

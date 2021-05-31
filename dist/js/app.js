@@ -1,5 +1,5 @@
-import * as DOM from './dom.js';
-import * as UTILS from './utils.js';
+import * as dom from './dom.js';
+import * as utils from './utils.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
@@ -9,12 +9,14 @@ const getJSON = async () => {
 
 class Select {
   static createSelect(filters) {
-    return DOM.createSelectGroup(filters);
+    return dom.createSelectGroup(filters);
   }
 
   static changeSelectedFilter(option) {
     if (option.getAttribute('aria-selected') !== 'true') {
-      document.querySelector('#select-list li[aria-selected="true"]').setAttribute('aria-selected', 'false');
+      document
+        .querySelector('#select-list li[aria-selected="true"]')
+        .setAttribute('aria-selected', 'false');
       option.setAttribute('aria-selected', 'true');
     }
   }
@@ -33,7 +35,10 @@ const switchTagActiveState = (tags, clickedTag) => {
     OR if tag is the same value as clicked tag
   */
   tags.forEach((tag) => {
-    if (tag.classList.contains('active') || UTILS.isSameTagText(tag, clickedTag)) {
+    if (
+      tag.classList.contains('active') ||
+      utils.isSameTagText(tag, clickedTag)
+    ) {
       tag.classList.toggle('active');
     }
   });
@@ -84,43 +89,46 @@ const displayBackToTopBtn = () => {
 // };
 
 const constructHomepage = (photographers, id, main) => {
-  document.body.prepend(DOM.createHeader(id, photographers), main);
+  document.body.prepend(dom.createHeader(id, photographers), main);
   main.classList.add('thumbnail-list');
 
   photographers.forEach((photographer) => {
-    main.appendChild(DOM.createPhotographerArticle(photographer));
+    main.appendChild(dom.createPhotographerArticle(photographer));
   });
 
-  main.appendChild(DOM.createBackToTopBtn());
+  main.appendChild(dom.createBackToTopBtn());
 
   const tags = document.querySelectorAll('.tag');
 
-  tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
+  tags.forEach((tag) =>
+    tag.addEventListener('click', () => handleTagClick(tags, tag))
+  );
 
   window.addEventListener('scroll', displayBackToTopBtn);
 };
 
 const constructPhotographPage = (json, id, main) => {
-  const photographer = json.photographers.find((photographer) => photographer.id === id);
+  const photographer = json.photographers.find(
+    (photographer) => photographer.id === id
+  );
   const medias = json.media.filter((media) => media.photographerId === id);
 
   document.title += ` - ${photographer.name}`;
 
   main.append(
-    DOM.createPhotographerHeader(photographer),
+    dom.createPhotographerHeader(photographer),
     Select.createSelect(selectFilters),
-    DOM.createFigureGroup(medias),
-    DOM.createMetaInfos(medias, photographer)
+    dom.createFigureGroup(medias),
+    dom.createMetaInfos(medias, photographer)
   );
 
-  document.body.prepend(DOM.createHeader(id), main);
+  document.body.prepend(dom.createHeader(id), main);
 
   const selectLis = document.querySelectorAll('#select-list li');
   const sortBtn = document.getElementById('js-sort');
-  const select = document.getElementById('select-list');
+  // const select = document.getElementById('select-list');
 
-  // sortBtn.addEventListener('click', () => {
-  //   toggleListBox(sortBtn, select);
+  // sortBtn.addEventListener('focus', toggleListBox();
   // });
 
   selectLis.forEach((option) => {
