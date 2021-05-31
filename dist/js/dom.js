@@ -262,7 +262,7 @@ const createTotalLikesDiv = (medias) => {
 };
 
 // TODO : change name
-export const createMetaInfos = (medias, photographer) => {
+export const createLikesAndPriceDiv = (medias, photographer) => {
   const div = createDIV('meta-infos');
   div.append(
     createTotalLikesDiv(medias),

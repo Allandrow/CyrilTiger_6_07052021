@@ -119,7 +119,7 @@ const constructPhotographPage = (json, id, main) => {
     dom.createPhotographerHeader(photographer),
     Select.createSelect(selectFilters),
     dom.createFigureGroup(medias),
-    dom.createMetaInfos(medias, photographer)
+    dom.createLikesAndPriceDiv(medias, photographer)
   );
 
   document.body.prepend(dom.createHeader(id), main);
