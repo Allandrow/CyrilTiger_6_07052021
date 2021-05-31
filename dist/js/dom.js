@@ -31,11 +31,11 @@ const createSPAN = (text, className = null) => {
   return span;
 };
 
-export const createSelectLI = (id, text, ariaSelected = false) => {
+export const createSelectLI = (id, text) => {
   const li = document.createElement('li');
   li.setAttribute('role', 'option');
   li.setAttribute('id', `sort-${id}`);
-  li.setAttribute('aria-selected', ariaSelected);
+  li.setAttribute('aria-selected', 'false');
   li.setAttribute('aria-labelledBy', 'ariaLabel');
   li.appendChild(document.createTextNode(text));
 
@@ -261,4 +261,52 @@ export const createHeader = (id, photographers = null) => {
   }
 
   return header;
+};
+
+export const createSelectGroup = (filters) => {
+  const divGroup = createDIV('select-group');
+
+  const label = document.createElement('label');
+  label.setAttribute('for', 'js-sort');
+  label.setAttribute('id', 'ariaLabel');
+  label.appendChild(document.createTextNode('Trier par'));
+
+  const divSelect = createDIV('select');
+
+  const btn = document.createElement('button');
+  btn.setAttribute('id', 'js-sort');
+  btn.setAttribute('role', 'button');
+  btn.setAttribute('aria-haspopup', 'listbox');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-labelledBy', 'ariaLabel');
+  btn.appendChild(document.createTextNode(filters[0]));
+
+  const ul = document.createElement('ul');
+  ul.setAttribute('id', 'select-list');
+  ul.setAttribute('role', 'listbox');
+
+  filters.forEach((filter) => {
+    switch (filter) {
+      case 'Popularité':
+        ul.appendChild(createSelectLI('likes', filter));
+        break;
+      case 'Date':
+        ul.appendChild(createSelectLI('date', filter));
+        break;
+      case 'Titre':
+        ul.appendChild(createSelectLI('titre', filter));
+        break;
+    }
+  });
+
+  ul.firstElementChild.setAttribute('aria-selected', 'true');
+
+  ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
+
+  const img = createIMG('expand-more.svg', 'expand list indicator');
+
+  divSelect.append(btn, ul, img);
+  divGroup.append(label, divSelect);
+
+  return divGroup;
 };

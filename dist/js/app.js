@@ -7,41 +7,17 @@ const getJSON = async () => {
   return json;
 };
 
-const createSelectGroup = () => {
-  const divGroup = DOM.createDIV('select-group');
+class Select {
+  constructor(filters) {
+    this.filters = filters;
+  }
 
-  const label = document.createElement('label');
-  label.setAttribute('for', 'js-sort');
-  label.setAttribute('id', 'ariaLabel');
-  label.appendChild(document.createTextNode('Trier par'));
+  static createSelect(filters) {
+    return DOM.createSelectGroup(filters);
+  }
+}
 
-  const divSelect = DOM.createDIV('select');
-
-  const btn = document.createElement('button');
-  btn.setAttribute('id', 'js-sort');
-  btn.setAttribute('role', 'button');
-  btn.setAttribute('aria-haspopup', 'listbox');
-  btn.setAttribute('aria-expanded', 'false');
-  btn.setAttribute('aria-labelledBy', 'ariaLabel');
-  btn.appendChild(document.createTextNode('Popularité'));
-
-  const ul = document.createElement('ul');
-  ul.setAttribute('id', 'select-list');
-  ul.setAttribute('role', 'listbox');
-  ul.setAttribute('aria-activedescendant', 'sort-likes');
-
-  const liLikes = DOM.createSelectLI('likes', 'Popularité', true);
-  const liDate = DOM.createSelectLI('date', 'Date');
-  const liTitle = DOM.createSelectLI('titre', 'Titre');
-  ul.append(liLikes, liDate, liTitle);
-
-  const img = DOM.createIMG('expand-more.svg', 'expand list indicator');
-
-  divSelect.append(btn, ul, img);
-  divGroup.append(label, divSelect);
-
-  return divGroup;
-};
+const selectFilters = ['Popularité', 'Date', 'Titre'];
 
 const switchTagActiveState = (tags, clickedTag) => {
   /*
@@ -120,9 +96,10 @@ const constructPhotographPage = (json, id) => {
   document.body.prepend(DOM.createHeader(id));
 
   const main = document.getElementById('js-main');
+
   main.append(
     DOM.createPhotographerHeader(photographer),
-    createSelectGroup(),
+    Select.createSelect(selectFilters),
     DOM.createFigureGroup(medias),
     DOM.createMetaInfos(medias, photographer)
   );
