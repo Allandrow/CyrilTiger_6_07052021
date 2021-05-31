@@ -15,6 +15,17 @@ class Select {
   static createSelect(filters) {
     return DOM.createSelectGroup(filters);
   }
+
+  static changeSelectedFilter(option) {
+    if (option.getAttribute('aria-selected') !== 'true') {
+      document.querySelector('#select-list li[aria-selected="true"]').setAttribute('aria-selected', 'false');
+      option.setAttribute('aria-selected', 'true');
+    }
+  }
+
+  static changeBtnText(option, btn) {
+    btn.innerText = option.innerText;
+  }
 }
 
 const selectFilters = ['Popularité', 'Date', 'Titre'];
@@ -70,15 +81,15 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
-const constructHomepage = (photographers, id) => {
-  document.body.prepend(DOM.createHeader(id, photographers));
-
-  const main = document.getElementById('js-main');
+const constructHomepage = (photographers, id, main) => {
+  document.body.prepend(DOM.createHeader(id, photographers), main);
   main.classList.add('thumbnail-list');
 
   photographers.forEach((photographer) => {
     main.appendChild(DOM.createPhotographerArticle(photographer));
   });
+
+  main.appendChild(DOM.createBackToTopBtn());
 
   const tags = document.querySelectorAll('.tag');
 
@@ -87,15 +98,13 @@ const constructHomepage = (photographers, id) => {
   window.addEventListener('scroll', displayBackToTopBtn);
 };
 
-const constructPhotographPage = (json, id) => {
+const constructPhotographPage = (json, id, main) => {
   const photographer = json.photographers.find((photographer) => photographer.id === id);
   const medias = json.media.filter((media) => media.photographerId === id);
 
   document.title += ` - ${photographer.name}`;
 
-  document.body.prepend(DOM.createHeader(id));
-
-  const main = document.getElementById('js-main');
+  // const main = document.getElementById('js-main');
 
   main.append(
     DOM.createPhotographerHeader(photographer),
@@ -103,16 +112,31 @@ const constructPhotographPage = (json, id) => {
     DOM.createFigureGroup(medias),
     DOM.createMetaInfos(medias, photographer)
   );
+
+  document.body.prepend(DOM.createHeader(id), main);
+
+  const selectLis = document.querySelectorAll('#select-list li');
+  const sortBtn = document.getElementById('js-sort');
+
+  selectLis.forEach((option) => {
+    option.addEventListener('click', () => {
+      Select.changeSelectedFilter(option);
+      Select.changeBtnText(option, sortBtn);
+    });
+  });
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
 
+  const main = document.createElement('main');
+  main.id = 'js-main';
+
   if (isFinite(id)) {
-    constructPhotographPage(json, id);
+    constructPhotographPage(json, id, main);
   } else {
-    constructHomepage(json.photographers, id);
+    constructHomepage(json.photographers, id, main);
   }
 };
 

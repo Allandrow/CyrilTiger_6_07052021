@@ -66,6 +66,19 @@ const createContactBtn = () => {
   return btn;
 };
 
+export const createBackToTopBtn = () => {
+  const backTop = createDIV('back');
+  backTop.classList.add('hidden');
+  backTop.id = 'js-backToTop';
+
+  const link = document.createElement('a');
+  link.appendChild(document.createTextNode('Passer au contenu'));
+
+  backTop.appendChild(link);
+
+  return backTop;
+};
+
 const createTagList = (tags) => {
   const ul = document.createElement('ul');
   ul.classList.add('tag-list');
@@ -300,7 +313,6 @@ export const createSelectGroup = (filters) => {
   });
 
   ul.firstElementChild.setAttribute('aria-selected', 'true');
-
   ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
 
   const img = createIMG('expand-more.svg', 'expand list indicator');

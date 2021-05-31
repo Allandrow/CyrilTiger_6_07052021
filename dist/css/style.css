@@ -408,6 +408,8 @@ header nav {
   padding: 1rem 3rem 1rem 1rem;
   border-radius: 0.25rem;
   background-color: #901c1c;
+  width: 145px;
+  text-align: left;
 }
 .select-group .select ul {
   position: absolute;
@@ -417,6 +419,7 @@ header nav {
   background-color: #901c1c;
   border-radius: 0.25rem;
   padding: 1rem 0.75rem 0 0.75rem;
+  width: 145px;
 }
 .select-group .select li {
   padding: 1rem 2.25rem 1rem 0.25rem;
