@@ -261,7 +261,6 @@ const createTotalLikesDiv = (medias) => {
   return div;
 };
 
-// TODO : change name
 export const createLikesAndPriceDiv = (medias, photographer) => {
   const div = createDIV('meta-infos');
   div.append(
@@ -278,13 +277,11 @@ const createLogo = () => {
   return logo;
 };
 
-const createNav = (photographers) => {
-  const photographTagSet = utils.getPhotographTagSet(photographers);
-
+const createNav = (tagSet) => {
   const nav = document.createElement('nav');
   nav.ariaLabel = 'photographer categories';
 
-  const ul = createTagList(photographTagSet);
+  const ul = createTagList(tagSet);
 
   nav.appendChild(ul);
 
@@ -297,10 +294,8 @@ export const createHeader = (id, photographers) => {
   header.appendChild(createLogo());
 
   if (!isFinite(id)) {
-    header.append(
-      createHeading('Nos photographes', 'h1'),
-      createNav(photographers)
-    );
+    const tagSet = utils.getPhotographTagSet(photographers);
+    header.append(createHeading('Nos photographes', 'h1'), createNav(tagSet));
   }
 
   return header;
@@ -320,7 +315,7 @@ export const createSelectGroup = (filters) => {
   btn.setAttribute('id', 'js-sort');
   btn.setAttribute('role', 'button');
   btn.setAttribute('aria-haspopup', 'listbox');
-  btn.setAttribute('aria-expanded', 'false'); // TODO, change this value on focus/hover
+  btn.setAttribute('aria-expanded', 'false');
   btn.setAttribute('aria-labelledBy', 'ariaLabel');
   btn.appendChild(document.createTextNode(filters[0]));
 

@@ -82,11 +82,15 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
-// const toggleListBox = (btn, select) => {
-//   select.classList.toggle('open');
-//   console.log('focus');
-//   btn.setAttribute('aria-expanded', 'true');
-// };
+const expandListBox = (btn, select) => {
+  btn.setAttribute('aria-expanded', 'true');
+  select.classList.toggle('open');
+};
+
+const collapseListBox = (btn, select) => {
+  btn.setAttribute('aria-expanded', 'false');
+  select.classList.toggle('open');
+};
 
 const constructHomepage = (photographers, id, main) => {
   document.body.prepend(dom.createHeader(id, photographers), main);
@@ -126,16 +130,19 @@ const constructPhotographPage = (json, id, main) => {
 
   const selectLis = document.querySelectorAll('#select-list li');
   const sortBtn = document.getElementById('js-sort');
-  // const select = document.getElementById('select-list');
+  const select = document.getElementById('select-list');
 
-  // sortBtn.addEventListener('focus', toggleListBox();
-  // });
-
+  sortBtn.addEventListener('focus', () => {
+    expandListBox(sortBtn, select);
+  });
   selectLis.forEach((option) => {
     option.addEventListener('click', () => {
       Select.changeSelectedFilter(option);
       Select.changeBtnText(option, sortBtn);
     });
+  });
+  sortBtn.addEventListener('blur', () => {
+    collapseListBox(sortBtn, select);
   });
 };
 
