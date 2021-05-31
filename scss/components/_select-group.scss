@@ -29,7 +29,7 @@
       cursor: pointer;
 
       &:focus + ul {
-        // display: block;
+        display: block;
         width: 148px;
         left: -1px;
       }
@@ -45,9 +45,9 @@
       width: 145px;
     }
 
-    ul.open {
-      display: block;
-    }
+    // ul.open {
+    //   display: block;
+    // }
 
     li {
       cursor: pointer;
@@ -72,7 +72,7 @@
 
     &:hover {
       ul {
-        // display: block;
+        display: block;
       }
 
       img {

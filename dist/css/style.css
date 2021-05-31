@@ -413,6 +413,7 @@ header nav {
   cursor: pointer;
 }
 .select-group .select button:focus + ul {
+  display: block;
   width: 148px;
   left: -1px;
 }
@@ -424,9 +425,6 @@ header nav {
   background-color: #901c1c;
   border-radius: 0.25rem;
   width: 145px;
-}
-.select-group .select ul.open {
-  display: block;
 }
 .select-group .select li {
   cursor: pointer;
@@ -444,6 +442,9 @@ header nav {
   right: 1rem;
   z-index: 2;
   transition: transform 100ms linear;
+}
+.select-group .select:hover ul {
+  display: block;
 }
 .select-group .select:hover img {
   transform: rotate(180deg);
