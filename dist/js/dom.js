@@ -227,11 +227,15 @@ const createFigure = (media) => {
   } else {
     mediaElement = createVideo(media.photographerId, media.video);
   }
+
   link.appendChild(mediaElement);
 
   const caption = createFigcaption(media.title, media.likes);
 
   figure.append(link, caption);
+  figure.setAttribute('data-likes', media.likes);
+  figure.setAttribute('data-title', media.title);
+  figure.setAttribute('data-date', media.date);
   return figure;
 };
 
@@ -342,9 +346,7 @@ export const createSelectGroup = (filters) => {
   ul.setAttribute(
     'aria-activedescendant',
     ul.firstElementChild.getAttribute('id')
-  ); // TODO : change this value
-
-  // const img = createIMG('expand-more.svg', 'expand list indicator');
+  );
 
   divSelect.append(btn, ul);
   divGroup.append(label, divSelect);

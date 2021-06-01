@@ -21,8 +21,9 @@ class Filters {
     }
   }
 
-  static changeBtnText(option, btn) {
+  static changeFilterBtnContent(option, btn) {
     btn.innerText = option.innerText;
+    btn.setAttribute('data-sort', option.id.slice(5));
   }
 
   static expandListBox(btn) {
@@ -33,6 +34,31 @@ class Filters {
   static collapseListBox(btn) {
     btn.setAttribute('aria-expanded', 'false');
     btn.nextElementSibling.classList.remove('open');
+  }
+
+  static sortByFilter() {
+    const filterType = document
+      .getElementById('js-sort')
+      .getAttribute('data-sort');
+    const figures = Array.from(
+      document.querySelectorAll('#js-figureGroup .figure')
+    );
+
+    switch (filterType) {
+      case 'likes':
+        figures.sort(utils.sortByLikes);
+        break;
+      case 'date':
+        figures.sort(utils.sortByDate);
+        break;
+      case 'titre':
+        figures.sort(utils.sortByTitle);
+        break;
+    }
+
+    for (const figure of figures) {
+      figure.parentNode.appendChild(figure);
+    }
   }
 }
 
@@ -109,8 +135,9 @@ const loadFiltersEventListeners = () => {
   selectListItems.forEach((option) => {
     option.addEventListener('click', () => {
       Filters.changeSelectedFilter(option);
-      Filters.changeBtnText(option, sortBtn);
+      Filters.changeFilterBtnContent(option, sortBtn);
       Filters.collapseListBox(sortBtn);
+      Filters.sortByFilter();
     });
     option.addEventListener('focusout', () => {
       if (option === selectList.lastElementChild) {
@@ -147,10 +174,7 @@ const constructPhotographPage = (json, id, main) => {
 
   document.title += ` - ${photographer.name}`;
 
-  // Sort medias according to btn value
   medias.sort((a, b) => b.likes - a.likes);
-  // generate figure group sorted
-  // on btn value change, replace figure group with new sorted media array
 
   main.append(
     dom.createPhotographerHeader(photographer),
