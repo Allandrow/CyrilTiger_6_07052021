@@ -7,7 +7,7 @@ const getJSON = async () => {
   return json;
 };
 
-class Select {
+class Filters {
   static createSelect(filters) {
     return dom.createSelectGroup(filters);
   }
@@ -15,7 +15,7 @@ class Select {
   static changeSelectedFilter(option) {
     if (option.getAttribute('aria-selected') !== 'true') {
       document
-        .querySelector('#select-list li[aria-selected="true"]')
+        .querySelector('#js-select li[aria-selected="true"]')
         .setAttribute('aria-selected', 'false');
       option.setAttribute('aria-selected', 'true');
     }
@@ -23,6 +23,16 @@ class Select {
 
   static changeBtnText(option, btn) {
     btn.innerText = option.innerText;
+  }
+
+  static expandListBox(btn) {
+    btn.setAttribute('aria-expanded', 'true');
+    btn.nextElementSibling.classList.add('open');
+  }
+
+  static collapseListBox(btn) {
+    btn.setAttribute('aria-expanded', 'false');
+    btn.nextElementSibling.classList.remove('open');
   }
 }
 
@@ -82,14 +92,32 @@ const displayBackToTopBtn = () => {
   backTopBtn.classList.remove('hidden');
 };
 
-const expandListBox = (btn, select) => {
-  btn.setAttribute('aria-expanded', 'true');
-  select.classList.toggle('open');
-};
+const loadFiltersEventListeners = () => {
+  const selectListItems = document.querySelectorAll('#js-select li');
+  const sortBtn = document.getElementById('js-sort');
+  const selectList = document.getElementById('js-select');
 
-const collapseListBox = (btn, select) => {
-  btn.setAttribute('aria-expanded', 'false');
-  select.classList.toggle('open');
+  sortBtn.addEventListener('mouseenter', () => {
+    Filters.expandListBox(sortBtn);
+  });
+  selectList.addEventListener('mouseleave', () => {
+    Filters.collapseListBox(sortBtn);
+  });
+  sortBtn.addEventListener('focus', () => {
+    Filters.expandListBox(sortBtn);
+  });
+  selectListItems.forEach((option) => {
+    option.addEventListener('click', () => {
+      Filters.changeSelectedFilter(option);
+      Filters.changeBtnText(option, sortBtn);
+      Filters.collapseListBox(sortBtn);
+    });
+    option.addEventListener('focusout', () => {
+      if (option === selectList.lastElementChild) {
+        Filters.collapseListBox(sortBtn);
+      }
+    });
+  });
 };
 
 const constructHomepage = (photographers, id, main) => {
@@ -121,29 +149,14 @@ const constructPhotographPage = (json, id, main) => {
 
   main.append(
     dom.createPhotographerHeader(photographer),
-    Select.createSelect(selectFilters),
+    Filters.createSelect(selectFilters),
     dom.createFigureGroup(medias),
     dom.createLikesAndPriceDiv(medias, photographer)
   );
 
   document.body.prepend(dom.createHeader(id), main);
 
-  const selectLis = document.querySelectorAll('#select-list li');
-  const sortBtn = document.getElementById('js-sort');
-  const select = document.getElementById('select-list');
-
-  sortBtn.addEventListener('focus', () => {
-    expandListBox(sortBtn, select);
-  });
-  selectLis.forEach((option) => {
-    option.addEventListener('click', () => {
-      Select.changeSelectedFilter(option);
-      Select.changeBtnText(option, sortBtn);
-    });
-  });
-  sortBtn.addEventListener('blur', () => {
-    collapseListBox(sortBtn, select);
-  });
+  loadFiltersEventListeners();
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {

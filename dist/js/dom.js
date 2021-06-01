@@ -314,13 +314,14 @@ export const createSelectGroup = (filters) => {
   const btn = document.createElement('button');
   btn.setAttribute('id', 'js-sort');
   btn.setAttribute('role', 'button');
+  btn.classList.add('btn');
   btn.setAttribute('aria-haspopup', 'listbox');
   btn.setAttribute('aria-expanded', 'false');
   btn.setAttribute('aria-labelledBy', 'ariaLabel');
   btn.appendChild(document.createTextNode(filters[0]));
 
   const ul = document.createElement('ul');
-  ul.setAttribute('id', 'select-list');
+  ul.setAttribute('id', 'js-select');
   ul.setAttribute('role', 'listbox');
 
   filters.forEach((filter) => {
@@ -343,9 +344,9 @@ export const createSelectGroup = (filters) => {
     ul.firstElementChild.getAttribute('id')
   ); // TODO : change this value
 
-  const img = createIMG('expand-more.svg', 'expand list indicator');
+  // const img = createIMG('expand-more.svg', 'expand list indicator');
 
-  divSelect.append(btn, ul, img);
+  divSelect.append(btn, ul);
   divGroup.append(label, divSelect);
 
   return divGroup;

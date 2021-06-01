@@ -405,16 +405,25 @@ header nav {
   background-color: inherit;
   border: none;
   color: inherit;
-  padding: 1rem 3rem 1rem 1rem;
+  padding: 1rem;
   border-radius: 0.25rem;
   background-color: #901c1c;
   width: 145px;
   text-align: left;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
-.select-group .select button:focus + ul {
-  width: 148px;
-  left: -1px;
+.select-group .select .btn::after,
+.select-group .select li:first-of-type button::after {
+  content: url("../img/expand-more.svg");
+  display: block;
+  width: 16px;
+  height: 11px;
+}
+.select-group .select li:first-of-type button::after {
+  transform: rotate(180deg);
+  transform-origin: bottom;
 }
 .select-group .select ul {
   position: absolute;
@@ -437,16 +446,6 @@ header nav {
 .select-group .select li:nth-child(2) {
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
-}
-.select-group .select img {
-  position: absolute;
-  top: 1.5rem;
-  right: 1rem;
-  z-index: 2;
-  transition: transform 100ms linear;
-}
-.select-group .select:hover img {
-  transform: rotate(180deg);
 }
 @media (min-width: 60rem) {
   .select-group {

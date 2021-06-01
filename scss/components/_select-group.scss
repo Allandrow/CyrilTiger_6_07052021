@@ -21,18 +21,27 @@
       background-color: inherit;
       border: none;
       color: inherit;
-      padding: 1rem 3rem 1rem 1rem;
+      padding: 1rem;
       border-radius: 0.25rem;
       background-color: $color-primary-400;
       width: 145px;
       text-align: left;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+    }
 
-      &:focus + ul {
-        // display: block;
-        width: 148px;
-        left: -1px;
-      }
+    .btn::after,
+    li:first-of-type button::after {
+      content: url('../img/expand-more.svg');
+      display: block;
+      width: 16px;
+      height: 11px;
+    }
+
+    li:first-of-type button::after {
+      transform: rotate(180deg);
+      transform-origin: bottom;
     }
 
     ul {
@@ -59,24 +68,6 @@
       &:nth-child(2) {
         border-top: 1px solid $color-base-100;
         border-bottom: 1px solid $color-base-100;
-      }
-    }
-
-    img {
-      position: absolute;
-      top: 1.5rem;
-      right: 1rem;
-      z-index: 2;
-      transition: transform 100ms linear;
-    }
-
-    &:hover {
-      ul {
-        // display: block;
-      }
-
-      img {
-        transform: rotate(180deg);
       }
     }
   }
