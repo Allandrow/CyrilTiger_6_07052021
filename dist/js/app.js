@@ -147,6 +147,11 @@ const constructPhotographPage = (json, id, main) => {
 
   document.title += ` - ${photographer.name}`;
 
+  // Sort medias according to btn value
+  medias.sort((a, b) => b.likes - a.likes);
+  // generate figure group sorted
+  // on btn value change, replace figure group with new sorted media array
+
   main.append(
     dom.createPhotographerHeader(photographer),
     Filters.createSelect(selectFilters),
