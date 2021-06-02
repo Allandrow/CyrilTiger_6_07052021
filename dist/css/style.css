@@ -483,6 +483,13 @@ header nav {
 .figure figcaption div {
   display: flex;
 }
+.figure figcaption div img {
+  transition: transform 200ms;
+  cursor: pointer;
+}
+.figure figcaption div img:hover {
+  transform: scale(1.1);
+}
 .figure figcaption span {
   margin-right: 0.5rem;
 }

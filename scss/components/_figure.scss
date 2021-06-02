@@ -32,6 +32,15 @@
 
     div {
       display: flex;
+
+      img {
+        transition: transform 200ms;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
     }
 
     span {

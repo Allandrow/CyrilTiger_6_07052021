@@ -8,7 +8,7 @@ export const createDIV = (className) => {
   return div;
 };
 
-const createHeading = (name, heading = 'h2') => {
+const createHeading = (name, heading) => {
   const title = document.createElement(heading);
   title.appendChild(document.createTextNode(name));
   return title;
@@ -208,6 +208,7 @@ const createFigcaption = (title, likes) => {
 
   const likesSpan = createSPAN(likes);
   const img = createIMG('like-icon.svg', 'likes');
+  img.classList.add('js-like');
 
   div.append(likesSpan, img);
   figcaption.append(span, div);

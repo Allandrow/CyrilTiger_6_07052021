@@ -37,12 +37,8 @@ class Filters {
   }
 
   static sortByFilter() {
-    const filterType = document
-      .getElementById('js-sort')
-      .getAttribute('data-sort');
-    const figures = Array.from(
-      document.querySelectorAll('#js-figureGroup .figure')
-    );
+    const filterType = document.getElementById('js-sort').getAttribute('data-sort');
+    const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
 
     switch (filterType) {
       case 'likes':
@@ -71,10 +67,7 @@ const switchTagActiveState = (tags, clickedTag) => {
     OR if tag is the same value as clicked tag
   */
   tags.forEach((tag) => {
-    if (
-      tag.classList.contains('active') ||
-      utils.isSameTagText(tag, clickedTag)
-    ) {
+    if (tag.classList.contains('active') || utils.isSameTagText(tag, clickedTag)) {
       tag.classList.toggle('active');
     }
   });
@@ -147,6 +140,38 @@ const loadFiltersEventListeners = () => {
   });
 };
 
+const updateTotalLikesCount = (operation) => {
+  const totalLikesCountElement = document.querySelector('.meta-infos__likes span');
+  let totalLikesCount = parseInt(totalLikesCountElement.innerText);
+
+  operation === 'add' ? totalLikesCount++ : totalLikesCount--;
+
+  totalLikesCountElement.innerText = totalLikesCount;
+};
+
+const loadLikesEventListener = () => {
+  const mediaLikeIcons = document.querySelectorAll('.js-like');
+  mediaLikeIcons.forEach((icon) => {
+    icon.addEventListener('click', () => {
+      const likeFigure = icon.closest('.figure');
+      let likeCount = parseInt(likeFigure.getAttribute('data-likes'));
+
+      if (icon.getAttribute('data-liked') === 'true') {
+        likeCount--;
+        icon.setAttribute('data-liked', 'false');
+        updateTotalLikesCount('substract');
+      } else {
+        likeCount++;
+        icon.setAttribute('data-liked', 'true');
+        updateTotalLikesCount('add');
+      }
+
+      likeFigure.setAttribute('data-likes', likeCount);
+      icon.previousElementSibling.textContent = likeCount;
+    });
+  });
+};
+
 const constructHomepage = (photographers, id, main) => {
   document.body.prepend(dom.createHeader(id, photographers), main);
   main.classList.add('thumbnail-list');
@@ -186,6 +211,8 @@ const constructPhotographPage = (json, id, main) => {
   document.body.prepend(dom.createHeader(id), main);
 
   loadFiltersEventListeners();
+
+  loadLikesEventListener();
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
