@@ -83,13 +83,16 @@ ul {
 
 body {
   font-family: "DM Sans";
-  padding: 2rem 0 0;
   color: #901c1c;
+}
+
+.wrapper {
+  padding: 2rem 0 0;
   max-width: 1440px;
   margin: 0 auto;
 }
 @media (min-width: 48rem) {
-  body {
+  .wrapper {
     padding-top: 3.25rem;
   }
 }
@@ -496,6 +499,120 @@ header nav {
 @media (min-width: 60rem) {
   .figure {
     height: 350px;
+  }
+}
+
+.modal-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  background-color: rgba(196, 196, 196, 0.4);
+}
+.modal-window section {
+  background: #db8876;
+  position: relative;
+  color: #000;
+  padding: 2rem 1.25rem;
+  height: 100%;
+  width: 100%;
+}
+.modal-window h1 {
+  font-size: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.modal-window form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.modal-window form button {
+  background-color: #901c1c;
+  border: 0;
+  color: #fff;
+  padding: 0.25rem 3rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  align-self: center;
+  margin-top: 1rem;
+  font-size: 1.125rem;
+}
+.modal-window label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  width: 100%;
+}
+.modal-window input,
+.modal-window textarea {
+  border-radius: 0.25rem;
+  border: 0;
+  margin-top: 0.25rem;
+}
+.modal-window input {
+  height: 3.25rem;
+}
+.modal-window textarea {
+  max-height: 190px;
+}
+.modal-window .close {
+  position: absolute;
+  top: 2rem;
+  right: 1.25rem;
+  background: 0;
+  border: 0;
+  cursor: pointer;
+  height: 1.5rem;
+}
+.modal-window .close::before, .modal-window .close::after {
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 3px;
+  background-color: #fff;
+  transform-origin: center;
+}
+.modal-window .close::before {
+  transform: rotate(45deg);
+}
+.modal-window .close::after {
+  transform: rotate(-45deg);
+  margin-top: -3px;
+}
+@media (min-width: 60rem) {
+  .modal-window section {
+    height: 900px;
+    width: 670px;
+  }
+  .modal-window h1 {
+    font-size: 4rem;
+    line-height: 1;
+  }
+  .modal-window form {
+    margin-top: 1rem;
+  }
+  .modal-window form button {
+    align-self: start;
+    height: 69px;
+  }
+  .modal-window label {
+    font-size: 2.25rem;
+    margin-bottom: 0;
+  }
+  .modal-window input {
+    height: 4.25rem;
+    margin-top: 0;
+  }
+  .modal-window textarea {
+    max-height: 170px;
   }
 }
 

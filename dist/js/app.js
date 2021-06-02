@@ -58,6 +58,7 @@ class Filters {
   }
 }
 
+// TODO : add this array in Filters constructor
 const selectFilters = ['Popularité', 'Date', 'Titre'];
 
 const switchTagActiveState = (tags, clickedTag) => {
@@ -172,8 +173,8 @@ const loadLikesEventListener = () => {
   });
 };
 
-const constructHomepage = (photographers, id, main) => {
-  document.body.prepend(dom.createHeader(id, photographers), main);
+const constructHomepage = (photographers, id, wrapper, main) => {
+  wrapper.append(dom.createHeader(id, photographers), main);
   main.classList.add('thumbnail-list');
 
   photographers.forEach((photographer) => {
@@ -191,7 +192,7 @@ const constructHomepage = (photographers, id, main) => {
   window.addEventListener('scroll', displayBackToTopBtn);
 };
 
-const constructPhotographPage = (json, id, main) => {
+const constructPhotographPage = (json, id, wrapper, main) => {
   const photographer = json.photographers.find(
     (photographer) => photographer.id === id
   );
@@ -208,7 +209,7 @@ const constructPhotographPage = (json, id, main) => {
     dom.createLikesAndPriceDiv(medias, photographer)
   );
 
-  document.body.prepend(dom.createHeader(id), main);
+  wrapper.append(dom.createHeader(id), main);
 
   loadFiltersEventListeners();
 
@@ -218,14 +219,15 @@ const constructPhotographPage = (json, id, main) => {
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
+  const wrapper = document.getElementById('js-container');
 
   const main = document.createElement('main');
   main.id = 'js-main';
 
   if (isFinite(id)) {
-    constructPhotographPage(json, id, main);
+    constructPhotographPage(json, id, wrapper, main);
   } else {
-    constructHomepage(json.photographers, id, main);
+    constructHomepage(json.photographers, id, wrapper, main);
   }
 };
 
