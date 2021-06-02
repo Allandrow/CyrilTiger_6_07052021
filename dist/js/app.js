@@ -173,6 +173,36 @@ const loadLikesEventListener = () => {
   });
 };
 
+const loadModalEventListeners = () => {
+  const contactBtn = document.getElementById('js-contactForm');
+  const modal = document.getElementById('contact-modal');
+
+  contactBtn.addEventListener('click', () => {
+    modal.classList.toggle('open');
+  });
+
+  const modalButtons = modal.querySelectorAll('button');
+
+  modalButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      if (button.id === 'js-submit') {
+        const firstName = document.getElementById('formFirstName').value;
+        const lastName = document.getElementById('formLastName').value;
+        const email = document.getElementById('formEmail').value;
+        const message = document.getElementById('formMessage').value;
+
+        console.log(`Prénom : ${firstName}`);
+        console.log(`Nom : ${lastName}`);
+        console.log(`Email : ${email}`);
+        console.log(`Message : ${message}`);
+      }
+      modal.classList.toggle('open');
+    });
+  });
+};
+
 const constructHomepage = (photographers, id, wrapper, main) => {
   wrapper.append(dom.createHeader(id, photographers), main);
   main.classList.add('thumbnail-list');
@@ -211,15 +241,23 @@ const constructPhotographPage = (json, id, wrapper, main) => {
 
   wrapper.append(dom.createHeader(id), main);
 
+  document.body.insertBefore(
+    dom.createContactModal(),
+    document.querySelector('script')
+  );
+
   loadFiltersEventListeners();
 
   loadLikesEventListener();
+
+  loadModalEventListeners();
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
-  const wrapper = document.getElementById('js-container');
+
+  const wrapper = dom.createBodyContent();
 
   const main = document.createElement('main');
   main.id = 'js-main';

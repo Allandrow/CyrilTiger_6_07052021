@@ -503,6 +503,9 @@ header nav {
 }
 
 .modal-window {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -512,6 +515,12 @@ header nav {
   z-index: 2;
   top: 0;
   background-color: rgba(196, 196, 196, 0.4);
+  transition: visibility 150ms, opacity 150ms;
+}
+.modal-window.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 .modal-window section {
   background: #db8876;
@@ -556,12 +565,13 @@ header nav {
   border-radius: 0.25rem;
   border: 0;
   margin-top: 0.25rem;
+  padding: 0 1rem;
 }
 .modal-window input {
   height: 3.25rem;
 }
 .modal-window textarea {
-  max-height: 190px;
+  ht: 190px;
 }
 .modal-window .close {
   position: absolute;
@@ -602,17 +612,19 @@ header nav {
   .modal-window form button {
     align-self: start;
     height: 69px;
+    cursor: pointer;
   }
   .modal-window label {
     font-size: 2.25rem;
     margin-bottom: 0;
+    cursor: pointer;
   }
   .modal-window input {
     height: 4.25rem;
     margin-top: 0;
   }
   .modal-window textarea {
-    max-height: 170px;
+    height: 170px;
   }
 }
 

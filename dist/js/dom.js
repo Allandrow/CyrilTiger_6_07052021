@@ -65,6 +65,7 @@ export const createTag = (tagText) => {
 const createContactBtn = () => {
   const btn = document.createElement('button');
   btn.classList.add('button');
+  btn.id = 'js-contactForm';
   btn.appendChild(document.createTextNode('Contactez-moi'));
 
   return btn;
@@ -268,10 +269,7 @@ const createTotalLikesDiv = (medias) => {
 
 export const createLikesAndPriceDiv = (medias, photographer) => {
   const div = createDIV('meta-infos');
-  div.append(
-    createTotalLikesDiv(medias),
-    createSPAN(`${photographer.price}€/jour`)
-  );
+  div.append(createTotalLikesDiv(medias), createSPAN(`${photographer.price}€/jour`));
   return div;
 };
 
@@ -344,13 +342,77 @@ export const createSelectGroup = (filters) => {
   });
 
   ul.firstElementChild.setAttribute('aria-selected', 'true');
-  ul.setAttribute(
-    'aria-activedescendant',
-    ul.firstElementChild.getAttribute('id')
-  );
+  ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
 
   divSelect.append(btn, ul);
   divGroup.append(label, divSelect);
 
   return divGroup;
+};
+
+const createFormLabel = (id, text, type = 'text') => {
+  const label = document.createElement('label');
+  label.setAttribute('for', id);
+
+  const input = document.createElement('input');
+  input.setAttribute('type', type);
+  input.id = id;
+  input.setAttribute('required', true);
+
+  label.append(document.createTextNode(text), input);
+
+  return label;
+};
+
+export const createContactModal = () => {
+  const div = createDIV('modal-window');
+  div.id = 'contact-modal';
+
+  const section = document.createElement('section');
+
+  const title = createHeading('Contactez-moi', 'h1');
+
+  // TODO : add dynamic content
+  const span = createSPAN('Mimi Keel');
+
+  title.appendChild(span);
+
+  const form = document.createElement('form');
+
+  const firstNameInput = createFormLabel('formFirstName', 'Prénom');
+  const lastNameInput = createFormLabel('formLastName', 'Nom');
+  const emailInput = createFormLabel('formEmail', 'Email', 'email');
+
+  const textAreaLabel = document.createElement('label');
+  textAreaLabel.setAttribute('for', 'formMessage');
+
+  const textArea = document.createElement('textarea');
+  textArea.id = 'formMessage';
+
+  textAreaLabel.append(document.createTextNode('Votre message'), textArea);
+
+  const button = document.createElement('button');
+  button.id = 'js-submit';
+  button.appendChild(document.createTextNode('Envoyer'));
+
+  form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
+
+  const closeBtn = document.createElement('button');
+  closeBtn.classList.add('close');
+
+  section.append(title, form, closeBtn);
+
+  div.appendChild(section);
+
+  return div;
+};
+
+// TODO : add main creation here
+export const createBodyContent = () => {
+  const wrapper = createDIV('wrapper');
+  wrapper.id = 'js-container';
+
+  document.body.prepend(wrapper);
+
+  return wrapper;
 };
