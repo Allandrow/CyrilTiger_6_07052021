@@ -194,9 +194,77 @@ const loadModalEventListeners = () => {
   const contactBtn = document.getElementById('js-contactForm');
   const modal = document.getElementById('contact-modal');
   const modalButtons = modal.querySelectorAll('button');
+  const wrapper = document.getElementById('js-container');
 
   contactBtn.addEventListener('click', () => {
-    modal.classList.toggle('open');
+    modal.classList.add('open');
+    wrapper.setAttribute('aria-hidden', 'true');
+    contactBtn.setAttribute('aria-expanded', 'true');
+    // Save focused element before opening modal
+    const focusedElement = document.activeElement;
+    const tabKeyCode = 9;
+    const escapeKeyCode = 27;
+
+    // Get a list of all focusable elements within modal
+    const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
+    // Save first and last focusable elements
+    const firstFocusElement = modalFocusableElements[0];
+    const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
+
+    // First tab once modal is open focus on first focus element
+    window.addEventListener('keydown', (e) => {
+      const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
+      const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
+
+      //TODO : on modal closing, put focus on last focused element in document
+
+      if (!(isTabPressed || isEscapePressed)) {
+        return;
+      }
+      if (isEscapePressed) {
+        e.preventDefault();
+        focusedElement.focus();
+        modal.classList.remove('open');
+        contactBtn.setAttribute('aria-expanded', 'false');
+        wrapper.setAttribute('aria-hidden', 'false');
+        console.log(document.activeElement);
+      }
+      if (!modalFocusableElements.includes(document.activeElement)) {
+        e.preventDefault();
+        firstFocusElement.focus();
+      }
+    });
+    // Loop through focusable elements within modal
+    modalFocusableElements.forEach((element) => {
+      element.addEventListener('keydown', (e) => {
+        const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
+        const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
+
+        if (!(isTabPressed || isEscapePressed)) {
+          return;
+        }
+        if (isEscapePressed) {
+          e.preventDefault();
+          focusedElement.focus();
+          modal.classList.remove('open');
+          contactBtn.setAttribute('aria-expanded', 'false');
+          wrapper.setAttribute('aria-hidden', 'false');
+        }
+        if (isTabPressed) {
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusElement) {
+              e.preventDefault();
+              lastFocusElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastFocusElement) {
+              e.preventDefault();
+              firstFocusElement.focus();
+            }
+          }
+        }
+      });
+    });
   });
 
   modalButtons.forEach((button) => {
@@ -215,7 +283,8 @@ const loadModalEventListeners = () => {
         console.log(`Email : ${email}`);
         console.log(`Message : ${message}`);
       }
-      modal.classList.toggle('open');
+      modal.classList.remove('open');
+      wrapper.setAttribute('aria-hidden', 'false');
     });
   });
 };

@@ -1,6 +1,6 @@
 import * as utils from './utils.js';
 
-export const createIMG = (path, alt = '') => {
+const createIMG = (path, alt = '') => {
   const img = document.createElement('img');
   img.setAttribute('src', `dist/img/${path}`);
   img.setAttribute('alt', alt);
@@ -17,7 +17,7 @@ const createSPAN = (text, className) => {
   return span;
 };
 
-export const createSelectLI = (id, text) => {
+const createSelectLI = (id, text) => {
   const li = document.createElement('li');
   li.setAttribute('role', 'option');
   li.setAttribute('id', `sort-${id}`);
@@ -32,7 +32,7 @@ export const createSelectLI = (id, text) => {
   return li;
 };
 
-export const createTag = (tagText) => {
+const createTag = (tagText) => {
   const li = document.createElement('li');
 
   const link = document.createElement('a');
@@ -52,6 +52,7 @@ const createContactBtn = () => {
   const btn = document.createElement('button');
   btn.classList.add('button');
   btn.id = 'js-contactForm';
+  btn.setAttribute('aria-expanded', 'false');
   btn.appendChild(document.createTextNode('Contactez-moi'));
 
   return btn;
@@ -346,7 +347,8 @@ const createFormLabel = (id, text, type = 'text') => {
   const input = document.createElement('input');
   input.setAttribute('type', type);
   input.id = id;
-  input.setAttribute('required', true);
+  input.classList.add('js-focusable');
+  input.required = true;
 
   label.append(document.createTextNode(text), input);
 
@@ -382,17 +384,19 @@ export const createContactModal = (name) => {
 
   const textArea = document.createElement('textarea');
   textArea.id = 'formMessage';
+  textArea.classList.add('js-focusable');
 
   textAreaLabel.append(document.createTextNode('Votre message'), textArea);
 
   const button = document.createElement('button');
   button.id = 'js-submit';
+  button.classList.add('js-focusable');
   button.appendChild(document.createTextNode('Envoyer'));
 
   form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
 
   const closeBtn = document.createElement('button');
-  closeBtn.classList.add('close');
+  closeBtn.classList.add('close', 'js-focusable');
 
   section.append(title, form, closeBtn);
 
