@@ -38,15 +38,21 @@ const handleTagClick = (tags, tagClicked) => {
   });
 };
 
-const displayBackToTopBtn = () => {
+const loadBackToTopBtnEventListeners = () => {
   const html = document.querySelector('html');
-  const backTopBtn = document.getElementById('js-backToTop');
+  const btn = document.getElementById('js-backToTop');
 
-  if (html.scrollTop <= 400) {
-    backTopBtn.classList.add('hidden');
-    return;
-  }
-  backTopBtn.classList.remove('hidden');
+  window.addEventListener('scroll', () => {
+    if (html.scrollTop <= 400) {
+      btn.classList.add('hidden');
+      return;
+    }
+    btn.classList.remove('hidden');
+  });
+
+  btn.addEventListener('click', () => {
+    html.scrollTop = 0;
+  });
 };
 
 const constructHomepage = (photographers, id, wrapper) => {
@@ -65,7 +71,7 @@ const constructHomepage = (photographers, id, wrapper) => {
 
   tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
 
-  window.addEventListener('scroll', displayBackToTopBtn);
+  loadBackToTopBtnEventListeners();
 };
 
 class Filters {

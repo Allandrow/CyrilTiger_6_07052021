@@ -131,7 +131,9 @@ export const createPhotographerHeader = (photographer) => {
   const section = document.createElement('section');
   section.classList.add('photograph-header');
 
-  const div = createDIV(elementBEMName);
+  const div = document.createElement('div');
+  div.classList.add(elementBEMName);
+
   const title = createHeading(photographer.name, 'h1');
 
   const paragraph = document.createElement('p');
