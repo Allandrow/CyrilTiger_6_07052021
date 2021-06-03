@@ -1,13 +1,5 @@
 import * as utils from './utils.js';
 
-export const createDIV = (className) => {
-  const div = document.createElement('div');
-  if (className !== undefined) {
-    div.classList.add(className);
-  }
-  return div;
-};
-
 const createHeading = (name, heading) => {
   const title = document.createElement(heading);
   title.appendChild(document.createTextNode(name));
@@ -193,7 +185,7 @@ const createFigcaption = (title, likes) => {
   const figcaption = document.createElement('figcaption');
 
   const span = createSPAN(title);
-  const div = createDIV();
+  const div = document.createElement('div');
 
   const likesSpan = createSPAN(likes);
   const img = createIMG('like-icon.svg', 'likes');
@@ -248,7 +240,8 @@ const createTotalLikesDiv = (medias) => {
     totalLikes += media.likes;
   });
 
-  const div = createDIV('meta-infos__likes');
+  const div = document.createElement('div');
+  div.classList.add('meta-infos__likes');
   const span = createSPAN(totalLikes);
   const img = createIMG('like-icon-black.svg', 'likes');
   div.append(span, img);
@@ -256,8 +249,9 @@ const createTotalLikesDiv = (medias) => {
 };
 
 export const createLikesAndPriceDiv = (medias, photographer) => {
-  const div = createDIV('meta-infos');
-  div.append(createTotalLikesDiv(medias), createSPAN(`${photographer.price}€/jour`));
+  const div = document.createElement('div');
+  div.classList.add('meta-infos');
+  div.append(createTotalLikesDiv(medias), createSPAN(`${photographer.price}€ / jour`));
   return div;
 };
 
@@ -293,14 +287,16 @@ export const createHeader = (id, photographers) => {
 };
 
 export const createSelectGroup = (filters) => {
-  const divGroup = createDIV('select-group');
+  const divGroup = document.createElement('div');
+  divGroup.classList.add('select-group');
 
   const label = document.createElement('label');
   label.setAttribute('for', 'js-sort');
   label.setAttribute('id', 'ariaLabel');
   label.appendChild(document.createTextNode('Trier par'));
 
-  const divSelect = createDIV('select');
+  const divSelect = document.createElement('div');
+  divSelect.classList.add('select');
 
   const btn = document.createElement('button');
   btn.setAttribute('id', 'js-sort');
@@ -353,7 +349,8 @@ const createFormLabel = (id, text, type = 'text') => {
 };
 
 export const createContactModal = (name) => {
-  const div = createDIV('modal-window');
+  const div = document.createElement('div');
+  div.classList.add('modal-window');
   div.id = 'contact-modal';
   div.setAttribute('role', 'dialog');
 
@@ -399,15 +396,16 @@ export const createContactModal = (name) => {
 };
 
 export const createBodySkeleton = () => {
-  const wrapper = createDIV('wrapper');
-  wrapper.id = 'js-container';
+  const div = document.createElement('div');
+  div.classList.add('wrapper');
+  div.id = 'js-container';
 
   const main = document.createElement('main');
   main.id = 'js-main';
 
-  wrapper.appendChild(main);
+  div.appendChild(main);
 
-  document.body.prepend(wrapper);
+  document.body.prepend(div);
 
-  return wrapper;
+  return div;
 };
