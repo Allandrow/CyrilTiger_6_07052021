@@ -8,8 +8,12 @@ const getJSON = async () => {
 };
 
 class Filters {
-  static createSelect(filters) {
-    return dom.createSelectGroup(filters);
+  constructor(sortingOptions) {
+    this.sortingOptions = sortingOptions;
+  }
+
+  createSelect(sortingOptions) {
+    return dom.createSelectGroup(sortingOptions);
   }
 
   static changeSelectedFilter(option) {
@@ -57,9 +61,6 @@ class Filters {
     }
   }
 }
-
-// TODO : add this array in Filters constructor
-const selectFilters = ['Popularité', 'Date', 'Titre'];
 
 const switchTagActiveState = (tags, clickedTag) => {
   /*
@@ -203,8 +204,10 @@ const loadModalEventListeners = () => {
   });
 };
 
-const constructHomepage = (photographers, id, wrapper, main) => {
-  wrapper.append(dom.createHeader(id, photographers), main);
+const constructHomepage = (photographers, id, wrapper) => {
+  wrapper.prepend(dom.createHeader(id, photographers));
+
+  const main = document.getElementById('js-main');
   main.classList.add('thumbnail-list');
 
   photographers.forEach((photographer) => {
@@ -222,7 +225,9 @@ const constructHomepage = (photographers, id, wrapper, main) => {
   window.addEventListener('scroll', displayBackToTopBtn);
 };
 
-const constructPhotographPage = (json, id, wrapper, main) => {
+const constructPhotographPage = (json, id, wrapper) => {
+  const main = document.getElementById('js-main');
+
   const photographer = json.photographers.find(
     (photographer) => photographer.id === id
   );
@@ -232,9 +237,11 @@ const constructPhotographPage = (json, id, wrapper, main) => {
 
   medias.sort((a, b) => b.likes - a.likes);
 
+  const filters = new Filters(['Popularité', 'Date', 'Titre']);
+
   main.append(
     dom.createPhotographerHeader(photographer),
-    Filters.createSelect(selectFilters),
+    filters.createSelect(filters.sortingOptions),
     dom.createFigureGroup(medias),
     dom.createLikesAndPriceDiv(medias, photographer)
   );
@@ -242,7 +249,7 @@ const constructPhotographPage = (json, id, wrapper, main) => {
   wrapper.append(dom.createHeader(id), main);
 
   document.body.insertBefore(
-    dom.createContactModal(),
+    dom.createContactModal(photographer.name),
     document.querySelector('script')
   );
 
@@ -256,16 +263,12 @@ const constructPhotographPage = (json, id, wrapper, main) => {
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
-
-  const wrapper = dom.createBodyContent();
-
-  const main = document.createElement('main');
-  main.id = 'js-main';
+  const wrapper = dom.createBodySkeleton();
 
   if (isFinite(id)) {
-    constructPhotographPage(json, id, wrapper, main);
+    constructPhotographPage(json, id, wrapper);
   } else {
-    constructHomepage(json.photographers, id, wrapper, main);
+    constructHomepage(json.photographers, id, wrapper);
   }
 };
 

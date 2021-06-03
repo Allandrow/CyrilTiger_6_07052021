@@ -177,7 +177,6 @@ const createPicture = (id, image) => {
   source.setAttribute('media', '(min-width:60rem)');
   source.setAttribute('srcset', `dist/img/${id}/${image}`);
 
-  // TODO fonction sémantique utilitaire
   const separatorIndex = image.indexOf('.');
   const imageMin = [
     image.slice(0, separatorIndex),
@@ -364,18 +363,21 @@ const createFormLabel = (id, text, type = 'text') => {
   return label;
 };
 
-export const createContactModal = () => {
+export const createContactModal = (name) => {
   const div = createDIV('modal-window');
   div.id = 'contact-modal';
+  div.setAttribute('role', 'dialog');
 
   const section = document.createElement('section');
 
   const title = createHeading('Contactez-moi', 'h1');
+  title.id = 'modal-title';
 
-  // TODO : add dynamic content
-  const span = createSPAN('Mimi Keel');
+  const span = createSPAN(name);
 
   title.appendChild(span);
+
+  div.setAttribute('aria-labelledby', title.id);
 
   const form = document.createElement('form');
 
@@ -407,10 +409,14 @@ export const createContactModal = () => {
   return div;
 };
 
-// TODO : add main creation here
-export const createBodyContent = () => {
+export const createBodySkeleton = () => {
   const wrapper = createDIV('wrapper');
   wrapper.id = 'js-container';
+
+  const main = document.createElement('main');
+  main.id = 'js-main';
+
+  wrapper.appendChild(main);
 
   document.body.prepend(wrapper);
 
