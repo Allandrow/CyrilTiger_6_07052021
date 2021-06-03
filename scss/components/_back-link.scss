@@ -3,17 +3,14 @@
 .back {
   position: fixed;
   top: 0.75rem;
-  display: flex;
+  color: $color-base-900;
+  background-color: $color-primary-200;
+  font-weight: 700;
+  font-size: 1.125rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 0;
+  margin: 0 auto;
   left: 0;
   right: 0;
-  justify-content: center;
-
-  a {
-    color: $color-base-900;
-    background-color: $color-primary-200;
-    font-weight: 700;
-    font-size: 1.125rem;
-    padding: 0.125rem 0.5rem;
-    border-radius: 0.25rem;
-  }
 }

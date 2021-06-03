@@ -245,18 +245,16 @@ header nav {
 .back {
   position: fixed;
   top: 0.75rem;
-  display: flex;
-  left: 0;
-  right: 0;
-  justify-content: center;
-}
-.back a {
   color: #000;
   background-color: #db8876;
   font-weight: 700;
   font-size: 1.125rem;
   padding: 0.125rem 0.5rem;
   border-radius: 0.25rem;
+  border: 0;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }
 
 .photograph-header {

@@ -72,16 +72,12 @@ const createContactBtn = () => {
 };
 
 export const createBackToTopBtn = () => {
-  const backTop = createDIV('back');
-  backTop.classList.add('hidden');
-  backTop.id = 'js-backToTop';
+  const button = document.createElement('button');
+  button.classList.add('hidden', 'back');
+  button.id = 'js-backToTop';
+  button.appendChild(document.createTextNode('Passer au contenu'));
 
-  const link = document.createElement('a');
-  link.appendChild(document.createTextNode('Passer au contenu'));
-
-  backTop.appendChild(link);
-
-  return backTop;
+  return button;
 };
 
 const createTagList = (tags) => {
@@ -105,10 +101,7 @@ export const createPhotographerArticle = (photographer) => {
   link.setAttribute('href', `index.html?id=${photographer.id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = createIMG(
-    `thumbnails/${photographer.portrait}`,
-    photographer.name
-  );
+  const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
 
   const title = createHeading(photographer.name, 'h2');
 
@@ -121,10 +114,7 @@ export const createPhotographerArticle = (photographer) => {
     `${elementBEMName}__localisation`
   );
   const slogan = createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
-  const price = createSPAN(
-    `${photographer.price}€/jour`,
-    `${elementBEMName}__price`
-  );
+  const price = createSPAN(`${photographer.price}€/jour`, `${elementBEMName}__price`);
 
   paragraph.append(localisation, slogan, price);
 
@@ -160,10 +150,7 @@ export const createPhotographerHeader = (photographer) => {
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = createIMG(
-    `thumbnails/${photographer.portrait}`,
-    photographer.name
-  );
+  const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
 
   section.append(div, portrait);
 

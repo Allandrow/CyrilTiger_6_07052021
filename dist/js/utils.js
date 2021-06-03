@@ -1,5 +1,6 @@
-export const uppercaseFirstLetter = (string) =>
-  string.charAt(0).toUpperCase() + string.slice(1);
+export const uppercaseFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 export const getPhotographTagSet = (photographers) => {
   const tagSet = new Set();
@@ -14,12 +15,15 @@ export const getPhotographTagSet = (photographers) => {
 
 export const isImage = (media) => media.image !== undefined;
 
-export const isSameTagText = (tag, tagClicked) =>
-  tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
+export const isSameTagText = (tag, tagClicked) => {
+  return tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
+};
 
-export const sortByLikes = (a, b) =>
-  parseInt(b.getAttribute('data-likes')) -
-  parseInt(a.getAttribute('data-likes'));
+export const sortByLikes = (a, b) => {
+  return (
+    parseInt(b.getAttribute('data-likes')) - parseInt(a.getAttribute('data-likes'))
+  );
+};
 
 export const sortByDate = (a, b) => {
   const firstDate = new Date(a.getAttribute('data-date'));

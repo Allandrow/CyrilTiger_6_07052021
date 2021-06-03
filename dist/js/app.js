@@ -7,6 +7,67 @@ const getJSON = async () => {
   return json;
 };
 
+const handleTagClick = (tags, tagClicked) => {
+  const thumbnails = document.querySelectorAll('.thumbnail');
+
+  /*
+    Parse all tags from Document
+    Toggle active class from tag if clicked tag is already active
+    OR if tag is the same value as clicked tag
+  */
+  tags.forEach((tag) => {
+    if (tag.classList.contains('active') || utils.isSameTagText(tag, tagClicked)) {
+      tag.classList.toggle('active');
+    }
+  });
+
+  const activeTags = document.querySelectorAll('#js-main .active');
+
+  if (activeTags.length === 0) {
+    thumbnails.forEach((thumbnail) => thumbnail.classList.remove('hidden'));
+    return;
+  }
+
+  thumbnails.forEach((thumbnail) => {
+    thumbnail.classList.add('hidden');
+  });
+
+  activeTags.forEach((tag) => {
+    const article = tag.closest('.thumbnail');
+    article.classList.remove('hidden');
+  });
+};
+
+const displayBackToTopBtn = () => {
+  const html = document.querySelector('html');
+  const backTopBtn = document.getElementById('js-backToTop');
+
+  if (html.scrollTop <= 400) {
+    backTopBtn.classList.add('hidden');
+    return;
+  }
+  backTopBtn.classList.remove('hidden');
+};
+
+const constructHomepage = (photographers, id, wrapper) => {
+  wrapper.prepend(dom.createHeader(id, photographers));
+
+  const main = document.getElementById('js-main');
+  main.classList.add('thumbnail-list');
+
+  photographers.forEach((photographer) => {
+    main.appendChild(dom.createPhotographerArticle(photographer));
+  });
+
+  main.appendChild(dom.createBackToTopBtn());
+
+  const tags = document.querySelectorAll('.tag');
+
+  tags.forEach((tag) => tag.addEventListener('click', () => handleTagClick(tags, tag)));
+
+  window.addEventListener('scroll', displayBackToTopBtn);
+};
+
 class Filters {
   constructor(sortingOptions) {
     this.sortingOptions = sortingOptions;
@@ -61,57 +122,6 @@ class Filters {
     }
   }
 }
-
-const switchTagActiveState = (tags, clickedTag) => {
-  /*
-    Parse all tags from Document
-    Toggle active class from tag if clicked tag is already active
-    OR if tag is the same value as clicked tag
-  */
-  tags.forEach((tag) => {
-    if (tag.classList.contains('active') || utils.isSameTagText(tag, clickedTag)) {
-      tag.classList.toggle('active');
-    }
-  });
-};
-
-const displayThumbnailsByActiveTag = () => {
-  // Hide thumbnails
-  const thumbnails = document.querySelectorAll('.thumbnail');
-
-  thumbnails.forEach((thumbnail) => {
-    thumbnail.classList.add('hidden');
-  });
-
-  // Display thumbnails with active tag
-  const activeTags = document.querySelectorAll('#js-main .active');
-
-  activeTags.forEach((tag) => {
-    const article = tag.closest('.thumbnail');
-    article.classList.remove('hidden');
-  });
-
-  // Display all thumbnails if no active tag
-  if (activeTags.length === 0) {
-    thumbnails.forEach((thumbnail) => thumbnail.classList.remove('hidden'));
-  }
-};
-
-const handleTagClick = (tags, tag) => {
-  switchTagActiveState(tags, tag);
-  displayThumbnailsByActiveTag();
-};
-
-const displayBackToTopBtn = () => {
-  const html = document.querySelector('html');
-  const backTopBtn = document.getElementById('js-backToTop');
-
-  if (html.scrollTop <= 400) {
-    backTopBtn.classList.add('hidden');
-    return;
-  }
-  backTopBtn.classList.remove('hidden');
-};
 
 const loadFiltersEventListeners = () => {
   const selectListItems = document.querySelectorAll('#js-select li');
@@ -177,17 +187,17 @@ const loadLikesEventListener = () => {
 const loadModalEventListeners = () => {
   const contactBtn = document.getElementById('js-contactForm');
   const modal = document.getElementById('contact-modal');
+  const modalButtons = modal.querySelectorAll('button');
 
   contactBtn.addEventListener('click', () => {
     modal.classList.toggle('open');
   });
 
-  const modalButtons = modal.querySelectorAll('button');
-
   modalButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
 
+      //TODO : handle this via submit for quick HTML5 validation
       if (button.id === 'js-submit') {
         const firstName = document.getElementById('formFirstName').value;
         const lastName = document.getElementById('formLastName').value;
@@ -204,40 +214,15 @@ const loadModalEventListeners = () => {
   });
 };
 
-const constructHomepage = (photographers, id, wrapper) => {
-  wrapper.prepend(dom.createHeader(id, photographers));
-
-  const main = document.getElementById('js-main');
-  main.classList.add('thumbnail-list');
-
-  photographers.forEach((photographer) => {
-    main.appendChild(dom.createPhotographerArticle(photographer));
-  });
-
-  main.appendChild(dom.createBackToTopBtn());
-
-  const tags = document.querySelectorAll('.tag');
-
-  tags.forEach((tag) =>
-    tag.addEventListener('click', () => handleTagClick(tags, tag))
-  );
-
-  window.addEventListener('scroll', displayBackToTopBtn);
-};
-
 const constructPhotographPage = (json, id, wrapper) => {
   const main = document.getElementById('js-main');
+  const filters = new Filters(['Popularité', 'Date', 'Titre']);
 
-  const photographer = json.photographers.find(
-    (photographer) => photographer.id === id
-  );
-  const medias = json.media.filter((media) => media.photographerId === id);
-
+  const photographer = json.photographers.find((photographer) => photographer.id === id);
   document.title += ` - ${photographer.name}`;
 
+  const medias = json.media.filter((media) => media.photographerId === id);
   medias.sort((a, b) => b.likes - a.likes);
-
-  const filters = new Filters(['Popularité', 'Date', 'Titre']);
 
   main.append(
     dom.createPhotographerHeader(photographer),
