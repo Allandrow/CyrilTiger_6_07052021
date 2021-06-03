@@ -33,6 +33,11 @@
     div {
       display: flex;
 
+      button {
+        border: 0;
+        background: 0;
+      }
+
       img {
         transition: transform 200ms;
         cursor: pointer;

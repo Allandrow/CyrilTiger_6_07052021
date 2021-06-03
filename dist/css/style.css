@@ -485,6 +485,10 @@ header nav {
 .figure figcaption div {
   display: flex;
 }
+.figure figcaption div button {
+  border: 0;
+  background: 0;
+}
 .figure figcaption div img {
   transition: transform 200ms;
   cursor: pointer;

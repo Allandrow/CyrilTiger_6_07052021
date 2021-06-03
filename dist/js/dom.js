@@ -184,10 +184,15 @@ const createFigcaption = (title, likes) => {
   const div = document.createElement('div');
 
   const likesSpan = createSPAN(likes);
-  const img = createIMG('like-icon.svg', 'likes');
-  img.classList.add('js-like');
 
-  div.append(likesSpan, img);
+  const button = document.createElement('button');
+  button.classList.add('js-like');
+
+  const img = createIMG('like-icon.svg', 'likes');
+
+  button.appendChild(img);
+
+  div.append(likesSpan, button);
   figcaption.append(span, div);
   return figcaption;
 };
