@@ -1,11 +1,5 @@
 import * as utils from './utils.js';
 
-const createHeading = (name, heading) => {
-  const title = document.createElement(heading);
-  title.appendChild(document.createTextNode(name));
-  return title;
-};
-
 export const createIMG = (path, alt = '') => {
   const img = document.createElement('img');
   img.setAttribute('src', `dist/img/${path}`);
@@ -95,7 +89,8 @@ export const createPhotographerArticle = (photographer) => {
 
   const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
 
-  const title = createHeading(photographer.name, 'h2');
+  const title = document.createElement('h2');
+  title.appendChild(document.createTextNode(photographer.name));
 
   link.append(portrait, title);
 
@@ -126,7 +121,8 @@ export const createPhotographerHeader = (photographer) => {
   const div = document.createElement('div');
   div.classList.add(elementBEMName);
 
-  const title = createHeading(photographer.name, 'h1');
+  const title = document.createElement('h1');
+  title.appendChild(document.createTextNode(photographer.name));
 
   const paragraph = document.createElement('p');
 
@@ -280,7 +276,11 @@ export const createHeader = (id, photographers) => {
 
   if (!isFinite(id)) {
     const tagSet = utils.getPhotographTagSet(photographers);
-    header.append(createHeading('Nos photographes', 'h1'), createNav(tagSet));
+
+    const title = document.createElement('h1');
+    title.appendChild(document.createTextNode('Nos photographes'));
+
+    header.append(title, createNav(tagSet));
   }
 
   return header;
@@ -356,8 +356,9 @@ export const createContactModal = (name) => {
 
   const section = document.createElement('section');
 
-  const title = createHeading('Contactez-moi', 'h1');
+  const title = document.createElement('h1');
   title.id = 'modal-title';
+  title.appendChild(document.createTextNode('Contactez-moi'));
 
   const span = createSPAN(name);
 
