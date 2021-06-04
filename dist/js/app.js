@@ -190,103 +190,87 @@ const loadLikesEventListener = () => {
   });
 };
 
+const openModal = (modal, btn) => {
+  const wrapper = document.getElementById('js-container');
+
+  modal.classList.add('open');
+  wrapper.setAttribute('aria-hidden', 'true');
+  btn.setAttribute('aria-expanded', 'true');
+};
+
+const closeModal = (modal, btn) => {
+  const wrapper = document.getElementById('js-container');
+
+  modal.classList.remove('open');
+  wrapper.setAttribute('aria-hidden', 'false');
+  btn.setAttribute('aria-expanded', 'false');
+
+  btn.focus();
+};
+
+const contactModalKeyEvents = (e) => {
+  const modal = document.getElementById('contact-modal');
+  const contactBtn = document.getElementById('js-contactForm');
+
+  // Get a list of all focusable elements within modal
+  const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
+  // Save first and last focusable elements
+  const firstFocusElement = modalFocusableElements[0];
+  const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
+
+  const tabKeyCode = 9;
+  const escapeKeyCode = 27;
+  const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
+  const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
+
+  if (modal.classList.contains('open')) {
+    if (!(isTabPressed || isEscapePressed)) {
+      return;
+    }
+    // Escape key closes modal if inside
+    if (isEscapePressed) {
+      closeModal(modal, contactBtn);
+      return;
+    }
+    // If Tab key
+    if (isTabPressed) {
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusElement) {
+          e.preventDefault();
+          lastFocusElement.focus();
+          return;
+        }
+      } else {
+        if (document.activeElement === lastFocusElement) {
+          e.preventDefault();
+          firstFocusElement.focus();
+          return;
+        }
+      }
+    }
+    if (!modalFocusableElements.includes(document.activeElement)) {
+      e.preventDefault();
+      firstFocusElement.focus();
+    }
+  }
+};
+
 const loadModalEventListeners = () => {
   const contactBtn = document.getElementById('js-contactForm');
   const modal = document.getElementById('contact-modal');
-  const modalButtons = modal.querySelectorAll('button');
-  const wrapper = document.getElementById('js-container');
+  const closeBtn = modal.querySelector('.close');
 
+  // Click to open modal event
   contactBtn.addEventListener('click', () => {
-    modal.classList.add('open');
-    wrapper.setAttribute('aria-hidden', 'true');
-    contactBtn.setAttribute('aria-expanded', 'true');
-    // Save focused element before opening modal
-    const focusedElement = document.activeElement;
-    const tabKeyCode = 9;
-    const escapeKeyCode = 27;
-
-    // Get a list of all focusable elements within modal
-    const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
-    // Save first and last focusable elements
-    const firstFocusElement = modalFocusableElements[0];
-    const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
-
-    // First tab once modal is open focus on first focus element
-    window.addEventListener('keydown', (e) => {
-      const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
-      const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
-
-      //TODO : on modal closing, put focus on last focused element in document
-
-      if (!(isTabPressed || isEscapePressed)) {
-        return;
-      }
-      if (isEscapePressed) {
-        e.preventDefault();
-        focusedElement.focus();
-        modal.classList.remove('open');
-        contactBtn.setAttribute('aria-expanded', 'false');
-        wrapper.setAttribute('aria-hidden', 'false');
-        console.log(document.activeElement);
-      }
-      if (!modalFocusableElements.includes(document.activeElement)) {
-        e.preventDefault();
-        firstFocusElement.focus();
-      }
-    });
-    // Loop through focusable elements within modal
-    modalFocusableElements.forEach((element) => {
-      element.addEventListener('keydown', (e) => {
-        const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
-        const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
-
-        if (!(isTabPressed || isEscapePressed)) {
-          return;
-        }
-        if (isEscapePressed) {
-          e.preventDefault();
-          focusedElement.focus();
-          modal.classList.remove('open');
-          contactBtn.setAttribute('aria-expanded', 'false');
-          wrapper.setAttribute('aria-hidden', 'false');
-        }
-        if (isTabPressed) {
-          if (e.shiftKey) {
-            if (document.activeElement === firstFocusElement) {
-              e.preventDefault();
-              lastFocusElement.focus();
-            }
-          } else {
-            if (document.activeElement === lastFocusElement) {
-              e.preventDefault();
-              firstFocusElement.focus();
-            }
-          }
-        }
-      });
-    });
+    openModal(modal, contactBtn);
   });
 
-  modalButtons.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      //TODO : handle this via submit for quick HTML5 validation
-      if (button.id === 'js-submit') {
-        const firstName = document.getElementById('formFirstName').value;
-        const lastName = document.getElementById('formLastName').value;
-        const email = document.getElementById('formEmail').value;
-        const message = document.getElementById('formMessage').value;
-
-        console.log(`Prénom : ${firstName}`);
-        console.log(`Nom : ${lastName}`);
-        console.log(`Email : ${email}`);
-        console.log(`Message : ${message}`);
-      }
-      modal.classList.remove('open');
-      wrapper.setAttribute('aria-hidden', 'false');
-    });
+  // Click on close button to close modal
+  closeBtn.addEventListener('click', () => {
+    closeModal(modal, contactBtn);
   });
+
+  window.addEventListener('keydown', contactModalKeyEvents);
 };
 
 const constructPhotographPage = (json, id, wrapper) => {
