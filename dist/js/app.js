@@ -196,6 +196,7 @@ const openModal = (modal, btn) => {
   modal.classList.add('open');
   wrapper.setAttribute('aria-hidden', 'true');
   btn.setAttribute('aria-expanded', 'true');
+  window.addEventListener('keydown', contactModalKeyEvents);
 };
 
 const closeModal = (modal, btn) => {
@@ -204,6 +205,7 @@ const closeModal = (modal, btn) => {
   modal.classList.remove('open');
   wrapper.setAttribute('aria-hidden', 'false');
   btn.setAttribute('aria-expanded', 'false');
+  window.removeEventListener('keydown', contactModalKeyEvents);
 
   btn.focus();
 };
@@ -269,8 +271,6 @@ const loadModalEventListeners = () => {
   closeBtn.addEventListener('click', () => {
     closeModal(modal, contactBtn);
   });
-
-  window.addEventListener('keydown', contactModalKeyEvents);
 };
 
 const constructPhotographPage = (json, id, wrapper) => {
