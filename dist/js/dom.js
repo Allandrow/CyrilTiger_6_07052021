@@ -347,7 +347,7 @@ const createFormLabel = (id, text, type = 'text') => {
   const input = document.createElement('input');
   input.setAttribute('type', type);
   input.id = id;
-  input.classList.add('js-focusable');
+  input.classList.add('js-focusable', 'js-input');
   input.required = true;
 
   label.append(document.createTextNode(text), input);
@@ -384,7 +384,8 @@ export const createContactModal = (name) => {
 
   const textArea = document.createElement('textarea');
   textArea.id = 'formMessage';
-  textArea.classList.add('js-focusable');
+  textArea.classList.add('js-focusable', 'js-input');
+  textArea.required = true;
 
   textAreaLabel.append(document.createTextNode('Votre message'), textArea);
 

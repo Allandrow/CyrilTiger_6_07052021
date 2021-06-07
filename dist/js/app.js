@@ -261,6 +261,8 @@ const loadModalEventListeners = () => {
   const contactBtn = document.getElementById('js-contactForm');
   const modal = document.getElementById('contact-modal');
   const closeBtn = modal.querySelector('.close');
+  const form = modal.querySelector('form');
+  const inputs = modal.querySelectorAll('.js-input');
 
   // Click to open modal event
   contactBtn.addEventListener('click', () => {
@@ -269,6 +271,15 @@ const loadModalEventListeners = () => {
 
   // Click on close button to close modal
   closeBtn.addEventListener('click', () => {
+    closeModal(modal, contactBtn);
+  });
+
+  // Form submission closes logs values + close modal
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    inputs.forEach((input) => {
+      console.log(input.value);
+    });
     closeModal(modal, contactBtn);
   });
 };
