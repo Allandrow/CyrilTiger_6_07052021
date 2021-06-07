@@ -257,7 +257,7 @@ const contactModalKeyEvents = (e) => {
   }
 };
 
-const loadModalEventListeners = () => {
+const loadContactModalEventListeners = () => {
   const contactBtn = document.getElementById('js-contactForm');
   const modal = document.getElementById('contact-modal');
   const closeBtn = modal.querySelector('.close');
@@ -308,11 +308,13 @@ const constructPhotographPage = (json, id, wrapper) => {
     document.querySelector('script')
   );
 
+  document.body.insertBefore(dom.createGalleryModal(), document.querySelector('script'));
+
   loadFiltersEventListeners();
 
   loadLikesEventListener();
 
-  loadModalEventListeners();
+  loadContactModalEventListeners();
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {

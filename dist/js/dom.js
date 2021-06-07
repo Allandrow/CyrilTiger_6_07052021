@@ -204,7 +204,11 @@ const createFigure = (media) => {
 
   const link = document.createElement('a');
   // TODO : add href to media
-  link.setAttribute('href', '');
+  let path;
+  utils.isImage(media)
+    ? (path = `dist/img/${media.photographerId}/${media.image}`)
+    : (path = `dist/img/${media.photographerId}/${media.video}`);
+  link.setAttribute('href', path);
 
   let mediaElement;
   if (utils.isImage(media)) {
@@ -401,6 +405,57 @@ export const createContactModal = (name) => {
   closeBtn.classList.add('close', 'js-focusable');
 
   section.append(title, form, closeBtn);
+
+  div.appendChild(section);
+
+  return div;
+};
+
+export const createGalleryModal = () => {
+  const links = document.querySelectorAll('figure a');
+  const paths = [];
+
+  links.forEach((link) => {
+    paths.push(link.pathname);
+  });
+
+  console.log(paths);
+
+  const div = document.createElement('div');
+  div.classList.add('modal-window', 'gallery-modal');
+  div.setAttribute('role', 'dialog');
+
+  const section = document.createElement('section');
+
+  const leftButton = document.createElement('button');
+  leftButton.classList.add('gallery-modal__control');
+
+  const leftButtonImg = document.createElement('img');
+  leftButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
+  leftButton.appendChild(leftButtonImg);
+
+  const imgBlock = document.createElement('div');
+  imgBlock.classList.add('img');
+
+  const img = document.createElement('img');
+  img.setAttribute('src', 'dist/img/243/Travel_HillsideColor.jpg'); //TODO : Add dynamic value
+
+  const paragraph = document.createElement('p');
+  paragraph.appendChild(document.createTextNode('Texte statique')); // TODO : Add dynamic text
+
+  const closeBtn = document.createElement('button');
+  closeBtn.classList.add('close', 'js-focusable');
+
+  imgBlock.append(img, paragraph, closeBtn);
+
+  const rightButton = document.createElement('button');
+  rightButton.classList.add('gallery-modal__control');
+
+  const rightButtonImg = document.createElement('img');
+  rightButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
+  rightButton.appendChild(rightButtonImg);
+
+  section.append(leftButton, imgBlock, rightButton);
 
   div.appendChild(section);
 
