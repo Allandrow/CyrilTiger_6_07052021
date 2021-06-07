@@ -7,9 +7,13 @@
     background: $color-base-100;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .close {
+    top: 0;
+    right: -2.5rem;
+
     &::after,
     &::before {
       background-color: $color-primary-400;
@@ -40,9 +44,37 @@
     margin: 0 1rem;
     position: relative;
 
-    button {
-      top: 0;
-      right: -2.5rem;
+    img {
+      object-fit: contain;
+      max-height: 800px;
+    }
+  }
+
+  @include mq($medium) {
+    &__control img {
+      width: 2rem;
+    }
+
+    .img {
+      margin: 0 2rem;
+    }
+    .close {
+      top: 0.5rem;
+      right: -4.5rem;
+
+      &::after,
+      &::before {
+        width: 3rem;
+        height: 5px;
+      }
+
+      &::after {
+        margin-top: -5px;
+      }
+    }
+
+    p {
+      font-size: 1.5rem;
     }
   }
 }

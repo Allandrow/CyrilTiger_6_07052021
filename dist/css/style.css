@@ -520,36 +520,6 @@ main {
   transform: rotate(-45deg);
   margin-top: -3px;
 }
-@media (min-width: 60rem) {
-  .modal-window section {
-    height: 900px;
-    width: 670px;
-  }
-  .modal-window h1 {
-    font-size: 4rem;
-    line-height: 1;
-  }
-  .modal-window form {
-    margin-top: 1rem;
-  }
-  .modal-window form button {
-    align-self: start;
-    height: 69px;
-    cursor: pointer;
-  }
-  .modal-window label {
-    font-size: 2.25rem;
-    margin-bottom: 0;
-    cursor: pointer;
-  }
-  .modal-window input {
-    height: 4.25rem;
-    margin-top: 0;
-  }
-  .modal-window textarea {
-    height: 170px;
-  }
-}
 
 header {
   display: flex;
@@ -637,6 +607,36 @@ header nav {
 .contact-modal .close::before, .contact-modal .close::after {
   background-color: #fff;
 }
+@media (min-width: 60rem) {
+  .contact-modal section {
+    height: 900px;
+    width: 670px;
+  }
+  .contact-modal h1 {
+    font-size: 4rem;
+    line-height: 1;
+  }
+  .contact-modal form {
+    margin-top: 1rem;
+  }
+  .contact-modal form button {
+    align-self: start;
+    height: 69px;
+    cursor: pointer;
+  }
+  .contact-modal label {
+    font-size: 2.25rem;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  .contact-modal input {
+    height: 4.25rem;
+    margin-top: 0;
+  }
+  .contact-modal textarea {
+    height: 170px;
+  }
+}
 
 .gallery-modal {
   background: #fff;
@@ -645,6 +645,11 @@ header nav {
   background: #fff;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.gallery-modal .close {
+  top: 0;
+  right: -2.5rem;
 }
 .gallery-modal .close::after, .gallery-modal .close::before {
   background-color: #901c1c;
@@ -669,9 +674,31 @@ header nav {
   margin: 0 1rem;
   position: relative;
 }
-.gallery-modal .img button {
-  top: 0;
-  right: -2.5rem;
+.gallery-modal .img img {
+  object-fit: contain;
+  max-height: 800px;
+}
+@media (min-width: 60rem) {
+  .gallery-modal__control img {
+    width: 2rem;
+  }
+  .gallery-modal .img {
+    margin: 0 2rem;
+  }
+  .gallery-modal .close {
+    top: 0.5rem;
+    right: -4.5rem;
+  }
+  .gallery-modal .close::after, .gallery-modal .close::before {
+    width: 3rem;
+    height: 5px;
+  }
+  .gallery-modal .close::after {
+    margin-top: -5px;
+  }
+  .gallery-modal p {
+    font-size: 1.5rem;
+  }
 }
 
 .hidden {
