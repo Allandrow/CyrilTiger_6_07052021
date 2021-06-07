@@ -1,0 +1,17 @@
+@use '../abstracts/' as *;
+
+.contact-modal {
+  background-color: rgba($color-base-400, 0.4);
+
+  section {
+    background: $color-primary-200;
+    color: $color-base-900;
+  }
+
+  .close {
+    &::before,
+    &::after {
+      background-color: $color-base-100;
+    }
+  }
+}

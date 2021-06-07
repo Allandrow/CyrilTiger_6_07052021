@@ -327,11 +327,11 @@ const displayPageByURLQuery = (json, URLQuery) => {
   }
 };
 
-async function onLoad() {
+const onLoad = async () => {
   const json = await getJSON();
   const URLQuery = window.location.search;
 
   displayPageByURLQuery(json, URLQuery);
-}
+};
 
 document.addEventListener('DOMContentLoaded', onLoad);

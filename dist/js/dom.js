@@ -203,6 +203,7 @@ const createFigure = (media) => {
   figure.classList.add('figure');
 
   const link = document.createElement('a');
+  // TODO : add href to media
   link.setAttribute('href', '');
 
   let mediaElement;
@@ -357,7 +358,7 @@ const createFormLabel = (id, text, type = 'text') => {
 
 export const createContactModal = (name) => {
   const div = document.createElement('div');
-  div.classList.add('modal-window');
+  div.classList.add('modal-window', 'contact-modal');
   div.id = 'contact-modal';
   div.setAttribute('role', 'dialog');
 

@@ -1,0 +1,48 @@
+@use '../abstracts/' as *;
+
+.gallery-modal {
+  background: $color-base-100;
+
+  section {
+    background: $color-base-100;
+    display: flex;
+    align-items: center;
+  }
+
+  .close {
+    &::after,
+    &::before {
+      background-color: $color-primary-400;
+    }
+  }
+
+  &__control {
+    background: 0;
+    border: 0;
+    color: $color-primary-400;
+    cursor: pointer;
+    padding: 0;
+
+    img {
+      min-width: 1rem;
+    }
+
+    &:nth-of-type(2) {
+      order: 1;
+
+      img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .img {
+    margin: 0 1rem;
+    position: relative;
+
+    button {
+      top: 0;
+      right: -2.5rem;
+    }
+  }
+}

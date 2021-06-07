@@ -12,7 +12,6 @@
   position: fixed;
   z-index: 2;
   top: 0;
-  background-color: rgba($color-base-400, 0.4);
   transition: visibility 150ms, opacity 150ms;
 
   &.open {
@@ -22,9 +21,7 @@
   }
 
   section {
-    background: $color-primary-200;
     position: relative;
-    color: $color-base-900;
     padding: 2rem 1.25rem;
     height: 100%;
     width: 100%;
@@ -95,7 +92,6 @@
       display: block;
       width: 1.5rem;
       height: 3px;
-      background-color: $color-base-100;
       transform-origin: center;
     }
 
