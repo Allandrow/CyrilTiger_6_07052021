@@ -78,6 +78,7 @@ const createTagList = (tags) => {
   return ul;
 };
 
+// TODO : destructuring param
 export const createPhotographerArticle = (photographer) => {
   const elementBEMName = 'thumbnail';
 
@@ -113,6 +114,7 @@ export const createPhotographerArticle = (photographer) => {
   return article;
 };
 
+// TODO : destructuring param
 export const createPhotographerHeader = (photographer) => {
   const elementBEMName = 'photograph-header__infos';
 
@@ -198,6 +200,7 @@ const createFigcaption = (title, likes) => {
   return figcaption;
 };
 
+// TODO : destructuring param
 const createFigure = (media) => {
   const figure = document.createElement('figure');
   figure.classList.add('figure');
@@ -412,33 +415,26 @@ export const createContactModal = (name) => {
 };
 
 export const createGalleryModal = () => {
-  const links = document.querySelectorAll('figure a');
-  const paths = [];
-
-  links.forEach((link) => {
-    paths.push(link.pathname);
-  });
-
-  console.log(paths);
-
   const div = document.createElement('div');
   div.classList.add('modal-window', 'gallery-modal');
   div.setAttribute('role', 'dialog');
+  div.setAttribute('aria-label', 'image closup view');
 
   const section = document.createElement('section');
 
   const leftButton = document.createElement('button');
-  leftButton.classList.add('gallery-modal__control');
+  leftButton.id = 'js-prev';
+  leftButton.classList.add('gallery-modal__control', 'js-focusable');
 
   const leftButtonImg = document.createElement('img');
   leftButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
   leftButton.appendChild(leftButtonImg);
 
-  const imgBlock = document.createElement('div');
-  imgBlock.classList.add('img');
+  const mediaBlock = document.createElement('div');
+  mediaBlock.classList.add('media');
 
-  const img = document.createElement('img');
-  img.setAttribute('src', 'dist/img/243/Travel_HillsideColor.jpg'); //TODO : Add dynamic value
+  const img = document.createElement('img'); // TOOD : handle video media
+  img.setAttribute('src', ''); //TODO : Add dynamic value
 
   const paragraph = document.createElement('p');
   paragraph.appendChild(document.createTextNode('Texte statique')); // TODO : Add dynamic text
@@ -446,16 +442,17 @@ export const createGalleryModal = () => {
   const closeBtn = document.createElement('button');
   closeBtn.classList.add('close', 'js-focusable');
 
-  imgBlock.append(img, paragraph, closeBtn);
+  mediaBlock.append(img, paragraph, closeBtn);
 
   const rightButton = document.createElement('button');
-  rightButton.classList.add('gallery-modal__control');
+  rightButton.id = 'js-next';
+  rightButton.classList.add('gallery-modal__control', 'js-focusable');
 
   const rightButtonImg = document.createElement('img');
   rightButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
   rightButton.appendChild(rightButtonImg);
 
-  section.append(leftButton, imgBlock, rightButton);
+  section.append(leftButton, mediaBlock, rightButton);
 
   div.appendChild(section);
 

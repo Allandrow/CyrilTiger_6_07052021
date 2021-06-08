@@ -670,11 +670,11 @@ header nav {
 .gallery-modal__control:nth-of-type(2) img {
   transform: rotate(180deg);
 }
-.gallery-modal .img {
+.gallery-modal .media {
   margin: 0 1rem;
   position: relative;
 }
-.gallery-modal .img img {
+.gallery-modal .media img {
   object-fit: contain;
   max-height: 800px;
 }
@@ -682,7 +682,7 @@ header nav {
   .gallery-modal__control img {
     width: 2rem;
   }
-  .gallery-modal .img {
+  .gallery-modal .media {
     margin: 0 2rem;
   }
   .gallery-modal .close {

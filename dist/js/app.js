@@ -284,6 +284,32 @@ const loadContactModalEventListeners = () => {
   });
 };
 
+const loadGalleryModalEventListeners = () => {
+  const links = document.querySelectorAll('figure a');
+  const modal = document.querySelector('.gallery-modal');
+  let paths = [];
+
+  // if first/last media in array, loop to opposite end of array
+  // handle keyboard events for navigation
+  // handle escape key for closing modal + click on close button
+  // on modal closing, give focus back to initial media
+
+  links.forEach((link) => {
+    // Get all medias in array
+    paths = [...paths, link.pathname];
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      // on media click, open modal and init with clicked media as first slide
+      modal.querySelector('.media img').setAttribute('src', link.pathname);
+      modal.classList.add('open');
+
+      // on arrows click, navigate medias array to get next/previous media
+      console.log(paths.indexOf(link.pathname));
+    });
+  });
+};
+
 const constructPhotographPage = (json, id, wrapper) => {
   const main = document.getElementById('js-main');
   const filters = new Filters(['Popularité', 'Date', 'Titre']);
@@ -315,6 +341,8 @@ const constructPhotographPage = (json, id, wrapper) => {
   loadLikesEventListener();
 
   loadContactModalEventListeners();
+
+  loadGalleryModalEventListeners();
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
