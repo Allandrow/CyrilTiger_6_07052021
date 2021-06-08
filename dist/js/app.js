@@ -284,16 +284,12 @@ const loadContactModalEventListeners = () => {
   });
 };
 
-const constructLightBoxMedias = () => {
+const constructLightBoxMedias = (activeLink) => {
   // Parse all medias in document
   const links = document.querySelectorAll('figure a');
   const modal = document.querySelector('.gallery-modal');
   const mediaBlock = modal.querySelector('.medias');
   mediaBlock.textContent = '';
-
-  const closeBtn = document.createElement('button');
-  closeBtn.classList.add('close', 'js-focusable');
-  mediaBlock.append(closeBtn);
 
   // for each, create a media in modal
   for (const link of links) {
@@ -301,6 +297,10 @@ const constructLightBoxMedias = () => {
 
     const div = document.createElement('div');
     div.classList.add('media');
+
+    if (link.pathname === activeLink) {
+      div.classList.add('visible');
+    }
 
     // if video create a video, otherwise create an img
     if (isVideo) {
@@ -333,14 +333,53 @@ const constructLightBoxMedias = () => {
   }
 };
 
+const openLightBoxModal = () => {
+  const wrapper = document.getElementById('js-container');
+  const modal = document.querySelector('.gallery-modal');
+
+  wrapper.setAttribute('aria-hidden', 'true');
+  modal.classList.add('open');
+};
+
+const closeLightBoxModal = (links, activeLink) => {
+  const modal = document.querySelector('.gallery-modal');
+  const wrapper = document.getElementById('js-container');
+
+  modal.classList.remove('open');
+  wrapper.setAttribute('aria-hidden', 'false');
+  // on modal closing, give focus back to initial media
+  links.find((link) => link.pathname === activeLink).focus();
+};
+
 const loadGalleryModalEventListeners = () => {
-  const links = document.querySelectorAll('figure a');
+  const links = Array.from(document.querySelectorAll('.figure a'));
+  const modal = document.querySelector('.gallery-modal');
+  const closeBtn = modal.querySelector('.close');
+  const prevBtn = document.getElementById('js-prev');
+  const nextBtn = document.getElementById('js-next');
+  let activeLink;
 
   links.forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      constructLightBoxMedias();
+      activeLink = link.pathname;
+      constructLightBoxMedias(activeLink);
+      openLightBoxModal();
     });
+  });
+
+  //  Close modal when click on close button
+  closeBtn.addEventListener('click', () => {
+    closeLightBoxModal(links, activeLink);
+  });
+
+  // handle escape key for closing modal
+  window.addEventListener('keydown', (e) => {
+    if (modal.classList.contains('open')) {
+      if (e.key === 'escape' || e.keyCode === 27) {
+        closeLightBoxModal(links, activeLink);
+      }
+    }
   });
 
   // depending on document media clicked, set according modal media visible, others hidden

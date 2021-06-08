@@ -422,6 +422,8 @@ export const createGalleryModal = () => {
 
   const section = document.createElement('section');
 
+  const leftDiv = document.createElement('div');
+
   const leftButton = document.createElement('button');
   leftButton.id = 'js-prev';
   leftButton.classList.add('gallery-modal__control', 'js-focusable');
@@ -429,6 +431,7 @@ export const createGalleryModal = () => {
   const leftButtonImg = document.createElement('img');
   leftButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
   leftButton.appendChild(leftButtonImg);
+  leftDiv.appendChild(leftButton);
 
   const mediaBlock = document.createElement('div');
   mediaBlock.classList.add('medias');
@@ -441,7 +444,10 @@ export const createGalleryModal = () => {
   rightButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
   rightButton.appendChild(rightButtonImg);
 
-  section.append(leftButton, rightButton, mediaBlock);
+  const closeBtn = document.createElement('button');
+  closeBtn.classList.add('close', 'js-focusable');
+
+  section.append(leftButton, rightButton, mediaBlock, closeBtn);
 
   div.appendChild(section);
 

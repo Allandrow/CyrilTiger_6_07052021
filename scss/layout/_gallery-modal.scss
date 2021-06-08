@@ -11,8 +11,7 @@
   }
 
   .close {
-    top: 0;
-    right: -2.5rem;
+    right: 1rem;
 
     &::after,
     &::before {
@@ -46,10 +45,16 @@
 
     .media {
       visibility: hidden;
-      transition: visibility 150ms;
+      height: 0;
+      width: 0;
+      opacity: 0;
+      transition: opacity 150ms, visibility 150ms;
 
       &.visible {
         visibility: visible;
+        height: auto;
+        width: auto;
+        opacity: 1;
       }
     }
 
@@ -69,8 +74,7 @@
       margin: 0 2rem;
     }
     .close {
-      top: 0.5rem;
-      right: -4.5rem;
+      top: 2.25rem;
 
       &::after,
       &::before {
