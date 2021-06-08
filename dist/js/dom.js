@@ -431,18 +431,7 @@ export const createGalleryModal = () => {
   leftButton.appendChild(leftButtonImg);
 
   const mediaBlock = document.createElement('div');
-  mediaBlock.classList.add('media');
-
-  const img = document.createElement('img'); // TOOD : handle video media
-  img.setAttribute('src', ''); //TODO : Add dynamic value
-
-  const paragraph = document.createElement('p');
-  paragraph.appendChild(document.createTextNode('Texte statique')); // TODO : Add dynamic text
-
-  const closeBtn = document.createElement('button');
-  closeBtn.classList.add('close', 'js-focusable');
-
-  mediaBlock.append(img, paragraph, closeBtn);
+  mediaBlock.classList.add('medias');
 
   const rightButton = document.createElement('button');
   rightButton.id = 'js-next';
@@ -452,7 +441,7 @@ export const createGalleryModal = () => {
   rightButtonImg.setAttribute('src', 'dist/img/gallery-control.svg');
   rightButton.appendChild(rightButtonImg);
 
-  section.append(leftButton, mediaBlock, rightButton);
+  section.append(leftButton, rightButton, mediaBlock);
 
   div.appendChild(section);
 

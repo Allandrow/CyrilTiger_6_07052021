@@ -670,11 +670,19 @@ header nav {
 .gallery-modal__control:nth-of-type(2) img {
   transform: rotate(180deg);
 }
-.gallery-modal .media {
+.gallery-modal .medias {
   margin: 0 1rem;
   position: relative;
 }
-.gallery-modal .media img {
+.gallery-modal .medias .media {
+  visibility: hidden;
+  transition: visibility 150ms;
+}
+.gallery-modal .medias .media.visible {
+  visibility: visible;
+}
+.gallery-modal .medias img,
+.gallery-modal .medias video {
   object-fit: contain;
   max-height: 800px;
 }
@@ -682,7 +690,7 @@ header nav {
   .gallery-modal__control img {
     width: 2rem;
   }
-  .gallery-modal .media {
+  .gallery-modal .medias {
     margin: 0 2rem;
   }
   .gallery-modal .close {

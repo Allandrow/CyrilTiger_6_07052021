@@ -40,11 +40,21 @@
     }
   }
 
-  .media {
+  .medias {
     margin: 0 1rem;
     position: relative;
 
-    img {
+    .media {
+      visibility: hidden;
+      transition: visibility 150ms;
+
+      &.visible {
+        visibility: visible;
+      }
+    }
+
+    img,
+    video {
       object-fit: contain;
       max-height: 800px;
     }
@@ -55,7 +65,7 @@
       width: 2rem;
     }
 
-    .media {
+    .medias {
       margin: 0 2rem;
     }
     .close {

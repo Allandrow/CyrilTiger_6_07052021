@@ -284,30 +284,69 @@ const loadContactModalEventListeners = () => {
   });
 };
 
-const loadGalleryModalEventListeners = () => {
+const constructLightBoxMedias = () => {
+  // Parse all medias in document
   const links = document.querySelectorAll('figure a');
   const modal = document.querySelector('.gallery-modal');
-  let paths = [];
+  const mediaBlock = modal.querySelector('.medias');
+  mediaBlock.textContent = '';
 
-  // if first/last media in array, loop to opposite end of array
-  // handle keyboard events for navigation
-  // handle escape key for closing modal + click on close button
-  // on modal closing, give focus back to initial media
+  const closeBtn = document.createElement('button');
+  closeBtn.classList.add('close', 'js-focusable');
+  mediaBlock.append(closeBtn);
+
+  // for each, create a media in modal
+  for (const link of links) {
+    const isVideo = link.firstElementChild.tagName.toLowerCase() === 'video';
+
+    const div = document.createElement('div');
+    div.classList.add('media');
+
+    // if video create a video, otherwise create an img
+    if (isVideo) {
+      const video = document.createElement('video');
+
+      const source = document.createElement('source');
+      source.setAttribute('src', link.pathname);
+      source.setAttribute('type', 'video/mp4');
+      video.appendChild(source);
+      //TODO : set track element for captions
+
+      div.appendChild(video);
+    } else {
+      const img = document.createElement('img');
+      img.setAttribute('src', link.pathname);
+      //TODO : set alt text
+
+      div.appendChild(img);
+    }
+
+    const paragraph = document.createElement('p');
+    // get data-title from parent figure for text below media
+    paragraph.appendChild(
+      document.createTextNode(link.parentElement.getAttribute('data-title'))
+    );
+
+    div.appendChild(paragraph);
+
+    mediaBlock.appendChild(div);
+  }
+};
+
+const loadGalleryModalEventListeners = () => {
+  const links = document.querySelectorAll('figure a');
 
   links.forEach((link) => {
-    // Get all medias in array
-    paths = [...paths, link.pathname];
-
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      // on media click, open modal and init with clicked media as first slide
-      modal.querySelector('.media img').setAttribute('src', link.pathname);
-      modal.classList.add('open');
-
-      // on arrows click, navigate medias array to get next/previous media
-      console.log(paths.indexOf(link.pathname));
+      constructLightBoxMedias();
     });
   });
+
+  // depending on document media clicked, set according modal media visible, others hidden
+  // on arrows click, hide current modal media and display new media
+
+  // console.log(links);
 };
 
 const constructPhotographPage = (json, id, wrapper) => {
