@@ -190,7 +190,7 @@ const attachLikesEventListener = () => {
   });
 };
 
-const openModal = (modal, btn) => {
+const openContactModal = (modal, btn) => {
   const wrapper = document.getElementById('js-container');
 
   modal.classList.add('open');
@@ -199,7 +199,7 @@ const openModal = (modal, btn) => {
   window.addEventListener('keydown', contactModalKeyEvents);
 };
 
-const closeModal = (modal, btn) => {
+const closeContactModal = (modal, btn) => {
   const wrapper = document.getElementById('js-container');
 
   modal.classList.remove('open');
@@ -230,7 +230,7 @@ const contactModalKeyEvents = (e) => {
   }
   // Escape key closes modal if inside
   if (isEscapePressed) {
-    closeModal(modal, contactBtn);
+    closeContactModal(modal, contactBtn);
     return;
   }
   // If Tab key
@@ -264,12 +264,12 @@ const attachContactModalEventListeners = () => {
 
   // Click to open modal event
   contactBtn.addEventListener('click', () => {
-    openModal(modal, contactBtn);
+    openContactModal(modal, contactBtn);
   });
 
   // Click on close button to close modal
   closeBtn.addEventListener('click', () => {
-    closeModal(modal, contactBtn);
+    closeContactModal(modal, contactBtn);
   });
 
   // Form submission closes logs values + close modal
@@ -278,7 +278,7 @@ const attachContactModalEventListeners = () => {
     inputs.forEach((input) => {
       console.log(input.value);
     });
-    closeModal(modal, contactBtn);
+    closeContactModal(modal, contactBtn);
   });
 };
 
@@ -383,17 +383,33 @@ const attachGalleryModalEventListeners = () => {
 
   // Click for previous media
   prevBtn.addEventListener('click', () => {
-    const media = links.find((link) => link.pathname === activeLink);
-    console.log(links[links.indexOf(media) - 1]);
+    const medias = Array.from(modal.querySelectorAll('.media'));
+    const media = medias.find((media) => media.classList.contains('visible'));
+    media.classList.remove('visible');
+    const previousMedia = medias[medias.indexOf(media) - 1];
+    let newMedia;
+    if (previousMedia === undefined) {
+      newMedia = medias[medias.length - 1];
+    } else {
+      newMedia = previousMedia;
+    }
+    newMedia.classList.add('visible');
   });
 
   // Click for next media
   nextBtn.addEventListener('click', () => {
-    const media = links.find((link) => link.pathname === activeLink);
-    console.log(links[links.indexOf(media) + 1]);
+    const medias = Array.from(modal.querySelectorAll('.media'));
+    const media = medias.find((media) => media.classList.contains('visible'));
+    media.classList.remove('visible');
+    let newMedia;
+    const nextMedia = medias[medias.indexOf(media) + 1];
+    if (nextMedia === undefined) {
+      newMedia = medias[0];
+    } else {
+      newMedia = nextMedia;
+    }
+    newMedia.classList.add('visible');
   });
-
-  // on arrows click, hide current modal media and display new media
 
   // console.log(links);
 };

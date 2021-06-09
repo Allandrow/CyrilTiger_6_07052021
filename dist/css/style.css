@@ -690,6 +690,7 @@ header nav {
 .gallery-modal .medias video {
   object-fit: contain;
   max-height: 800px;
+  max-width: 1440px;
 }
 @media (min-width: 60rem) {
   .gallery-modal__control img {
