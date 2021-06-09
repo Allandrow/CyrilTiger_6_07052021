@@ -129,7 +129,7 @@ class Filters {
   }
 }
 
-const loadFiltersEventListeners = () => {
+const attachFiltersEventListeners = () => {
   const selectListItems = document.querySelectorAll('#js-select li');
   const sortBtn = document.getElementById('js-sort');
   const selectList = document.getElementById('js-select');
@@ -167,7 +167,7 @@ const updateTotalLikesCount = (operation) => {
   totalLikesCountElement.innerText = totalLikesCount;
 };
 
-const loadLikesEventListener = () => {
+const attachLikesEventListener = () => {
   const mediaLikeIcons = document.querySelectorAll('.js-like');
   mediaLikeIcons.forEach((icon) => {
     icon.addEventListener('click', () => {
@@ -225,39 +225,37 @@ const contactModalKeyEvents = (e) => {
   const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
   const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
 
-  if (modal.classList.contains('open')) {
-    if (!(isTabPressed || isEscapePressed)) {
-      return;
-    }
-    // Escape key closes modal if inside
-    if (isEscapePressed) {
-      closeModal(modal, contactBtn);
-      return;
-    }
-    // If Tab key
-    if (isTabPressed) {
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusElement) {
-          e.preventDefault();
-          lastFocusElement.focus();
-          return;
-        }
-      } else {
-        if (document.activeElement === lastFocusElement) {
-          e.preventDefault();
-          firstFocusElement.focus();
-          return;
-        }
+  if (!(isTabPressed || isEscapePressed)) {
+    return;
+  }
+  // Escape key closes modal if inside
+  if (isEscapePressed) {
+    closeModal(modal, contactBtn);
+    return;
+  }
+  // If Tab key
+  if (isTabPressed) {
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusElement) {
+        e.preventDefault();
+        lastFocusElement.focus();
+        return;
+      }
+    } else {
+      if (document.activeElement === lastFocusElement) {
+        e.preventDefault();
+        firstFocusElement.focus();
+        return;
       }
     }
-    if (!modalFocusableElements.includes(document.activeElement)) {
-      e.preventDefault();
-      firstFocusElement.focus();
-    }
+  }
+  if (!modalFocusableElements.includes(document.activeElement)) {
+    e.preventDefault();
+    firstFocusElement.focus();
   }
 };
 
-const loadContactModalEventListeners = () => {
+const attachContactModalEventListeners = () => {
   const contactBtn = document.getElementById('js-contactForm');
   const modal = document.getElementById('contact-modal');
   const closeBtn = modal.querySelector('.close');
@@ -289,7 +287,8 @@ const constructLightBoxMedias = (activeLink) => {
   const links = document.querySelectorAll('figure a');
   const modal = document.querySelector('.gallery-modal');
   const mediaBlock = modal.querySelector('.medias');
-  mediaBlock.textContent = '';
+
+  while (mediaBlock.firstChild) mediaBlock.removeChild(mediaBlock.firstChild);
 
   // for each, create a media in modal
   for (const link of links) {
@@ -351,7 +350,7 @@ const closeLightBoxModal = (links, activeLink) => {
   links.find((link) => link.pathname === activeLink).focus();
 };
 
-const loadGalleryModalEventListeners = () => {
+const attachGalleryModalEventListeners = () => {
   const links = Array.from(document.querySelectorAll('.figure a'));
   const modal = document.querySelector('.gallery-modal');
   const closeBtn = modal.querySelector('.close');
@@ -382,7 +381,18 @@ const loadGalleryModalEventListeners = () => {
     }
   });
 
-  // depending on document media clicked, set according modal media visible, others hidden
+  // Click for previous media
+  prevBtn.addEventListener('click', () => {
+    const media = links.find((link) => link.pathname === activeLink);
+    console.log(links[links.indexOf(media) - 1]);
+  });
+
+  // Click for next media
+  nextBtn.addEventListener('click', () => {
+    const media = links.find((link) => link.pathname === activeLink);
+    console.log(links[links.indexOf(media) + 1]);
+  });
+
   // on arrows click, hide current modal media and display new media
 
   // console.log(links);
@@ -414,13 +424,13 @@ const constructPhotographPage = (json, id, wrapper) => {
 
   document.body.insertBefore(dom.createGalleryModal(), document.querySelector('script'));
 
-  loadFiltersEventListeners();
+  attachFiltersEventListeners();
 
-  loadLikesEventListener();
+  attachLikesEventListener();
 
-  loadContactModalEventListeners();
+  attachContactModalEventListeners();
 
-  loadGalleryModalEventListeners();
+  attachGalleryModalEventListeners();
 };
 
 const displayPageByURLQuery = (json, URLQuery) => {
