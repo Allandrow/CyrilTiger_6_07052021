@@ -228,10 +228,8 @@ const contactModalKeyEvents = (e) => {
   const firstFocusElement = modalFocusableElements[0];
   const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
 
-  const tabKeyCode = 9;
-  const escapeKeyCode = 27;
-  const isTabPressed = e.key === 'Tab' || e.keyCode === tabKeyCode;
-  const isEscapePressed = e.key === 'escape' || e.keyCode === escapeKeyCode;
+  const isTabPressed = e.key === 'Tab' || e.code === 'Tab';
+  const isEscapePressed = e.key === 'escape' || e.code === 'Escape';
 
   if (!(isTabPressed || isEscapePressed)) {
     return;
@@ -364,6 +362,7 @@ const attachGalleryModalEventListeners = () => {
   const closeBtn = modal.querySelector('.close');
   const prevBtn = document.getElementById('js-prev');
   const nextBtn = document.getElementById('js-next');
+  const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
   let activeLink;
 
   links.forEach((link) => {
@@ -382,8 +381,10 @@ const attachGalleryModalEventListeners = () => {
 
   // handle escape key for closing modal
   window.addEventListener('keydown', (e) => {
+    const isEscapePressed = e.key === 'Escape' || e.code === 'Escape';
+
     if (modal.classList.contains('open')) {
-      if (e.key === 'escape' || e.keyCode === 27) {
+      if (isEscapePressed) {
         closeLightBoxModal(links, activeLink);
       }
     }
@@ -417,6 +418,66 @@ const attachGalleryModalEventListeners = () => {
       newMedia = nextMedia;
     }
     newMedia.classList.add('visible');
+  });
+
+  // Arrows on keyboard for previous/next media
+  window.addEventListener('keydown', (e) => {
+    if (modal.classList.contains('open')) {
+      // Previous media
+      if (e.key === 'ArrowLeft' || e.code === 'ArrowLeft') {
+        const medias = Array.from(modal.querySelectorAll('.media'));
+        const media = medias.find((media) => media.classList.contains('visible'));
+        media.classList.remove('visible');
+        const previousMedia = medias[medias.indexOf(media) - 1];
+        let newMedia;
+        if (previousMedia === undefined) {
+          newMedia = medias[medias.length - 1];
+        } else {
+          newMedia = previousMedia;
+        }
+        newMedia.classList.add('visible');
+        return;
+      }
+      // Next media
+      if (e.key === 'ArrowRight' || e.code === 'ArrowRight') {
+        const medias = Array.from(modal.querySelectorAll('.media'));
+        const media = medias.find((media) => media.classList.contains('visible'));
+        media.classList.remove('visible');
+        let newMedia;
+        const nextMedia = medias[medias.indexOf(media) + 1];
+        if (nextMedia === undefined) {
+          newMedia = medias[0];
+        } else {
+          newMedia = nextMedia;
+        }
+        newMedia.classList.add('visible');
+        return;
+      }
+      // Tabulation
+      if (e.key === 'Tab' || e.code === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === modalFocusableElements[0]) {
+            e.preventDefault();
+            modalFocusableElements[modalFocusableElements.length - 1].focus();
+            return;
+          }
+        } else {
+          if (!modalFocusableElements.includes(document.activeElement)) {
+            e.preventDefault();
+            modalFocusableElements[0].focus();
+            return;
+          }
+          if (
+            document.activeElement ===
+            modalFocusableElements[modalFocusableElements.length - 1]
+          ) {
+            e.preventDefault();
+            modalFocusableElements[0].focus();
+            return;
+          }
+        }
+      }
+    }
   });
 
   // console.log(links);
