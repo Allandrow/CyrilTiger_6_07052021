@@ -129,6 +129,14 @@ class Filters {
   }
 }
 
+// TODO : make a array of objects for filter
+// const filterOptions = [
+//   {
+//     'label': "Popularité",
+//     'sort': utils.sortByLikes,
+//   },
+// ];
+
 const attachFiltersEventListeners = () => {
   const selectListItems = document.querySelectorAll('#js-select li');
   const sortBtn = document.getElementById('js-sort');

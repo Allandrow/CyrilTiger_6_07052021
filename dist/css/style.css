@@ -33,7 +33,8 @@ body {
 
 /* Make images easier to work with */
 img,
-picture {
+picture,
+video {
   max-width: 100%;
   display: block;
 }
@@ -690,7 +691,6 @@ header nav {
 .gallery-modal .medias video {
   object-fit: contain;
   max-height: 800px;
-  max-width: 1440px;
 }
 @media (min-width: 60rem) {
   .gallery-modal__control img {
@@ -698,6 +698,10 @@ header nav {
   }
   .gallery-modal .medias {
     margin: 0 2rem;
+  }
+  .gallery-modal .medias img,
+.gallery-modal .medias video {
+    max-width: 1440px;
   }
   .gallery-modal .close {
     top: 2.25rem;

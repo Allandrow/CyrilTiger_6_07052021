@@ -62,7 +62,6 @@
     video {
       object-fit: contain;
       max-height: 800px;
-      max-width: 1440px;
     }
   }
 
@@ -73,6 +72,11 @@
 
     .medias {
       margin: 0 2rem;
+
+      img,
+      video {
+        max-width: 1440px;
+      }
     }
     .close {
       top: 2.25rem;
