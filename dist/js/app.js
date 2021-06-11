@@ -268,6 +268,16 @@ const attachContactModalEventListeners = () => {
   const form = modal.querySelector('form');
   const inputs = modal.querySelectorAll('.js-input');
 
+  window.addEventListener('click', (e) => {
+    if (modal.classList.contains('open')) {
+      if (e.target === modal) {
+        if (e.target.closest('section') === null) {
+          closeContactModal(modal, contactBtn);
+        }
+      }
+    }
+  });
+
   // Click to open modal event
   contactBtn.addEventListener('click', () => {
     openContactModal(modal, contactBtn);
