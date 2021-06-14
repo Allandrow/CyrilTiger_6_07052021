@@ -79,8 +79,8 @@ class Filters {
     this.sortingOptions = sortingOptions;
   }
 
-  createSelect(sortingOptions) {
-    return dom.createSelectGroup(sortingOptions);
+  createSelect() {
+    return dom.createSelectGroup(this.sortingOptions);
   }
 
   static changeSelectedFilter(option) {
@@ -319,19 +319,22 @@ const constructLightBoxMedias = (activeLink) => {
 
     // if video create a video, otherwise create an img
     if (isVideo) {
+      const title = link.querySelector('video').getAttribute('title');
       const video = document.createElement('video');
+      video.setAttribute('title', title);
 
       const source = document.createElement('source');
       source.setAttribute('src', link.pathname);
       source.setAttribute('type', 'video/mp4');
       video.appendChild(source);
-      //TODO : set track element for captions
 
       div.appendChild(video);
     } else {
+      const alt = link.querySelector('img').getAttribute('alt');
+
       const img = document.createElement('img');
       img.setAttribute('src', link.pathname);
-      //TODO : set alt text
+      img.setAttribute('alt', alt);
 
       div.appendChild(img);
     }

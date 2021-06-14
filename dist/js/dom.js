@@ -150,7 +150,11 @@ export const createPhotographerHeader = (photographer) => {
   return section;
 };
 
-const createPicture = (id, image) => {
+const createPicture = (media) => {
+  const id = media.photographerId;
+  const image = media.image;
+  const alt = media.description;
+
   const picture = document.createElement('picture');
 
   const source = document.createElement('source');
@@ -163,14 +167,19 @@ const createPicture = (id, image) => {
     '-min',
     image.slice(separatorIndex),
   ].join('');
-  const img = createIMG(`${id}/${imageMin}`);
+  const img = createIMG(`${id}/${imageMin}`, alt);
 
   picture.append(source, img);
   return picture;
 };
 
-const createVideo = (id, video) => {
+const createVideo = (mediaData) => {
+  const id = mediaData.photographerId;
+  const video = mediaData.video;
+  const alt = mediaData.description;
+
   const media = document.createElement('video');
+  media.setAttribute('title', alt);
 
   const source = document.createElement('source');
   source.setAttribute('src', `dist/img/${id}/${video}`);
@@ -215,9 +224,9 @@ const createFigure = (media) => {
 
   let mediaElement;
   if (utils.isImage(media)) {
-    mediaElement = createPicture(media.photographerId, media.image);
+    mediaElement = createPicture(media);
   } else {
-    mediaElement = createVideo(media.photographerId, media.video);
+    mediaElement = createVideo(media);
   }
 
   link.appendChild(mediaElement);
