@@ -450,7 +450,7 @@ export const createGalleryModal = () => {
   const closeBtn = document.createElement('button');
   closeBtn.classList.add('close', 'js-focusable');
 
-  section.append(leftButton, rightButton, mediaBlock, closeBtn);
+  section.append(leftButton, mediaBlock, rightButton, closeBtn);
 
   div.appendChild(section);
 

@@ -32,8 +32,6 @@
     }
 
     &:nth-of-type(2) {
-      order: 1;
-
       img {
         transform: rotate(180deg);
       }
@@ -43,9 +41,32 @@
   .medias {
     margin: 0 1rem;
     position: relative;
+    max-width: 1000px;
+    width: 1000px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 
     .media {
       display: none;
+      animation-duration: 400ms;
+
+      &.nextMedia {
+        animation-name: nextSlide;
+      }
+
+      &.previousMedia {
+        animation-name: prevSlide;
+      }
+
+      &.outLeft {
+        animation-name: slideOutLeft;
+      }
+
+      &.outRight {
+        animation-name: slideOutRight;
+      }
+
       &.visible {
         display: block;
       }
@@ -55,6 +76,7 @@
     video {
       object-fit: contain;
       max-height: 800px;
+      width: 100%;
     }
   }
 

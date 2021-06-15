@@ -332,7 +332,6 @@ const constructLightBoxMedias = (activeLink) => {
     }
 
     const paragraph = document.createElement('p');
-    // get data-title from parent figure for text below media
     paragraph.appendChild(
       document.createTextNode(link.parentElement.getAttribute('data-title'))
     );
@@ -414,7 +413,6 @@ const attachGalleryModalEventListeners = () => {
   nextBtn.addEventListener('click', () => {
     const medias = Array.from(modal.querySelectorAll('.media'));
     const media = medias.find((media) => media.classList.contains('visible'));
-    media.classList.remove('visible');
     let newMedia;
     const nextMedia = medias[medias.indexOf(media) + 1];
     if (nextMedia === undefined) {
@@ -422,7 +420,12 @@ const attachGalleryModalEventListeners = () => {
     } else {
       newMedia = nextMedia;
     }
-    newMedia.classList.add('visible');
+    newMedia.classList.add('visible', 'nextMedia');
+    media.classList.add('outLeft');
+    newMedia.addEventListener('animationend', () => {
+      media.classList.remove('visible', 'outLeft');
+      newMedia.classList.remove('nextMedia');
+    });
   });
 
   // Arrows on keyboard for previous/next media
