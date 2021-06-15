@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 100%;
   }
 
   .close {
@@ -44,17 +45,9 @@
     position: relative;
 
     .media {
-      visibility: hidden;
-      height: 0;
-      width: 0;
-      opacity: 0;
-      transition: opacity 150ms, visibility 150ms;
-
+      display: none;
       &.visible {
-        visibility: visible;
-        height: auto;
-        width: auto;
-        opacity: 1;
+        display: block;
       }
     }
 
@@ -75,7 +68,7 @@
 
       img,
       video {
-        max-width: 1440px;
+        max-width: 1200px;
       }
     }
     .close {
