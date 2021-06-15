@@ -74,7 +74,7 @@ const constructHomepage = (photographers, id, wrapper) => {
   loadBackToTopBtnEventListeners();
 };
 
-class Filters {
+class SortingSelect {
   constructor(sortingOptions) {
     this.sortingOptions = sortingOptions;
   }
@@ -107,7 +107,7 @@ class Filters {
     btn.nextElementSibling.classList.remove('open');
   }
 
-  static sortByFilter() {
+  sortByFilter() {
     const filterType = document.getElementById('js-sort').getAttribute('data-sort');
     const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
 
@@ -129,38 +129,30 @@ class Filters {
   }
 }
 
-// TODO : make a array of objects for filter
-// const filterOptions = [
-//   {
-//     'label': "Popularité",
-//     'sort': utils.sortByLikes,
-//   },
-// ];
-
 const attachFiltersEventListeners = () => {
   const selectListItems = document.querySelectorAll('#js-select li');
   const sortBtn = document.getElementById('js-sort');
   const selectList = document.getElementById('js-select');
 
   sortBtn.addEventListener('mouseenter', () => {
-    Filters.expandListBox(sortBtn);
+    SortingSelect.expandListBox(sortBtn);
   });
   selectList.addEventListener('mouseleave', () => {
-    Filters.collapseListBox(sortBtn);
+    SortingSelect.collapseListBox(sortBtn);
   });
   sortBtn.addEventListener('focus', () => {
-    Filters.expandListBox(sortBtn);
+    SortingSelect.expandListBox(sortBtn);
   });
   selectListItems.forEach((option) => {
     option.addEventListener('click', () => {
-      Filters.changeSelectedFilter(option);
-      Filters.changeFilterBtnContent(option, sortBtn);
-      Filters.collapseListBox(sortBtn);
-      Filters.sortByFilter();
+      SortingSelect.changeSelectedFilter(option);
+      SortingSelect.changeFilterBtnContent(option, sortBtn);
+      SortingSelect.collapseListBox(sortBtn);
+      SortingSelect.sortByFilter();
     });
     option.addEventListener('focusout', () => {
       if (option === selectList.lastElementChild) {
-        Filters.collapseListBox(sortBtn);
+        SortingSelect.collapseListBox(sortBtn);
       }
     });
   });
@@ -498,7 +490,30 @@ const attachGalleryModalEventListeners = () => {
 
 const constructPhotographPage = (json, id, wrapper) => {
   const main = document.getElementById('js-main');
-  const filters = new Filters(['Popularité', 'Date', 'Titre']);
+  // const filters = new SortingSelect(['Popularité', 'Date', 'Titre']);
+
+  const sortingOptions = new SortingSelect([
+    {
+      label: 'Popularité',
+      sorting: utils.sortByLikes,
+    },
+    {
+      label: 'Date',
+      sorting: utils.sortByDate,
+    },
+    {
+      label: 'Titre',
+      sorting: utils.sortByTitle,
+    },
+  ]);
+
+  // TODO : make a array of objects for filter
+  // const filterOptions = [
+  //   {
+  //     'label': "Popularité",
+  //     'sort': utils.sortByLikes,
+  //   },
+  // ];
 
   const photographer = json.photographers.find((photographer) => photographer.id === id);
   document.title += ` - ${photographer.name}`;
@@ -508,7 +523,7 @@ const constructPhotographPage = (json, id, wrapper) => {
 
   main.append(
     dom.createPhotographerHeader(photographer),
-    filters.createSelect(filters.sortingOptions),
+    sortingOptions.createSelect(),
     dom.createFigureGroup(medias),
     dom.createLikesAndPriceDiv(medias, photographer)
   );

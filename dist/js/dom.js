@@ -78,44 +78,44 @@ const createTagList = (tags) => {
   return ul;
 };
 
-// TODO : destructuring param
 export const createPhotographerArticle = (photographer) => {
+  const { id, portrait, name, city, country, tagline, price, tags } = photographer;
   const elementBEMName = 'thumbnail';
 
   const article = document.createElement('article');
   article.classList.add(elementBEMName);
 
   const link = document.createElement('a');
-  link.setAttribute('href', `index.html?id=${photographer.id}`);
+  link.setAttribute('href', `index.html?id=${id}`);
   link.classList.add(`${elementBEMName}__link`);
 
-  const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
+  const thumbnail = createIMG(`thumbnails/${portrait}`, name);
 
   const title = document.createElement('h2');
-  title.appendChild(document.createTextNode(photographer.name));
+  title.appendChild(document.createTextNode(name));
 
-  link.append(portrait, title);
+  link.append(thumbnail, title);
 
   const paragraph = document.createElement('p');
 
   const localisation = createSPAN(
-    `${photographer.city}, ${photographer.country}`,
+    `${city}, ${country}`,
     `${elementBEMName}__localisation`
   );
-  const slogan = createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
-  const price = createSPAN(`${photographer.price}€/jour`, `${elementBEMName}__price`);
+  const slogan = createSPAN(tagline, `${elementBEMName}__slogan`);
+  const priceText = createSPAN(`${price}€/jour`, `${elementBEMName}__price`);
 
-  paragraph.append(localisation, slogan, price);
+  paragraph.append(localisation, slogan, priceText);
 
-  const ul = createTagList(photographer.tags);
+  const ul = createTagList(tags);
 
   article.append(link, paragraph, ul);
 
   return article;
 };
 
-// TODO : destructuring param
 export const createPhotographerHeader = (photographer) => {
+  const { name, city, country, tagline, tags, portrait } = photographer;
   const elementBEMName = 'photograph-header__infos';
 
   const section = document.createElement('section');
@@ -125,41 +125,39 @@ export const createPhotographerHeader = (photographer) => {
   div.classList.add(elementBEMName);
 
   const title = document.createElement('h1');
-  title.appendChild(document.createTextNode(photographer.name));
+  title.appendChild(document.createTextNode(name));
 
   const paragraph = document.createElement('p');
 
   const localisation = createSPAN(
-    `${photographer.city}, ${photographer.country}`,
+    `${city}, ${country}`,
     `${elementBEMName}__localisation`
   );
-  const slogan = createSPAN(photographer.tagline, `${elementBEMName}__slogan`);
+  const slogan = createSPAN(tagline, `${elementBEMName}__slogan`);
 
   paragraph.append(localisation, slogan);
 
-  const ul = createTagList(photographer.tags);
+  const ul = createTagList(tags);
 
   const contact = createContactBtn();
 
   div.append(title, paragraph, ul, contact);
 
-  const portrait = createIMG(`thumbnails/${photographer.portrait}`, photographer.name);
+  const thumbnail = createIMG(`thumbnails/${portrait}`, name);
 
-  section.append(div, portrait);
+  section.append(div, thumbnail);
 
   return section;
 };
 
 const createPicture = (media) => {
-  const id = media.photographerId;
-  const image = media.image;
-  const alt = media.description;
+  const { photographerId, image, description } = media;
 
   const picture = document.createElement('picture');
 
   const source = document.createElement('source');
   source.setAttribute('media', '(min-width:60rem)');
-  source.setAttribute('srcset', `dist/img/${id}/${image}`);
+  source.setAttribute('srcset', `dist/img/${photographerId}/${image}`);
 
   const separatorIndex = image.indexOf('.');
   const imageMin = [
@@ -167,26 +165,24 @@ const createPicture = (media) => {
     '-min',
     image.slice(separatorIndex),
   ].join('');
-  const img = createIMG(`${id}/${imageMin}`, alt);
+  const img = createIMG(`${photographerId}/${imageMin}`, description);
 
   picture.append(source, img);
   return picture;
 };
 
-const createVideo = (mediaData) => {
-  const id = mediaData.photographerId;
-  const video = mediaData.video;
-  const alt = mediaData.description;
+const createVideo = (media) => {
+  const { photographerId, video, description } = media;
 
-  const media = document.createElement('video');
-  media.setAttribute('title', alt);
+  const mediaElement = document.createElement('video');
+  mediaElement.setAttribute('title', description);
 
   const source = document.createElement('source');
-  source.setAttribute('src', `dist/img/${id}/${video}`);
+  source.setAttribute('src', `dist/img/${photographerId}/${video}`);
   source.setAttribute('type', 'video/mp4');
 
-  media.appendChild(source);
-  return media;
+  mediaElement.appendChild(source);
+  return mediaElement;
 };
 
 const createFigcaption = (title, likes) => {
@@ -209,34 +205,32 @@ const createFigcaption = (title, likes) => {
   return figcaption;
 };
 
-// TODO : destructuring param
 const createFigure = (media) => {
+  const { photographerId, image, video, title, likes, date } = media;
   const figure = document.createElement('figure');
   figure.classList.add('figure');
 
   const link = document.createElement('a');
-  // TODO : add href to media
   let path;
-  utils.isImage(media)
-    ? (path = `dist/img/${media.photographerId}/${media.image}`)
-    : (path = `dist/img/${media.photographerId}/${media.video}`);
-  link.setAttribute('href', path);
-
   let mediaElement;
+
   if (utils.isImage(media)) {
+    path = `dist/img/${photographerId}/${image}`;
     mediaElement = createPicture(media);
   } else {
+    path = `dist/img/${photographerId}/${video}`;
     mediaElement = createVideo(media);
   }
 
+  link.setAttribute('href', path);
   link.appendChild(mediaElement);
 
-  const caption = createFigcaption(media.title, media.likes);
+  const caption = createFigcaption(title, likes);
 
   figure.append(link, caption);
-  figure.setAttribute('data-likes', media.likes);
-  figure.setAttribute('data-title', media.title);
-  figure.setAttribute('data-date', media.date);
+  figure.setAttribute('data-likes', likes);
+  figure.setAttribute('data-title', title);
+  figure.setAttribute('data-date', date);
   return figure;
 };
 
@@ -328,22 +322,22 @@ export const createSelectGroup = (filters) => {
   btn.setAttribute('aria-haspopup', 'listbox');
   btn.setAttribute('aria-expanded', 'false');
   btn.setAttribute('aria-labelledBy', 'ariaLabel');
-  btn.appendChild(document.createTextNode(filters[0]));
+  btn.appendChild(document.createTextNode(filters[0].label));
 
   const ul = document.createElement('ul');
   ul.setAttribute('id', 'js-select');
   ul.setAttribute('role', 'listbox');
 
   filters.forEach((filter) => {
-    switch (filter) {
+    switch (filter.label) {
       case 'Popularité':
-        ul.appendChild(createSelectLI('likes', filter));
+        ul.appendChild(createSelectLI('likes', filter.label));
         break;
       case 'Date':
-        ul.appendChild(createSelectLI('date', filter));
+        ul.appendChild(createSelectLI('date', filter.label));
         break;
       case 'Titre':
-        ul.appendChild(createSelectLI('titre', filter));
+        ul.appendChild(createSelectLI('titre', filter.label));
         break;
     }
   });
