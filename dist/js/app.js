@@ -490,8 +490,8 @@ const attachGalleryModalEventListeners = () => {
 
 const constructPhotographPage = (json, id, wrapper) => {
   const main = document.getElementById('js-main');
-  // const filters = new SortingSelect(['Popularité', 'Date', 'Titre']);
 
+  // TODO : use sorting method
   const sortingOptions = new SortingSelect([
     {
       label: 'Popularité',
@@ -506,14 +506,6 @@ const constructPhotographPage = (json, id, wrapper) => {
       sorting: utils.sortByTitle,
     },
   ]);
-
-  // TODO : make a array of objects for filter
-  // const filterOptions = [
-  //   {
-  //     'label': "Popularité",
-  //     'sort': utils.sortByLikes,
-  //   },
-  // ];
 
   const photographer = json.photographers.find((photographer) => photographer.id === id);
   document.title += ` - ${photographer.name}`;

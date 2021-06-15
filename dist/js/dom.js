@@ -20,7 +20,7 @@ const createSPAN = (text, className) => {
 const createSelectLI = (id, text) => {
   const li = document.createElement('li');
   li.setAttribute('role', 'option');
-  li.setAttribute('id', `sort-${id}`);
+  li.id = `sort-${id}`;
   li.setAttribute('aria-selected', 'false');
   li.setAttribute('aria-labelledBy', 'ariaLabel');
 
@@ -237,7 +237,7 @@ const createFigure = (media) => {
 export const createFigureGroup = (medias) => {
   const figureGroup = document.createElement('figure');
   figureGroup.setAttribute('role', 'group');
-  figureGroup.setAttribute('id', 'js-figureGroup');
+  figureGroup.id = 'js-figureGroup';
   figureGroup.classList.add('figure-group');
 
   medias.forEach((media) => {
@@ -309,14 +309,14 @@ export const createSelectGroup = (filters) => {
 
   const label = document.createElement('label');
   label.setAttribute('for', 'js-sort');
-  label.setAttribute('id', 'ariaLabel');
+  label.id = 'ariaLabel';
   label.appendChild(document.createTextNode('Trier par'));
 
   const divSelect = document.createElement('div');
   divSelect.classList.add('select');
 
   const btn = document.createElement('button');
-  btn.setAttribute('id', 'js-sort');
+  btn.id = 'js-sort';
   btn.setAttribute('role', 'button');
   btn.classList.add('btn');
   btn.setAttribute('aria-haspopup', 'listbox');
@@ -325,7 +325,7 @@ export const createSelectGroup = (filters) => {
   btn.appendChild(document.createTextNode(filters[0].label));
 
   const ul = document.createElement('ul');
-  ul.setAttribute('id', 'js-select');
+  ul.id = 'js-select';
   ul.setAttribute('role', 'listbox');
 
   filters.forEach((filter) => {
