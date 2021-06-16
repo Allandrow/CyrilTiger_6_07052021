@@ -292,7 +292,7 @@ const attachContactModalEventListeners = () => {
 
 const constructLightBoxMedias = (activeLink) => {
   // Parse all medias in document
-  const links = document.querySelectorAll('figure a');
+  const links = Array.from(document.querySelectorAll('figure a'));
   const modal = document.querySelector('.gallery-modal');
   const mediaBlock = modal.querySelector('.medias');
 
@@ -304,6 +304,7 @@ const constructLightBoxMedias = (activeLink) => {
 
     const div = document.createElement('div');
     div.classList.add('media');
+    div.setAttribute('data-id', links.indexOf(link));
 
     if (link.pathname === activeLink) {
       div.classList.add('visible');
@@ -368,6 +369,7 @@ const attachGalleryModalEventListeners = () => {
   const nextBtn = document.getElementById('js-next');
   const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
   let activeLink;
+  let mediaId;
 
   links.forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -375,6 +377,7 @@ const attachGalleryModalEventListeners = () => {
       activeLink = link.pathname;
       constructLightBoxMedias(activeLink);
       openLightBoxModal();
+      mediaId = `${links.indexOf(link)}`;
     });
   });
 
@@ -397,8 +400,8 @@ const attachGalleryModalEventListeners = () => {
   // Click for previous media
   prevBtn.addEventListener('click', () => {
     const medias = Array.from(modal.querySelectorAll('.media'));
-    const media = medias.find((media) => media.classList.contains('visible'));
-    const previousMedia = medias[medias.indexOf(media) - 1];
+    let currentMedia = medias.find((media) => media.getAttribute('data-id') === mediaId);
+    const previousMedia = medias[medias.indexOf(currentMedia) - 1];
 
     let newMedia;
     if (previousMedia === undefined) {
@@ -406,39 +409,43 @@ const attachGalleryModalEventListeners = () => {
     } else {
       newMedia = previousMedia;
     }
-    media.classList.add('outRight');
+    currentMedia.classList.add('outRight');
     newMedia.classList.add('visible', 'previousMedia');
 
     newMedia.addEventListener('animationend', () => {
-      if (media.classList.contains('outRight')) {
-        media.classList.remove('visible');
+      if (currentMedia.classList.contains('outRight')) {
+        currentMedia.classList.remove('visible');
       }
-      media.classList.remove('outRight');
+      currentMedia.classList.remove('outRight');
       newMedia.classList.remove('previousMedia');
     });
+
+    mediaId = newMedia.getAttribute('data-id');
   });
 
   // Click for next media
   nextBtn.addEventListener('click', () => {
     const medias = Array.from(modal.querySelectorAll('.media'));
-    const media = medias.find((media) => media.classList.contains('visible'));
-    const nextMedia = medias[medias.indexOf(media) + 1];
+    let currentMedia = medias.find((media) => media.getAttribute('data-id') === mediaId);
+    const nextMedia = medias[medias.indexOf(currentMedia) + 1];
     let newMedia;
     if (nextMedia === undefined) {
       newMedia = medias[0];
     } else {
       newMedia = nextMedia;
     }
-    media.classList.add('outLeft');
+    currentMedia.classList.add('outLeft');
     newMedia.classList.add('visible', 'nextMedia');
 
     newMedia.addEventListener('animationend', () => {
-      if (media.classList.contains('outLeft')) {
-        media.classList.remove('visible');
+      if (currentMedia.classList.contains('outLeft')) {
+        currentMedia.classList.remove('visible');
       }
-      media.classList.remove('outLeft');
+      currentMedia.classList.remove('outLeft');
       newMedia.classList.remove('nextMedia');
     });
+
+    mediaId = newMedia.getAttribute('data-id');
   });
 
   // Arrows on keyboard for previous/next media
@@ -447,47 +454,55 @@ const attachGalleryModalEventListeners = () => {
       // Previous media
       if (e.key === 'ArrowLeft' || e.code === 'ArrowLeft') {
         const medias = Array.from(modal.querySelectorAll('.media'));
-        const media = medias.find((media) => media.classList.contains('visible'));
-        const previousMedia = medias[medias.indexOf(media) - 1];
+        let currentMedia = medias.find(
+          (media) => media.getAttribute('data-id') === mediaId
+        );
+        const previousMedia = medias[medias.indexOf(currentMedia) - 1];
         let newMedia;
         if (previousMedia === undefined) {
           newMedia = medias[medias.length - 1];
         } else {
           newMedia = previousMedia;
         }
-        media.classList.add('outRight');
+        currentMedia.classList.add('outRight');
         newMedia.classList.add('visible', 'previousMedia');
 
         newMedia.addEventListener('animationend', () => {
-          if (media.classList.contains('outRight')) {
-            media.classList.remove('visible');
+          if (currentMedia.classList.contains('outRight')) {
+            currentMedia.classList.remove('visible');
           }
-          media.classList.remove('outRight');
+          currentMedia.classList.remove('outRight');
           newMedia.classList.remove('previousMedia');
         });
+
+        mediaId = newMedia.getAttribute('data-id');
         return;
       }
       // Next media
       if (e.key === 'ArrowRight' || e.code === 'ArrowRight') {
         const medias = Array.from(modal.querySelectorAll('.media'));
-        const media = medias.find((media) => media.classList.contains('visible'));
+        let currentMedia = medias.find(
+          (media) => media.getAttribute('data-id') === mediaId
+        );
         let newMedia;
-        const nextMedia = medias[medias.indexOf(media) + 1];
+        const nextMedia = medias[medias.indexOf(currentMedia) + 1];
         if (nextMedia === undefined) {
           newMedia = medias[0];
         } else {
           newMedia = nextMedia;
         }
-        media.classList.add('outLeft');
+        currentMedia.classList.add('outLeft');
         newMedia.classList.add('visible', 'nextMedia');
 
         newMedia.addEventListener('animationend', () => {
-          if (media.classList.contains('outLeft')) {
-            media.classList.remove('visible');
+          if (currentMedia.classList.contains('outLeft')) {
+            currentMedia.classList.remove('visible');
           }
-          media.classList.remove('outLeft');
+          currentMedia.classList.remove('outLeft');
           newMedia.classList.remove('nextMedia');
         });
+
+        mediaId = newMedia.getAttribute('data-id');
         return;
       }
       // Tabulation
@@ -516,8 +531,6 @@ const attachGalleryModalEventListeners = () => {
       }
     }
   });
-
-  // console.log(links);
 };
 
 const constructPhotographPage = (json, id, wrapper) => {
