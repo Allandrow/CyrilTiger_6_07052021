@@ -448,7 +448,6 @@ const attachGalleryModalEventListeners = () => {
       if (e.key === 'ArrowLeft' || e.code === 'ArrowLeft') {
         const medias = Array.from(modal.querySelectorAll('.media'));
         const media = medias.find((media) => media.classList.contains('visible'));
-        media.classList.remove('visible');
         const previousMedia = medias[medias.indexOf(media) - 1];
         let newMedia;
         if (previousMedia === undefined) {
@@ -456,14 +455,22 @@ const attachGalleryModalEventListeners = () => {
         } else {
           newMedia = previousMedia;
         }
-        newMedia.classList.add('visible');
+        media.classList.add('outRight');
+        newMedia.classList.add('visible', 'previousMedia');
+
+        newMedia.addEventListener('animationend', () => {
+          if (media.classList.contains('outRight')) {
+            media.classList.remove('visible');
+          }
+          media.classList.remove('outRight');
+          newMedia.classList.remove('previousMedia');
+        });
         return;
       }
       // Next media
       if (e.key === 'ArrowRight' || e.code === 'ArrowRight') {
         const medias = Array.from(modal.querySelectorAll('.media'));
         const media = medias.find((media) => media.classList.contains('visible'));
-        media.classList.remove('visible');
         let newMedia;
         const nextMedia = medias[medias.indexOf(media) + 1];
         if (nextMedia === undefined) {
@@ -471,7 +478,16 @@ const attachGalleryModalEventListeners = () => {
         } else {
           newMedia = nextMedia;
         }
-        newMedia.classList.add('visible');
+        media.classList.add('outLeft');
+        newMedia.classList.add('visible', 'nextMedia');
+
+        newMedia.addEventListener('animationend', () => {
+          if (media.classList.contains('outLeft')) {
+            media.classList.remove('visible');
+          }
+          media.classList.remove('outLeft');
+          newMedia.classList.remove('nextMedia');
+        });
         return;
       }
       // Tabulation
