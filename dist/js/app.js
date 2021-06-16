@@ -398,23 +398,32 @@ const attachGalleryModalEventListeners = () => {
   prevBtn.addEventListener('click', () => {
     const medias = Array.from(modal.querySelectorAll('.media'));
     const media = medias.find((media) => media.classList.contains('visible'));
-    media.classList.remove('visible');
     const previousMedia = medias[medias.indexOf(media) - 1];
+
     let newMedia;
     if (previousMedia === undefined) {
       newMedia = medias[medias.length - 1];
     } else {
       newMedia = previousMedia;
     }
-    newMedia.classList.add('visible');
+    media.classList.add('outRight');
+    newMedia.classList.add('visible', 'previousMedia');
+
+    newMedia.addEventListener('animationend', () => {
+      if (media.classList.contains('outRight')) {
+        media.classList.remove('visible');
+      }
+      media.classList.remove('outRight');
+      newMedia.classList.remove('previousMedia');
+    });
   });
 
   // Click for next media
   nextBtn.addEventListener('click', () => {
     const medias = Array.from(modal.querySelectorAll('.media'));
     const media = medias.find((media) => media.classList.contains('visible'));
-    let newMedia;
     const nextMedia = medias[medias.indexOf(media) + 1];
+    let newMedia;
     if (nextMedia === undefined) {
       newMedia = medias[0];
     } else {
@@ -424,7 +433,10 @@ const attachGalleryModalEventListeners = () => {
     newMedia.classList.add('visible', 'nextMedia');
 
     newMedia.addEventListener('animationend', () => {
-      media.classList.remove('visible', 'outLeft');
+      if (media.classList.contains('outLeft')) {
+        media.classList.remove('visible');
+      }
+      media.classList.remove('outLeft');
       newMedia.classList.remove('nextMedia');
     });
   });

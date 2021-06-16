@@ -42,18 +42,18 @@
   .medias {
     margin: 0 1rem;
     position: relative;
-    max-width: 1000px;
-    width: 1000px;
+    width: 1200px;
     overflow: hidden;
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 100%;
 
     .media {
       display: none;
       animation-duration: 400ms;
       position: absolute;
-      top: 0;
+      max-width: 1200px;
 
       &.nextMedia {
         animation-name: nextSlide;
@@ -80,7 +80,6 @@
     video {
       object-fit: contain;
       max-height: 800px;
-      width: 100%;
     }
   }
 
@@ -90,8 +89,6 @@
     }
 
     .medias {
-      margin: 0 2rem;
-
       img,
       video {
         max-width: 1200px;

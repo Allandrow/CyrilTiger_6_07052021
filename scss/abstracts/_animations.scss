@@ -1,23 +1,23 @@
 @keyframes nextSlide {
   0% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes slideOutLeft {
-  100% {
-    transform: translateX(-100%);
+    transform: translateX(1200px);
   }
 }
 
 @keyframes prevSlide {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-1200px);
+  }
+}
+
+@keyframes slideOutLeft {
+  100% {
+    transform: translateX(-1400px);
   }
 }
 
 @keyframes slideOutRight {
   100% {
-    transform: translateX(100%);
+    transform: translateX(1400px);
   }
 }

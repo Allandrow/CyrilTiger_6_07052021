@@ -80,22 +80,22 @@ ul {
 /* BREAKPOINTS */
 @keyframes nextSlide {
   0% {
-    transform: translateX(100%);
-  }
-}
-@keyframes slideOutLeft {
-  100% {
-    transform: translateX(-100%);
+    transform: translateX(1200px);
   }
 }
 @keyframes prevSlide {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-1200px);
+  }
+}
+@keyframes slideOutLeft {
+  100% {
+    transform: translateX(-1400px);
   }
 }
 @keyframes slideOutRight {
   100% {
-    transform: translateX(100%);
+    transform: translateX(1400px);
   }
 }
 * {
@@ -692,18 +692,18 @@ header nav {
 .gallery-modal .medias {
   margin: 0 1rem;
   position: relative;
-  max-width: 1000px;
-  width: 1000px;
+  width: 1200px;
   overflow: hidden;
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 100%;
 }
 .gallery-modal .medias .media {
   display: none;
   animation-duration: 400ms;
   position: absolute;
-  top: 0;
+  max-width: 1200px;
 }
 .gallery-modal .medias .media.nextMedia {
   animation-name: nextSlide;
@@ -724,14 +724,10 @@ header nav {
 .gallery-modal .medias video {
   object-fit: contain;
   max-height: 800px;
-  width: 100%;
 }
 @media (min-width: 60rem) {
   .gallery-modal__control img {
     width: 2rem;
-  }
-  .gallery-modal .medias {
-    margin: 0 2rem;
   }
   .gallery-modal .medias img,
 .gallery-modal .medias video {
