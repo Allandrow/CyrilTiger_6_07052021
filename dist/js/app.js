@@ -333,6 +333,8 @@ const constructLightBoxMedias = (activeLink) => {
     }
 
     const paragraph = document.createElement('p');
+    paragraph.setAttribute('tabindex', '0');
+    paragraph.classList.add('js-focusable');
     paragraph.appendChild(
       document.createTextNode(link.parentElement.getAttribute('data-title'))
     );
@@ -361,13 +363,48 @@ const closeLightBoxModal = (links, activeLink) => {
   links.find((link) => link.pathname === activeLink).focus();
 };
 
+const changeMedia = (id, direction) => {
+  const medias = Array.from(document.querySelectorAll('.gallery-modal .media'));
+  let currentMedia = medias.find((media) => media.getAttribute('data-id') === `${id}`);
+  const previousMedia = medias[medias.indexOf(currentMedia) - 1];
+  const nextMedia = medias[medias.indexOf(currentMedia) + 1];
+  let newMedia;
+
+  if (direction === 'next') {
+    nextMedia === undefined ? (newMedia = medias[0]) : (newMedia = nextMedia);
+    currentMedia.classList.add('outLeft');
+    newMedia.classList.add('visible', 'nextMedia');
+
+    newMedia.addEventListener('animationend', () => {
+      if (currentMedia.classList.contains('outLeft')) {
+        currentMedia.classList.remove('visible');
+      }
+      currentMedia.classList.remove('outLeft');
+      newMedia.classList.remove('nextMedia');
+    });
+  } else {
+    previousMedia === undefined
+      ? (newMedia = medias[medias.length - 1])
+      : (newMedia = previousMedia);
+    currentMedia.classList.add('outRight');
+    newMedia.classList.add('visible', 'previousMedia');
+
+    newMedia.addEventListener('animationend', () => {
+      if (currentMedia.classList.contains('outRight')) {
+        currentMedia.classList.remove('visible');
+      }
+      currentMedia.classList.remove('outRight');
+      newMedia.classList.remove('previousMedia');
+    });
+  }
+};
+
 const attachGalleryModalEventListeners = () => {
   const links = Array.from(document.querySelectorAll('.figure a'));
   const modal = document.querySelector('.gallery-modal');
   const closeBtn = modal.querySelector('.close');
   const prevBtn = document.getElementById('js-prev');
   const nextBtn = document.getElementById('js-next');
-  const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
   let activeLink;
   let mediaId;
 
@@ -377,7 +414,7 @@ const attachGalleryModalEventListeners = () => {
       activeLink = link.pathname;
       constructLightBoxMedias(activeLink);
       openLightBoxModal();
-      mediaId = `${links.indexOf(link)}`;
+      mediaId = links.indexOf(link);
     });
   });
 
@@ -399,110 +436,30 @@ const attachGalleryModalEventListeners = () => {
 
   // Click for previous media
   prevBtn.addEventListener('click', () => {
-    const medias = Array.from(modal.querySelectorAll('.media'));
-    let currentMedia = medias.find((media) => media.getAttribute('data-id') === mediaId);
-    const previousMedia = medias[medias.indexOf(currentMedia) - 1];
-
-    let newMedia;
-    if (previousMedia === undefined) {
-      newMedia = medias[medias.length - 1];
-    } else {
-      newMedia = previousMedia;
-    }
-    currentMedia.classList.add('outRight');
-    newMedia.classList.add('visible', 'previousMedia');
-
-    newMedia.addEventListener('animationend', () => {
-      if (currentMedia.classList.contains('outRight')) {
-        currentMedia.classList.remove('visible');
-      }
-      currentMedia.classList.remove('outRight');
-      newMedia.classList.remove('previousMedia');
-    });
-
-    mediaId = newMedia.getAttribute('data-id');
+    changeMedia(mediaId, 'previous');
+    mediaId - 1 < 0 ? (mediaId = links.length - 1) : mediaId--;
   });
 
   // Click for next media
   nextBtn.addEventListener('click', () => {
-    const medias = Array.from(modal.querySelectorAll('.media'));
-    let currentMedia = medias.find((media) => media.getAttribute('data-id') === mediaId);
-    const nextMedia = medias[medias.indexOf(currentMedia) + 1];
-    let newMedia;
-    if (nextMedia === undefined) {
-      newMedia = medias[0];
-    } else {
-      newMedia = nextMedia;
-    }
-    currentMedia.classList.add('outLeft');
-    newMedia.classList.add('visible', 'nextMedia');
-
-    newMedia.addEventListener('animationend', () => {
-      if (currentMedia.classList.contains('outLeft')) {
-        currentMedia.classList.remove('visible');
-      }
-      currentMedia.classList.remove('outLeft');
-      newMedia.classList.remove('nextMedia');
-    });
-
-    mediaId = newMedia.getAttribute('data-id');
+    changeMedia(mediaId, 'next');
+    mediaId + 1 > links.length - 1 ? (mediaId = 0) : mediaId++;
   });
 
   // Arrows on keyboard for previous/next media
   window.addEventListener('keydown', (e) => {
+    const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
     if (modal.classList.contains('open')) {
       // Previous media
       if (e.key === 'ArrowLeft' || e.code === 'ArrowLeft') {
-        const medias = Array.from(modal.querySelectorAll('.media'));
-        let currentMedia = medias.find(
-          (media) => media.getAttribute('data-id') === mediaId
-        );
-        const previousMedia = medias[medias.indexOf(currentMedia) - 1];
-        let newMedia;
-        if (previousMedia === undefined) {
-          newMedia = medias[medias.length - 1];
-        } else {
-          newMedia = previousMedia;
-        }
-        currentMedia.classList.add('outRight');
-        newMedia.classList.add('visible', 'previousMedia');
-
-        newMedia.addEventListener('animationend', () => {
-          if (currentMedia.classList.contains('outRight')) {
-            currentMedia.classList.remove('visible');
-          }
-          currentMedia.classList.remove('outRight');
-          newMedia.classList.remove('previousMedia');
-        });
-
-        mediaId = newMedia.getAttribute('data-id');
+        changeMedia(mediaId, 'previous');
+        mediaId - 1 < 0 ? (mediaId = links.length - 1) : mediaId--;
         return;
       }
       // Next media
       if (e.key === 'ArrowRight' || e.code === 'ArrowRight') {
-        const medias = Array.from(modal.querySelectorAll('.media'));
-        let currentMedia = medias.find(
-          (media) => media.getAttribute('data-id') === mediaId
-        );
-        let newMedia;
-        const nextMedia = medias[medias.indexOf(currentMedia) + 1];
-        if (nextMedia === undefined) {
-          newMedia = medias[0];
-        } else {
-          newMedia = nextMedia;
-        }
-        currentMedia.classList.add('outLeft');
-        newMedia.classList.add('visible', 'nextMedia');
-
-        newMedia.addEventListener('animationend', () => {
-          if (currentMedia.classList.contains('outLeft')) {
-            currentMedia.classList.remove('visible');
-          }
-          currentMedia.classList.remove('outLeft');
-          newMedia.classList.remove('nextMedia');
-        });
-
-        mediaId = newMedia.getAttribute('data-id');
+        changeMedia(mediaId, 'next');
+        mediaId + 1 > links.length - 1 ? (mediaId = 0) : mediaId++;
         return;
       }
       // Tabulation
