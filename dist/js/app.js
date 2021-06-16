@@ -420,8 +420,9 @@ const attachGalleryModalEventListeners = () => {
     } else {
       newMedia = nextMedia;
     }
-    newMedia.classList.add('visible', 'nextMedia');
     media.classList.add('outLeft');
+    newMedia.classList.add('visible', 'nextMedia');
+
     newMedia.addEventListener('animationend', () => {
       media.classList.remove('visible', 'outLeft');
       newMedia.classList.remove('nextMedia');
