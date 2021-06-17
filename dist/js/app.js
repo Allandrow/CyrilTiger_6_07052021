@@ -369,12 +369,29 @@ const changeMedia = (id, direction) => {
   const previousMedia = medias[medias.indexOf(currentMedia) - 1];
   const nextMedia = medias[medias.indexOf(currentMedia) + 1];
   let newMedia;
+  const animationClassNames = ['outRight', 'outLeft'];
+
+  const animationRunning = animationClassNames.some((animationClassNames) =>
+    medias.find((media) => media.classList.contains(animationClassNames))
+  );
+
+  if (animationRunning) {
+    console.log('Animation running');
+    for (const media of medias) {
+      media.classList.remove(
+        'visible',
+        'outRight',
+        'outLeft',
+        'nextMedia',
+        'previousMedia'
+      );
+    }
+  }
 
   if (direction === 'next') {
     nextMedia === undefined ? (newMedia = medias[0]) : (newMedia = nextMedia);
     currentMedia.classList.add('outLeft');
     newMedia.classList.add('visible', 'nextMedia');
-
     newMedia.addEventListener('animationend', () => {
       if (currentMedia.classList.contains('outLeft')) {
         currentMedia.classList.remove('visible');
@@ -388,7 +405,6 @@ const changeMedia = (id, direction) => {
       : (newMedia = previousMedia);
     currentMedia.classList.add('outRight');
     newMedia.classList.add('visible', 'previousMedia');
-
     newMedia.addEventListener('animationend', () => {
       if (currentMedia.classList.contains('outRight')) {
         currentMedia.classList.remove('visible');
