@@ -22,6 +22,7 @@ const constructLightBoxMedias = (activeLink) => {
       const title = link.querySelector('video').getAttribute('title');
       const video = document.createElement('video');
       video.setAttribute('title', title);
+      video.controls = true;
 
       const source = document.createElement('source');
       source.setAttribute('src', link.pathname);
@@ -39,14 +40,14 @@ const constructLightBoxMedias = (activeLink) => {
       div.appendChild(img);
     }
 
-    const paragraph = document.createElement('p');
-    paragraph.setAttribute('tabindex', '0');
-    paragraph.classList.add('js-focusable');
-    paragraph.appendChild(
+    const title = document.createElement('h2');
+    title.setAttribute('tabindex', '0');
+    title.classList.add('js-focusable');
+    title.appendChild(
       document.createTextNode(link.parentElement.getAttribute('data-title'))
     );
 
-    div.appendChild(paragraph);
+    div.appendChild(title);
 
     mediaBlock.appendChild(div);
   }

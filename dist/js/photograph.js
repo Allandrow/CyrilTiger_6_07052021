@@ -45,10 +45,9 @@ export const constructPhotographPage = (json, id, wrapper) => {
   medias.sort((a, b) => b.likes - a.likes);
 
   main.append(
-    dom.createPhotographerHeader(photographer),
+    dom.createPhotographerHeader(photographer, medias),
     sorter.sortingOptions.createSelect(),
-    dom.createFigureGroup(medias),
-    dom.createLikesAndPriceDiv(medias, photographer)
+    dom.createFigureGroup(medias)
   );
 
   wrapper.append(dom.createHeader(id), main);

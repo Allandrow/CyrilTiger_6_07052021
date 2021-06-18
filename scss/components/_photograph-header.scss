@@ -32,7 +32,7 @@
       justify-content: flex-start;
     }
   }
-  img {
+  .thumbnail {
     @include profile-photo(100px);
     min-width: 100px;
     margin-top: -1rem;
@@ -64,7 +64,7 @@
       }
     }
 
-    img {
+    .thumbnail {
       @include profile-photo(200px);
     }
   }

@@ -83,6 +83,10 @@
     }
   }
 
+  h2 {
+    font-weight: 400;
+  }
+
   @include mq($medium) {
     &__control img {
       width: 2rem;

@@ -230,7 +230,7 @@ main {
 .photograph-header__infos .tagList {
   justify-content: flex-start;
 }
-.photograph-header img {
+.photograph-header .thumbnail {
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -262,7 +262,7 @@ main {
   .photograph-header__infos .tag {
     font-size: 1.125rem;
   }
-  .photograph-header img {
+  .photograph-header .thumbnail {
     border-radius: 50%;
     width: 200px;
     height: 200px;
@@ -724,6 +724,9 @@ header nav {
 .gallery-modal .medias video {
   object-fit: contain;
   max-height: 800px;
+}
+.gallery-modal h2 {
+  font-weight: 400;
 }
 @media (min-width: 60rem) {
   .gallery-modal__control img {
