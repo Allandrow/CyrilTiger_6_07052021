@@ -19,7 +19,7 @@ class SortingSelect {
     }
   }
 
-  changeFilterBtnContent(selectOption) {
+  handleSorting(selectOption) {
     const btn = document.getElementById('js-sort');
     const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
     const option = this.sortingOptions.find(
@@ -76,7 +76,7 @@ export const attachFiltersEventListeners = () => {
   });
   selectListItems.forEach((option) => {
     option.addEventListener('click', () => {
-      sortingOptions.changeFilterBtnContent(option);
+      sortingOptions.handleSorting(option);
       SortingSelect.changeSelectedFilter(option);
       SortingSelect.collapseListBox(sortBtn);
     });
