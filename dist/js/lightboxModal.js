@@ -1,5 +1,4 @@
 const constructLightBoxMedias = (activeLink) => {
-  // Parse all medias in document
   const links = Array.from(document.querySelectorAll('figure a'));
   const modal = document.querySelector('.gallery-modal');
   const mediaBlock = modal.querySelector('.medias');

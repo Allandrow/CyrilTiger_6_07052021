@@ -19,9 +19,19 @@ class SortingSelect {
     }
   }
 
-  static changeFilterBtnContent(option, btn) {
-    btn.innerText = option.innerText;
-    btn.setAttribute('data-sort', option.id.slice(5));
+  changeFilterBtnContent(selectOption) {
+    const btn = document.getElementById('js-sort');
+    const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
+    const option = this.sortingOptions.find(
+      (object) => object.label === selectOption.innerText
+    );
+
+    btn.innerText = option.label;
+    figures.sort(option.sorting);
+
+    for (const figure of figures) {
+      figure.parentNode.appendChild(figure);
+    }
   }
 
   static expandListBox(btn) {
@@ -33,30 +43,8 @@ class SortingSelect {
     btn.setAttribute('aria-expanded', 'false');
     btn.nextElementSibling.classList.remove('open');
   }
-
-  sortByFilter() {
-    const filterType = document.getElementById('js-sort').getAttribute('data-sort');
-    const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
-
-    switch (filterType) {
-      case 'likes':
-        figures.sort(utils.sortByLikes);
-        break;
-      case 'date':
-        figures.sort(utils.sortByDate);
-        break;
-      case 'titre':
-        figures.sort(utils.sortByTitle);
-        break;
-    }
-
-    for (const figure of figures) {
-      figure.parentNode.appendChild(figure);
-    }
-  }
 }
 
-// TODO : use sorting method
 export const sortingOptions = new SortingSelect([
   {
     label: 'Popularité',
@@ -88,10 +76,9 @@ export const attachFiltersEventListeners = () => {
   });
   selectListItems.forEach((option) => {
     option.addEventListener('click', () => {
+      sortingOptions.changeFilterBtnContent(option);
       SortingSelect.changeSelectedFilter(option);
-      SortingSelect.changeFilterBtnContent(option, sortBtn);
       SortingSelect.collapseListBox(sortBtn);
-      sortingOptions.sortByFilter();
     });
     option.addEventListener('focusout', () => {
       if (option === selectList.lastElementChild) {
