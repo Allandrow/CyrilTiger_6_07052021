@@ -191,13 +191,7 @@ const createPicture = (media) => {
   source.setAttribute('media', '(min-width:60rem)');
   source.setAttribute('srcset', `dist/img/${photographerId}/${image}`);
 
-  const separatorIndex = image.indexOf('.');
-  const imageMin = [
-    image.slice(0, separatorIndex),
-    '-min',
-    image.slice(separatorIndex),
-  ].join('');
-  const img = createIMG(`${photographerId}/${imageMin}`, description);
+  const img = createIMG(`min/${photographerId}/${image}`, description);
 
   picture.append(source, img);
   return picture;
