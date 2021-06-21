@@ -95,6 +95,8 @@ const changeMedia = (id, direction) => {
     }
   }
 
+  currentMedia.classList.add('visible');
+
   if (direction === 'next') {
     nextMedia === undefined ? (newMedia = medias[0]) : (newMedia = nextMedia);
     currentMedia.classList.add('outLeft');
