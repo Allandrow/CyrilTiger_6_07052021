@@ -1,89 +1,96 @@
-import * as dom from './dom.js';
-import * as utils from './utils.js';
+// import * as dom from './dom.js';
+// import * as utils from './utils.js';
 
-class SortingSelect {
-  constructor(sortingOptions) {
-    this.sortingOptions = sortingOptions;
-  }
+// class Dropdown {
+//   constructor(options, onChange) {
+//     this.selectedValue = options[0];
+//     this.options = options;
+//     this.onChange = onChange;
+//   }
 
-  createSelect() {
-    return dom.createSelectGroup(this.sortingOptions);
-  }
+//   createSelect() {
+//     const selectGroupDom = dom.createSelectGroup(this.options);
+//     selectGroupDom.addEventListener('click', () => {
+//       onChange(value);
+//     });
+//   }
 
-  static changeSelectedFilter(option) {
-    if (option.getAttribute('aria-selected') !== 'true') {
-      document
-        .querySelector('#js-select li[aria-selected="true"]')
-        .setAttribute('aria-selected', 'false');
-      option.setAttribute('aria-selected', 'true');
-    }
-  }
+//   changeSelectedFilter(option) {
+//     if (option.getAttribute('aria-selected') !== 'true') {
+//       document
+//         .querySelector('#js-select li[aria-selected="true"]')
+//         .setAttribute('aria-selected', 'false');
+//       option.setAttribute('aria-selected', 'true');
+//     }
+//   }
 
-  handleSorting(selectOption) {
-    const btn = document.getElementById('js-sort');
-    const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
-    const option = this.sortingOptions.find(
-      (object) => object.label === selectOption.innerText
-    );
+//   expandListBox(btn) {
+//     btn.setAttribute('aria-expanded', 'true');
+//     btn.nextElementSibling.classList.add('open');
+//   }
 
-    btn.innerText = option.label;
-    figures.sort(option.sorting);
+//   collapseListBox(btn) {
+//     btn.setAttribute('aria-expanded', 'false');
+//     btn.nextElementSibling.classList.remove('open');
+//   }
 
-    for (const figure of figures) {
-      figure.parentNode.appendChild(figure);
-    }
-  }
+// attachFiltersEventListeners(selectGroupDom) {
+//   const selectListItems = selectGroupDom.querySelectorAll('#js-select li');
+//   const sortBtn = selectGroupDom.getElementById('js-sort');
+//   const selectList = selectGroupDom.getElementById('js-select');
 
-  static expandListBox(btn) {
-    btn.setAttribute('aria-expanded', 'true');
-    btn.nextElementSibling.classList.add('open');
-  }
+//   sortBtn.addEventListener('mouseenter', () => {
+//     this.expandListBox(sortBtn);
+//   });
+//   selectList.addEventListener('mouseleave', () => {
+//     this.collapseListBox(sortBtn);
+//   });
+//   sortBtn.addEventListener('focus', () => {
+//     SortingSelect.expandListBox(sortBtn);
+//   });
+//   selectListItems.forEach((option) => {
+//     option.addEventListener('click', () => {
+//       sortingOptions.handleSorting(option);
+//       SortingSelect.changeSelectedFilter(option);
+//       SortingSelect.collapseListBox(sortBtn);
+//     });
+//     option.addEventListener('focusout', () => {
+//       if (option === selectList.lastElementChild) {
+//         SortingSelect.collapseListBox(sortBtn);
+//       }
+//     });
+//   });
+// }
+// }
 
-  static collapseListBox(btn) {
-    btn.setAttribute('aria-expanded', 'false');
-    btn.nextElementSibling.classList.remove('open');
-  }
-}
+// const sortingObj = {
+//   popularity: sortByPopularity,
+//   date: () => {},
+//   title: () => {}
+// };
 
-export const sortingOptions = new SortingSelect([
-  {
-    label: 'Popularité',
-    sorting: utils.sortByLikes,
-  },
-  {
-    label: 'Date',
-    sorting: utils.sortByDate,
-  },
-  {
-    label: 'Titre',
-    sorting: utils.sortByTitle,
-  },
-]);
+// const onChange = (value) => {
+//   const btn = document.getElementById('js-sort');
+//   const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
 
-export const attachFiltersEventListeners = () => {
-  const selectListItems = document.querySelectorAll('#js-select li');
-  const sortBtn = document.getElementById('js-sort');
-  const selectList = document.getElementById('js-select');
+//   btn.innerText = option.label;
+//   figures.sort(sortingObj[value]);
 
-  sortBtn.addEventListener('mouseenter', () => {
-    SortingSelect.expandListBox(sortBtn);
-  });
-  selectList.addEventListener('mouseleave', () => {
-    SortingSelect.collapseListBox(sortBtn);
-  });
-  sortBtn.addEventListener('focus', () => {
-    SortingSelect.expandListBox(sortBtn);
-  });
-  selectListItems.forEach((option) => {
-    option.addEventListener('click', () => {
-      sortingOptions.handleSorting(option);
-      SortingSelect.changeSelectedFilter(option);
-      SortingSelect.collapseListBox(sortBtn);
-    });
-    option.addEventListener('focusout', () => {
-      if (option === selectList.lastElementChild) {
-        SortingSelect.collapseListBox(sortBtn);
-      }
-    });
-  });
-};
+//   for (const figure of figures) {
+//     figure.parentNode.appendChild(figure);
+//   }
+// };
+
+// const obj = [
+//   {
+//     value: 'popularity',
+//     label: 'Popularité',
+//     sortFunction: sortByPopularity,
+//   },
+// ];
+
+// export const dropdown = new Dropdown(
+//   obj.map(({ sortFunction, ...rest }) => rest),
+//   onChange
+// );
+// export const dropdown2 = new Dropdown(options, onChange);

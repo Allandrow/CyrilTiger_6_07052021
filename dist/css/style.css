@@ -145,17 +145,17 @@ main {
   color: #fff;
 }
 
-.thumbnail {
+.article {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.thumbnail__link {
+.article__link {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.thumbnail__link img {
+.article__link img {
   border-radius: 50%;
   width: 200px;
   height: 200px;
@@ -163,27 +163,27 @@ main {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
   background-color: #c4c4c4;
 }
-.thumbnail__link h2 {
+.article__link h2 {
   color: #d3573c;
   margin-top: 1.75rem;
   font-size: 2.25rem;
   font-weight: 400;
   line-height: 1.2;
 }
-.thumbnail p {
+.article p {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 0.625rem;
   margin: 0.5rem 0;
 }
-.thumbnail__localisation {
+.article__localisation {
   font-size: 0.875rem;
 }
-.thumbnail__slogan {
+.article__slogan {
   color: #000;
 }
-.thumbnail__price {
+.article__price {
   color: #525252;
 }
 
@@ -587,18 +587,18 @@ header nav {
   gap: 0.5rem;
 }
 
-.thumbnail-list {
+.article-list {
   display: grid;
   gap: 2rem 0;
 }
 @media (min-width: 48rem) {
-  .thumbnail-list {
+  .article-list {
     grid-template-columns: repeat(2, 320px);
     justify-content: space-between;
   }
 }
 @media (min-width: 60rem) {
-  .thumbnail-list {
+  .article-list {
     grid-template-columns: repeat(3, 320px);
   }
 }
