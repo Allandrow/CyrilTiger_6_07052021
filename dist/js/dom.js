@@ -15,16 +15,6 @@
 //   return li;
 // };
 
-// const createContactBtn = () => {
-//   const btn = document.createElement('button');
-//   btn.classList.add('button');
-//   btn.id = 'js-contactForm';
-//   btn.setAttribute('aria-expanded', 'false');
-//   btn.appendChild(document.createTextNode('Contactez-moi'));
-
-//   return btn;
-// };
-
 // const createTotalLikesDiv = (medias) => {
 //   let totalLikes = 0;
 //   medias.forEach((media) => {
@@ -38,59 +28,6 @@
 //   const img = createIMG('like-icon-black.svg', 'likes');
 //   div.append(span, img);
 //   return div;
-// };
-
-// const createLikesAndPriceDiv = (photographer, medias) => {
-//   const div = document.createElement('div');
-//   div.classList.add('meta-infos');
-
-//   const likes = createTotalLikesDiv(medias);
-//   const price = createSPAN(`${photographer.price}€ / jour`);
-//   price.setAttribute('tabindex', '0');
-//   div.append(likes, price);
-//   return div;
-// };
-
-// export const createPhotographerHeader = (photographer, medias) => {
-//   const { name, city, country, tagline, tags, portrait } = photographer;
-//   const elementBEMName = 'photograph-header__infos';
-
-//   const section = document.createElement('section');
-//   section.classList.add('photograph-header');
-
-//   const div = document.createElement('div');
-//   div.classList.add(elementBEMName);
-
-//   const title = document.createElement('h1');
-//   title.appendChild(document.createTextNode(name));
-//   title.setAttribute('tabindex', '0');
-
-//   const paragraph = document.createElement('p');
-
-//   const localisation = createSPAN(
-//     `${city}, ${country}`,
-//     `${elementBEMName}__localisation`
-//   );
-//   localisation.setAttribute('tabindex', '0');
-//   const slogan = createSPAN(tagline, `${elementBEMName}__slogan`);
-//   slogan.setAttribute('tabindex', '0');
-
-//   paragraph.append(localisation, slogan);
-
-//   const likesAndPrice = createLikesAndPriceDiv(photographer, medias);
-
-//   const ul = createTagList(tags);
-
-//   const contact = createContactBtn();
-
-//   div.append(title, paragraph, likesAndPrice, ul, contact);
-
-//   const thumbnail = createIMG(`thumbnails/${portrait}`, name);
-//   thumbnail.classList.add('thumbnail');
-
-//   section.append(div, thumbnail);
-
-//   return section;
 // };
 
 // const createPicture = (media) => {

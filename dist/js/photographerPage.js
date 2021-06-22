@@ -1,7 +1,50 @@
-// import * as dom from './dom.js';
-// import * as contact from './contactModal.js';
-// import * as lightbox from './lightboxModal.js';
-// import * as sorter from './sortingSelect.js';
+import { Photographer } from './photographer.js';
+import * as utils from './utils.js';
+
+const createHeader = () => {
+  const header = document.createElement('header');
+
+  const logo = utils.createLogo();
+  header.appendChild(logo);
+
+  return header;
+};
+
+const createMain = (photographer, medias) => {
+  const main = document.createElement('main');
+  main.id = 'js-main';
+
+  const { id, portrait, name, city, country, tagline, price, tags } = photographer;
+  const photographerObj = new Photographer(
+    id,
+    portrait,
+    name,
+    city,
+    country,
+    tagline,
+    price,
+    tags
+  );
+
+  main.appendChild(photographerObj.createPhotographerHeader(medias));
+
+  return main;
+};
+
+export class PhotographerPage {
+  constructor(photographer, medias, container) {
+    this.photographer = photographer;
+    this.medias = medias;
+    this.container = container;
+  }
+
+  constructPage() {
+    const header = createHeader();
+    const main = createMain(this.photographer, this.medias);
+
+    this.container.append(header, main);
+  }
+}
 
 // const updateTotalLikesCount = (operation) => {
 //   const totalLikesCountElement = document.querySelector('.meta-infos__likes span');
@@ -36,12 +79,7 @@
 // };
 
 // export const constructPhotographPage = (json, id, wrapper) => {
-//   const main = document.getElementById('js-main');
 
-//   const photographer = json.photographers.find((photographer) => photographer.id === id);
-//   document.title += ` - ${photographer.name}`;
-
-//   const medias = json.media.filter((media) => media.photographerId === id);
 //   medias.sort((a, b) => b.likes - a.likes);
 
 //   main.append(

@@ -1,4 +1,5 @@
 import * as utils from './utils.js';
+import { Photographer } from './photographer.js';
 
 const createHeader = (photographers) => {
   const tagSet = utils.getPhotographTagSet(photographers);
@@ -19,59 +20,6 @@ const createHeader = (photographers) => {
 
   return header;
 };
-
-class Photographer {
-  constructor(id, portrait, name, city, country, tagline, price, tags) {
-    this.id = id;
-    this.portrait = portrait;
-    this.name = name;
-    this.city = city;
-    this.country = country;
-    this.tagline = tagline;
-    this.price = price;
-    this.tags = tags;
-  }
-
-  createArticle() {
-    const elementBEMName = 'article';
-
-    const article = document.createElement('article');
-    article.classList.add(elementBEMName);
-
-    const link = document.createElement('a');
-    link.setAttribute('href', `index.html?id=${this.id}`);
-    link.classList.add(`${elementBEMName}__link`);
-
-    const thumbnail = utils.createIMG(`thumbnails/${this.portrait}`, this.name);
-
-    const title = document.createElement('h2');
-    title.appendChild(document.createTextNode(this.name));
-
-    link.append(thumbnail, title);
-
-    const paragraph = document.createElement('p');
-
-    const localisation = document.createElement('span');
-    localisation.appendChild(document.createTextNode(`${this.city}, ${this.country}`));
-    localisation.classList.add(`${elementBEMName}`);
-
-    const slogan = document.createElement('span');
-    slogan.appendChild(document.createTextNode(this.tagline));
-    slogan.classList.add(`${elementBEMName}__slogan`);
-
-    const priceText = document.createElement('span');
-    priceText.appendChild(document.createTextNode(`${this.price}€/jour`));
-    priceText.classList.add(`${elementBEMName}__price`);
-
-    paragraph.append(localisation, slogan, priceText);
-
-    const ul = utils.createTagList(this.tags);
-
-    article.append(link, paragraph, ul);
-
-    return article;
-  }
-}
 
 const createMain = (photographers) => {
   const main = document.createElement('main');

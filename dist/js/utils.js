@@ -6,6 +6,13 @@ export const createIMG = (path, alt = '') => {
   return img;
 };
 
+export const createLogo = () => {
+  const logo = document.createElement('a');
+  logo.href = 'index.html';
+  logo.appendChild(createIMG('logo.svg', 'FishEye Home Page'));
+  return logo;
+};
+
 const createTag = (tagText) => {
   const li = document.createElement('li');
 
@@ -21,13 +28,6 @@ const createTag = (tagText) => {
   li.appendChild(link);
 
   return li;
-};
-
-export const createLogo = () => {
-  const logo = document.createElement('a');
-  logo.href = 'index.html';
-  logo.appendChild(createIMG('logo.svg', 'FishEye Home Page'));
-  return logo;
 };
 
 export const createTagList = (tags) => {
