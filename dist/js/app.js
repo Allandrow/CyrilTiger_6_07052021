@@ -26,7 +26,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
   } else {
     const home = new Homepage(json.photographers, wrapper);
     home.constructDOM();
-    home.loadEvents();
+    home.attachEventListeners();
   }
 };
 

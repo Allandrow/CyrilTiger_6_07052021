@@ -20,46 +20,58 @@ const createHeader = (photographers) => {
   return header;
 };
 
-const createPhotographerArticle = (photographer) => {
-  const { id, portrait, name, city, country, tagline, price, tags } = photographer;
-  const elementBEMName = 'article';
+class Photographer {
+  constructor(id, portrait, name, city, country, tagline, price, tags) {
+    this.id = id;
+    this.portrait = portrait;
+    this.name = name;
+    this.city = city;
+    this.country = country;
+    this.tagline = tagline;
+    this.price = price;
+    this.tags = tags;
+  }
 
-  const article = document.createElement('article');
-  article.classList.add(elementBEMName);
+  createArticle() {
+    const elementBEMName = 'article';
 
-  const link = document.createElement('a');
-  link.setAttribute('href', `index.html?id=${id}`);
-  link.classList.add(`${elementBEMName}__link`);
+    const article = document.createElement('article');
+    article.classList.add(elementBEMName);
 
-  const thumbnail = utils.createIMG(`thumbnails/${portrait}`, name);
+    const link = document.createElement('a');
+    link.setAttribute('href', `index.html?id=${this.id}`);
+    link.classList.add(`${elementBEMName}__link`);
 
-  const title = document.createElement('h2');
-  title.appendChild(document.createTextNode(name));
+    const thumbnail = utils.createIMG(`thumbnails/${this.portrait}`, this.name);
 
-  link.append(thumbnail, title);
+    const title = document.createElement('h2');
+    title.appendChild(document.createTextNode(this.name));
 
-  const paragraph = document.createElement('p');
+    link.append(thumbnail, title);
 
-  const localisation = document.createElement('span');
-  localisation.appendChild(document.createTextNode(`${city}, ${country}`));
-  localisation.classList.add(`${elementBEMName}`);
+    const paragraph = document.createElement('p');
 
-  const slogan = document.createElement('span');
-  slogan.appendChild(document.createTextNode(tagline));
-  slogan.classList.add(`${elementBEMName}__slogan`);
+    const localisation = document.createElement('span');
+    localisation.appendChild(document.createTextNode(`${this.city}, ${this.country}`));
+    localisation.classList.add(`${elementBEMName}`);
 
-  const priceText = document.createElement('span');
-  priceText.appendChild(document.createTextNode(`${price}€/jour`));
-  priceText.classList.add(`${elementBEMName}__price`);
+    const slogan = document.createElement('span');
+    slogan.appendChild(document.createTextNode(this.tagline));
+    slogan.classList.add(`${elementBEMName}__slogan`);
 
-  paragraph.append(localisation, slogan, priceText);
+    const priceText = document.createElement('span');
+    priceText.appendChild(document.createTextNode(`${this.price}€/jour`));
+    priceText.classList.add(`${elementBEMName}__price`);
 
-  const ul = utils.createTagList(tags);
+    paragraph.append(localisation, slogan, priceText);
 
-  article.append(link, paragraph, ul);
+    const ul = utils.createTagList(this.tags);
 
-  return article;
-};
+    article.append(link, paragraph, ul);
+
+    return article;
+  }
+}
 
 const createMain = (photographers) => {
   const main = document.createElement('main');
@@ -67,7 +79,18 @@ const createMain = (photographers) => {
   main.classList.add('article-list');
 
   photographers.forEach((photographer) => {
-    main.appendChild(createPhotographerArticle(photographer));
+    const { id, portrait, name, city, country, tagline, price, tags } = photographer;
+    const photographerArticle = new Photographer(
+      id,
+      portrait,
+      name,
+      city,
+      country,
+      tagline,
+      price,
+      tags
+    );
+    main.appendChild(photographerArticle.createArticle());
   });
 
   return main;
@@ -125,7 +148,7 @@ export class Homepage {
     this.container.append(header, main);
   }
 
-  loadEvents() {
+  attachEventListeners() {
     const html = document.querySelector('html');
     const tags = this.container.querySelectorAll('.tag');
     const articles = this.container.querySelectorAll('.article');
