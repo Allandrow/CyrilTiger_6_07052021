@@ -1,19 +1,115 @@
-// import * as dom from './dom.js';
-// import * as utils from './utils.js';
+import * as utils from './utils.js';
 
-// class Dropdown {
-//   constructor(options, onChange) {
-//     this.selectedValue = options[0];
-//     this.options = options;
-//     this.onChange = onChange;
-//   }
+const expandListBox = (btn) => {
+  btn.setAttribute('aria-expanded', 'true');
+  btn.nextElementSibling.classList.add('open');
+};
 
-//   createSelect() {
-//     const selectGroupDom = dom.createSelectGroup(this.options);
-//     selectGroupDom.addEventListener('click', () => {
-//       onChange(value);
-//     });
-//   }
+const collapseListBox = (btn) => {
+  btn.setAttribute('aria-expanded', 'false');
+  btn.nextElementSibling.classList.remove('open');
+};
+
+const createSelectLI = (id, text) => {
+  const li = document.createElement('li');
+  li.setAttribute('role', 'option');
+  li.id = `sort-${id}`;
+  li.setAttribute('aria-selected', 'false');
+  li.setAttribute('aria-labelledBy', 'ariaLabel');
+
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode(text));
+
+  li.appendChild(button);
+
+  return li;
+};
+
+const createSelectGroup = (filters, container) => {
+  const label = document.createElement('label');
+  label.setAttribute('for', 'js-sort');
+  label.id = 'ariaLabel';
+  label.appendChild(document.createTextNode('Trier par'));
+
+  const divSelect = document.createElement('div');
+  divSelect.classList.add('select');
+
+  const btn = document.createElement('button');
+  btn.id = 'js-sort';
+  btn.setAttribute('role', 'button');
+  btn.classList.add('btn');
+  btn.setAttribute('aria-haspopup', 'listbox');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-labelledBy', 'ariaLabel');
+  btn.appendChild(document.createTextNode(filters[0].label));
+
+  const ul = document.createElement('ul');
+  ul.id = 'js-select';
+  ul.setAttribute('role', 'listbox');
+
+  filters.forEach((filter) => {
+    switch (filter.label) {
+      case 'Popularité':
+        ul.appendChild(createSelectLI('likes', filter.label));
+        break;
+      case 'Date':
+        ul.appendChild(createSelectLI('date', filter.label));
+        break;
+      case 'Titre':
+        ul.appendChild(createSelectLI('titre', filter.label));
+        break;
+    }
+  });
+
+  ul.firstElementChild.setAttribute('aria-selected', 'true');
+  ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
+
+  divSelect.append(btn, ul);
+  container.append(label, divSelect);
+
+  return container;
+};
+
+export class MediaSortSelect {
+  constructor(options, container) {
+    this.options = options;
+    this.container = container;
+  }
+
+  createSelect() {
+    const selectGroup = createSelectGroup(this.options, this.container);
+
+    return selectGroup;
+  }
+
+  attachFiltersEventListeners() {
+    const selectListItems = this.container.querySelectorAll('#js-select li');
+    const sortBtn = this.container.getElementById('js-sort');
+    const selectList = this.container.getElementById('js-select');
+
+    sortBtn.addEventListener('mouseenter', () => {
+      expandListBox(sortBtn);
+    });
+    selectList.addEventListener('mouseleave', () => {
+      collapseListBox(sortBtn);
+    });
+    sortBtn.addEventListener('focus', () => {
+      expandListBox(sortBtn);
+    });
+    selectListItems.forEach((option) => {
+      option.addEventListener('click', () => {
+        // handleSorting(option);
+        // changeSelectedFilter(option);
+        collapseListBox(sortBtn);
+      });
+      option.addEventListener('focusout', () => {
+        if (option === selectList.lastElementChild) {
+          collapseListBox(sortBtn);
+        }
+      });
+    });
+  }
+}
 
 //   changeSelectedFilter(option) {
 //     if (option.getAttribute('aria-selected') !== 'true') {
@@ -24,43 +120,7 @@
 //     }
 //   }
 
-//   expandListBox(btn) {
-//     btn.setAttribute('aria-expanded', 'true');
-//     btn.nextElementSibling.classList.add('open');
-//   }
-
-//   collapseListBox(btn) {
-//     btn.setAttribute('aria-expanded', 'false');
-//     btn.nextElementSibling.classList.remove('open');
-//   }
-
-// attachFiltersEventListeners(selectGroupDom) {
-//   const selectListItems = selectGroupDom.querySelectorAll('#js-select li');
-//   const sortBtn = selectGroupDom.getElementById('js-sort');
-//   const selectList = selectGroupDom.getElementById('js-select');
-
-//   sortBtn.addEventListener('mouseenter', () => {
-//     this.expandListBox(sortBtn);
-//   });
-//   selectList.addEventListener('mouseleave', () => {
-//     this.collapseListBox(sortBtn);
-//   });
-//   sortBtn.addEventListener('focus', () => {
-//     SortingSelect.expandListBox(sortBtn);
-//   });
-//   selectListItems.forEach((option) => {
-//     option.addEventListener('click', () => {
-//       sortingOptions.handleSorting(option);
-//       SortingSelect.changeSelectedFilter(option);
-//       SortingSelect.collapseListBox(sortBtn);
-//     });
-//     option.addEventListener('focusout', () => {
-//       if (option === selectList.lastElementChild) {
-//         SortingSelect.collapseListBox(sortBtn);
-//       }
-//     });
-//   });
-// }
+//
 // }
 
 // const sortingObj = {

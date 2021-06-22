@@ -27,17 +27,7 @@ const createMain = (photographers) => {
   main.classList.add('article-list');
 
   photographers.forEach((photographer) => {
-    const { id, portrait, name, city, country, tagline, price, tags } = photographer;
-    const photographerArticle = new Photographer(
-      id,
-      portrait,
-      name,
-      city,
-      country,
-      tagline,
-      price,
-      tags
-    );
+    const photographerArticle = new Photographer(photographer);
     main.appendChild(photographerArticle.createArticle());
   });
 
@@ -88,7 +78,7 @@ export class Homepage {
     this.container = container;
   }
 
-  constructDOM() {
+  constructPage() {
     const header = createHeader(this.photographers);
     const main = createMain(this.photographers);
     main.appendChild(createBackToTopBtn());

@@ -30,10 +30,11 @@ const displayPageByURLQuery = (json, URLQuery) => {
     const photographerPage = new PhotographerPage(photographer, medias, wrapper);
 
     document.title += ` - ${photographer.name}`;
-    photographerPage.constructPage();
+    photographerPage.constructDOM();
+    photographerPage.attachEventListeners();
   } else {
     const home = new Homepage(json.photographers, wrapper);
-    home.constructDOM();
+    home.constructPage();
     home.attachEventListeners();
   }
 };

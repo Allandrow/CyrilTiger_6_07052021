@@ -60,7 +60,7 @@ export const isSameTagText = (tag, tagClicked) => {
   return tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
 };
 
-// export const isImage = (media) => media.image !== undefined;
+export const isImage = (media) => media.image !== undefined;
 
 // export const sortByLikes = (a, b) => {
 //   return (
