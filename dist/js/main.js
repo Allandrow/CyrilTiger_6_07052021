@@ -1,6 +1,7 @@
 import { DropDown } from './components/dropdown.js';
 import { Homepage } from './components/homepage.js';
 import { Photographer } from './components/photographer.js';
+import { PhotographerPage } from './components/photographerPage.js';
 import { PhotographersList } from './components/photographersList.js';
 
 const getJSON = async () => {
@@ -62,6 +63,14 @@ const displayPageByURLQuery = (json, URLQuery) => {
     const homepage = new Homepage(container, photographersList);
     homepage.appendContentToContainer();
     homepage.attachEventListeners();
+  } else {
+    const photographerPage = new PhotographerPage(
+      container,
+      id,
+      photographersList,
+      dropdown
+    );
+    photographerPage.appendContenttoContainer();
   }
 };
 

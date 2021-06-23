@@ -45,4 +45,70 @@ export class Photographer {
 
     return article;
   }
+
+  createInfosSection(elementBEMName) {
+    const { name, portrait, city, country, tagline, price, tags } = this.infos;
+    let childrenBEMName = `${elementBEMName}__infos`;
+
+    const section = document.createElement('section');
+    section.classList.add(elementBEMName);
+
+    const div = document.createElement('div');
+    div.classList.add(childrenBEMName);
+
+    const title = document.createElement('h1');
+    title.appendChild(document.createTextNode(name));
+    title.setAttribute('tabindex', '0');
+
+    const paragraph = document.createElement('p');
+
+    const localisation = document.createElement('span');
+    localisation.appendChild(document.createTextNode(`${city}, ${country}`));
+    localisation.classList.add(`${childrenBEMName}__localisation`);
+    localisation.setAttribute('tabindex', '0');
+
+    const slogan = document.createElement('span');
+    slogan.appendChild(document.createTextNode(tagline));
+    slogan.classList.add(`${childrenBEMName}__slogan`);
+    slogan.setAttribute('tabindex', '0');
+
+    paragraph.append(localisation, slogan);
+
+    const likesAndPriceDiv = document.createElement('div');
+    likesAndPriceDiv.classList.add('meta-infos');
+
+    const likesDiv = document.createElement('div');
+    likesDiv.classList.add('meta-infos__likes');
+
+    const span = document.createElement('span');
+
+    const likes = utils.getMediaLikes(this.medias);
+
+    span.appendChild(document.createTextNode(likes));
+    span.setAttribute('tabindex', '0');
+    const img = utils.createIMG('like-icon-black.svg', 'likes');
+    likesDiv.append(span, img);
+
+    const priceDiv = document.createElement('span');
+    priceDiv.appendChild(document.createTextNode(`${price}€ / jour`));
+    priceDiv.setAttribute('tabindex', '0');
+    likesAndPriceDiv.append(likesDiv, priceDiv);
+
+    const ul = utils.createTagList(tags);
+
+    const btn = document.createElement('button');
+    btn.classList.add('button');
+    btn.id = 'js-contactForm';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.appendChild(document.createTextNode('Contactez-moi'));
+
+    div.append(title, paragraph, likesAndPriceDiv, ul, btn);
+
+    const thumbnail = utils.createIMG(`thumbnails/${portrait}`, name);
+    thumbnail.classList.add('thumbnail');
+
+    section.append(div, thumbnail);
+
+    return section;
+  }
 }

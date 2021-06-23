@@ -14,4 +14,12 @@ export class PhotographersList {
 
     return main;
   }
+
+  getPhotographerInfosSectionDOM(id) {
+    const photographer = this.photographers.find(
+      (photographer) => photographer.infos.id === id
+    );
+
+    return photographer.createInfosSection('photograph-header');
+  }
 }
