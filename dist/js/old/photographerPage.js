@@ -101,8 +101,12 @@ export class PhotographerPage {
 
   attachEventListeners() {
     const mediaLikeIcons = document.querySelectorAll('.js-like');
+    const select = document.getElementById('js-sortContainer');
+
     mediaLikeIcons.forEach((icon) => {
       icon.addEventListener('click', () => likesEventListener(icon));
     });
+    
+    MediaSortSelect.attachEventListeners(select);
   }
 }

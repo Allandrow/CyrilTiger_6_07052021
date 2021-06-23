@@ -47,9 +47,8 @@ export const uppercaseFirstLetter = (string) => {
 
 export const getPhotographTagSet = (photographers) => {
   const tagSet = new Set();
-
-  photographers.forEach((photograph) => {
-    photograph.tags.forEach((tag) => {
+  photographers.forEach((photographer) => {
+    photographer.infos.tags.forEach((tag) => {
       tagSet.add(uppercaseFirstLetter(tag));
     });
   });

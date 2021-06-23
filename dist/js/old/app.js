@@ -7,16 +7,6 @@ const getJSON = async () => {
   return json;
 };
 
-const createBodySkeleton = () => {
-  const div = document.createElement('div');
-  div.classList.add('wrapper');
-  div.id = 'js-container';
-
-  document.body.prepend(div);
-
-  return div;
-};
-
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));

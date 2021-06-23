@@ -10,6 +10,18 @@ const collapseListBox = (btn) => {
   btn.nextElementSibling.classList.remove('open');
 };
 
+const onChange = (option) => {
+  const btn = document.getElementById('js-sort');
+  const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
+
+  btn.innerText = option.label;
+  figures.sort(sortingObj[value]);
+
+  for (const figure of figures) {
+    figure.parentNode.appendChild(figure);
+  }
+};
+
 const createSelectLI = (id, text) => {
   const li = document.createElement('li');
   li.setAttribute('role', 'option');
@@ -82,10 +94,10 @@ export class MediaSortSelect {
     return selectGroup;
   }
 
-  attachFiltersEventListeners() {
-    const selectListItems = this.container.querySelectorAll('#js-select li');
-    const sortBtn = this.container.getElementById('js-sort');
-    const selectList = this.container.getElementById('js-select');
+  static attachEventListeners(dropdown) {
+    const selectListItems = dropdown.querySelectorAll('#js-select li');
+    const sortBtn = dropdown.querySelector('#js-sort');
+    const selectList = dropdown.querySelector('#js-select');
 
     sortBtn.addEventListener('mouseenter', () => {
       expandListBox(sortBtn);
@@ -98,6 +110,7 @@ export class MediaSortSelect {
     });
     selectListItems.forEach((option) => {
       option.addEventListener('click', () => {
+        console.log(option);
         // handleSorting(option);
         // changeSelectedFilter(option);
         collapseListBox(sortBtn);
@@ -129,18 +142,6 @@ export class MediaSortSelect {
 //   title: () => {}
 // };
 
-// const onChange = (value) => {
-//   const btn = document.getElementById('js-sort');
-//   const figures = Array.from(document.querySelectorAll('#js-figureGroup .figure'));
-
-//   btn.innerText = option.label;
-//   figures.sort(sortingObj[value]);
-
-//   for (const figure of figures) {
-//     figure.parentNode.appendChild(figure);
-//   }
-// };
-
 // const obj = [
 //   {
 //     value: 'popularity',
@@ -148,9 +149,3 @@ export class MediaSortSelect {
 //     sortFunction: sortByPopularity,
 //   },
 // ];
-
-// export const dropdown = new Dropdown(
-//   obj.map(({ sortFunction, ...rest }) => rest),
-//   onChange
-// );
-// export const dropdown2 = new Dropdown(options, onChange);
