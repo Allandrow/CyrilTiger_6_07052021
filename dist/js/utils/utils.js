@@ -45,6 +45,14 @@ export const uppercaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+export const getPhotographerFromList = (id, photographerList) => {
+  const photographer = photographerList.photographers.find(
+    (photographer) => photographer.infos.id === id
+  );
+
+  return photographer;
+};
+
 export const getPhotographTagSet = (photographers) => {
   const tagSet = new Set();
   photographers.forEach((photographer) => {

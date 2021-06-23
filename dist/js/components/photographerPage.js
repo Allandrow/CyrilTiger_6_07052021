@@ -8,29 +8,26 @@ const createHeader = () => {
   return header;
 };
 
-const changePageTitle = (id, photographersList) => {
-  const photographer = photographersList.photographers.find(
-    (photographer) => photographer.infos.id === id
-  );
-
-  document.title += ` - ${photographer.infos.name}`;
-};
-
 export class PhotographerPage {
-  constructor(containerDOM, pageID, photographersList, dropdown) {
+  constructor(containerDOM, photographer, dropdown) {
     this.container = containerDOM;
-    this.pageID = pageID;
-    this.photographers = photographersList;
+    this.photographer = photographer;
     this.dropdown = dropdown;
   }
 
   appendContenttoContainer() {
-    changePageTitle(this.pageID, this.photographers);
+    document.title += ` - ${this.photographer.infos.name}`;
 
     const header = createHeader();
 
-    const infosSection = this.photographers.getPhotographerInfosSectionDOM(this.pageID);
+    const infosSection = this.photographer.createInfosSection('photograph-header');
 
-    this.container.append(header, infosSection);
+    const select = this.dropdown.createDropdown('js-sortContainer');
+
+    this.container.append(header, infosSection, select);
+  }
+
+  loadEventListeners() {
+    this.dropdown.attachEventListeners('js-sortContainer', this.photographer.medias);
   }
 }
