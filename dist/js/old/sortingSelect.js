@@ -123,29 +123,3 @@ export class MediaSortSelect {
     });
   }
 }
-
-//   changeSelectedFilter(option) {
-//     if (option.getAttribute('aria-selected') !== 'true') {
-//       document
-//         .querySelector('#js-select li[aria-selected="true"]')
-//         .setAttribute('aria-selected', 'false');
-//       option.setAttribute('aria-selected', 'true');
-//     }
-//   }
-
-//
-// }
-
-// const sortingObj = {
-//   popularity: sortByPopularity,
-//   date: () => {},
-//   title: () => {}
-// };
-
-// const obj = [
-//   {
-//     value: 'popularity',
-//     label: 'Popularité',
-//     sortFunction: sortByPopularity,
-//   },
-// ];

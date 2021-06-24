@@ -3,7 +3,7 @@ import * as utils from '../utils/utils.js';
 export class Photographer {
   constructor(photographerInfos, photographerMedias) {
     this.infos = photographerInfos;
-    this.medias = photographerMedias;
+    this.mediasList = photographerMedias;
   }
 
   createArticle(elementBEMName) {
@@ -82,7 +82,7 @@ export class Photographer {
 
     const span = document.createElement('span');
 
-    const likes = utils.getMediaLikes(this.medias);
+    const likes = utils.getMediaLikes(this.mediasList.medias);
 
     span.appendChild(document.createTextNode(likes));
     span.setAttribute('tabindex', '0');

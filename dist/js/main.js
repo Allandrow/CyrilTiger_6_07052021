@@ -1,5 +1,6 @@
 import { DropDown } from './components/dropdown.js';
 import { Homepage } from './components/homepage.js';
+import { MediasList } from './components/mediasList.js';
 import { Photographer } from './components/photographer.js';
 import { PhotographerPage } from './components/photographerPage.js';
 import { PhotographersList } from './components/photographersList.js';
@@ -15,13 +16,11 @@ const createPhotographerListWithMedias = (json) => {
   const photographerList = [];
 
   for (const photographer of json.photographers) {
-    const photographerMedias = json.media.filter(
-      (media) => media.photographerId === photographer.id
-    );
+    const medias = json.media.filter((media) => media.photographerId === photographer.id);
+    const photographerMedias = new MediasList(medias, 'js-figureGroup');
     const photographerWithMedias = new Photographer(photographer, photographerMedias);
     photographerList.push(photographerWithMedias);
   }
-
   return photographerList;
 };
 
@@ -43,18 +42,18 @@ const createDropdownObject = () => {
   const dropdownMethods = [
     {
       value: 'popularity',
-      // sort: sortByPopularity,
+      sort: utils.sortByPopularity,
     },
     {
       value: 'date',
-      // sort: sortByDate,
+      sort: utils.sortByDate,
     },
     {
       value: 'title',
-      // sort: sortByTitle,
+      sort: utils.sortByTitle,
     },
   ];
-  const dropdown = new DropDown(dropdownLabels, dropdownMethods);
+  const dropdown = new DropDown(dropdownLabels, dropdownMethods, 'js-sortContainer');
   return dropdown;
 };
 

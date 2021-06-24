@@ -1,5 +1,5 @@
 import { Homepage } from './homepage.js';
-import { PhotographerPage } from './photographerPage.js';
+import { PhotographerPage } from '../photographerPage.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
@@ -10,7 +10,6 @@ const getJSON = async () => {
 const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
-  const wrapper = createBodySkeleton();
 
   if (isFinite(id)) {
     const photographer = json.photographers.find(

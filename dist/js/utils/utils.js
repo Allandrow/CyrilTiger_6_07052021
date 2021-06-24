@@ -75,28 +75,26 @@ export const getMediaLikes = (medias) => {
 
 export const isImage = (media) => media.image !== undefined;
 
-// export const sortByLikes = (a, b) => {
-//   return (
-//     parseInt(b.getAttribute('data-likes')) - parseInt(a.getAttribute('data-likes'))
-//   );
-// };
+export const sortByPopularity = (a, b) => {
+  return parseInt(b.getAttribute('data-likes')) - parseInt(a.getAttribute('data-likes'));
+};
 
-// export const sortByDate = (a, b) => {
-//   const firstDate = new Date(a.getAttribute('data-date'));
-//   const secondDate = new Date(b.getAttribute('data-date'));
+export const sortByDate = (a, b) => {
+  const firstDate = new Date(a.getAttribute('data-date'));
+  const secondDate = new Date(b.getAttribute('data-date'));
 
-//   return firstDate - secondDate;
-// };
+  return firstDate - secondDate;
+};
 
-// export const sortByTitle = (a, b) => {
-//   const firstTitle = a.getAttribute('data-title').toLowerCase();
-//   const secondTitle = b.getAttribute('data-title').toLowerCase();
+export const sortByTitle = (a, b) => {
+  const firstTitle = a.getAttribute('data-title').toLowerCase();
+  const secondTitle = b.getAttribute('data-title').toLowerCase();
 
-//   if (firstTitle < secondTitle) {
-//     return -1;
-//   }
-//   if (firstTitle > secondTitle) {
-//     return 1;
-//   }
-//   return 0;
-// };
+  if (firstTitle < secondTitle) {
+    return -1;
+  }
+  if (firstTitle > secondTitle) {
+    return 1;
+  }
+  return 0;
+};

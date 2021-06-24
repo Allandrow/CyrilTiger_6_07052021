@@ -401,7 +401,6 @@ main {
 }
 
 .figure {
-  flex: 1 350px;
   height: 13.75rem;
 }
 .figure a {
@@ -607,7 +606,7 @@ header nav {
   margin-top: 2rem;
   padding-bottom: 5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(335px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1rem;
 }
 @media (min-width: 60rem) {

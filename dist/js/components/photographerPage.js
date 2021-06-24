@@ -20,14 +20,20 @@ export class PhotographerPage {
 
     const header = createHeader();
 
+    const main = document.createElement('main');
+    main.id = 'js-main';
+
     const infosSection = this.photographer.createInfosSection('photograph-header');
+    const select = this.dropdown.createDropdown();
+    const figureGroup = this.photographer.mediasList.createFigureGroup();
+    main.append(infosSection, select, figureGroup);
 
-    const select = this.dropdown.createDropdown('js-sortContainer');
-
-    this.container.append(header, infosSection, select);
+    this.container.append(header, main);
   }
 
   loadEventListeners() {
-    this.dropdown.attachEventListeners('js-sortContainer', this.photographer.medias);
+    const medias = this.photographer.mediasList;
+    this.dropdown.attachEventListeners(medias);
+    medias.attachLikesEventListener();
   }
 }

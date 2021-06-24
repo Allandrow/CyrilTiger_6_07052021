@@ -1,5 +1,5 @@
-import * as utils from './utils.js';
-import { Photographer } from './photographer.js';
+import * as utils from '../utils/utils.js';
+import { Photographer } from '../photographer.js';
 
 const createHeader = (photographers) => {
   const tagSet = utils.getPhotographTagSet(photographers);

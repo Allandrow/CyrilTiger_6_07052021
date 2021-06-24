@@ -1,5 +1,5 @@
 import { Photographer } from './photographer.js';
-import { MediaList } from './mediaList.js';
+import { MediaList } from './old/mediaList.js';
 import { MediaSortSelect } from './sortingSelect.js';
 import * as utils from './utils.js';
 
@@ -106,7 +106,7 @@ export class PhotographerPage {
     mediaLikeIcons.forEach((icon) => {
       icon.addEventListener('click', () => likesEventListener(icon));
     });
-    
+
     MediaSortSelect.attachEventListeners(select);
   }
 }
