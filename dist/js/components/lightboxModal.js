@@ -171,9 +171,10 @@ export class LightboxModal {
     figures.forEach((figure) =>
       figure.addEventListener('click', (e) => {
         e.preventDefault();
+        const updatedMediaList = Array.from(container.querySelectorAll('figure a'));
         this.openModal(container, modal);
         this.populateMedias(figure, figureGroup);
-        mediaId = figures.indexOf(figure);
+        mediaId = updatedMediaList.indexOf(figure);
         activeLink = figure;
       })
     );
