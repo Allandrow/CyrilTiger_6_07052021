@@ -9,10 +9,11 @@ const createHeader = () => {
 };
 
 export class PhotographerPage {
-  constructor(containerDOM, photographer, dropdown) {
+  constructor(containerDOM, photographer, dropdown, contactModal) {
     this.container = containerDOM;
     this.photographer = photographer;
     this.dropdown = dropdown;
+    this.contactModal = contactModal;
   }
 
   appendContenttoContainer() {
@@ -31,9 +32,16 @@ export class PhotographerPage {
     this.container.append(header, main);
   }
 
+  insertModalsInDOM() {
+    const scriptDOM = document.querySelector('script');
+    document.body.insertBefore(this.contactModal.createModal(), scriptDOM);
+  }
+
   loadEventListeners() {
     const medias = this.photographer.mediasList;
+    const contactBtn = document.getElementById('js-contactForm');
     this.dropdown.attachEventListeners(medias);
     medias.attachLikesEventListener();
+    this.contactModal.attachEventListeners(contactBtn);
   }
 }

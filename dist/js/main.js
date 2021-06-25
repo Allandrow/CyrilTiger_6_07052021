@@ -1,4 +1,5 @@
 import { DropDown } from './components/dropdown.js';
+import { FormModal } from './components/formModal.js';
 import { Homepage } from './components/homepage.js';
 import { MediasList } from './components/mediasList.js';
 import { Photographer } from './components/photographer.js';
@@ -65,8 +66,15 @@ const displayPageByURLQuery = (json, URLQuery) => {
     homepage.attachEventListeners();
   } else {
     const photographer = utils.getPhotographerFromList(id, photographersList);
-    const photographerPage = new PhotographerPage(container, photographer, dropdown);
+    const contactModal = new FormModal('contact-modal', photographer.infos.name);
+    const photographerPage = new PhotographerPage(
+      container,
+      photographer,
+      dropdown,
+      contactModal
+    );
     photographerPage.appendContenttoContainer();
+    photographerPage.insertModalsInDOM();
     photographerPage.loadEventListeners();
   }
 };
