@@ -27,7 +27,7 @@ export class Photographer {
 
     const localisation = document.createElement('span');
     localisation.appendChild(document.createTextNode(`${city}, ${country}`));
-    localisation.classList.add(`${elementBEMName}`);
+    localisation.classList.add(`${elementBEMName}__localisation`);
 
     const slogan = document.createElement('span');
     slogan.appendChild(document.createTextNode(tagline));

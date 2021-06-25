@@ -24,7 +24,10 @@ const createPhotographerListWithMedias = (json) => {
   return photographerList;
 };
 
-const createDropdownObject = () => {
+const displayPageByURLQuery = (json, URLQuery) => {
+  const URLParams = new URLSearchParams(URLQuery);
+  const id = parseInt(URLParams.get('id'));
+  const container = document.getElementById('js-container');
   const dropdownLabels = [
     {
       value: 'popularity',
@@ -54,14 +57,6 @@ const createDropdownObject = () => {
     },
   ];
   const dropdown = new DropDown(dropdownLabels, dropdownMethods, 'js-sortContainer');
-  return dropdown;
-};
-
-const displayPageByURLQuery = (json, URLQuery) => {
-  const URLParams = new URLSearchParams(URLQuery);
-  const id = parseInt(URLParams.get('id'));
-  const container = document.getElementById('js-container');
-  const dropdown = createDropdownObject();
   const photographersList = new PhotographersList(createPhotographerListWithMedias(json));
 
   if (!isFinite(id)) {
