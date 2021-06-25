@@ -1,6 +1,7 @@
 import { DropDown } from './components/dropdown.js';
 import { FormModal } from './components/formModal.js';
 import { Homepage } from './components/homepage.js';
+import { LightboxModal } from './components/lightboxModal.js';
 import { MediasList } from './components/mediasList.js';
 import { Photographer } from './components/photographer.js';
 import { PhotographerPage } from './components/photographerPage.js';
@@ -67,11 +68,13 @@ const displayPageByURLQuery = (json, URLQuery) => {
   } else {
     const photographer = utils.getPhotographerFromList(id, photographersList);
     const contactModal = new FormModal('contact-modal', photographer.infos.name);
+    const lightboxModal = new LightboxModal('lightbox-modal');
     const photographerPage = new PhotographerPage(
       container,
       photographer,
       dropdown,
-      contactModal
+      contactModal,
+      lightboxModal
     );
     photographerPage.appendContenttoContainer();
     photographerPage.insertModalsInDOM();

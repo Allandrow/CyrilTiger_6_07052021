@@ -9,11 +9,12 @@ const createHeader = () => {
 };
 
 export class PhotographerPage {
-  constructor(containerDOM, photographer, dropdown, contactModal) {
+  constructor(containerDOM, photographer, dropdown, contactModal, lightboxModal) {
     this.container = containerDOM;
     this.photographer = photographer;
     this.dropdown = dropdown;
     this.contactModal = contactModal;
+    this.lightbox = lightboxModal;
   }
 
   appendContenttoContainer() {
@@ -35,6 +36,7 @@ export class PhotographerPage {
   insertModalsInDOM() {
     const scriptDOM = document.querySelector('script');
     document.body.insertBefore(this.contactModal.createModal(), scriptDOM);
+    document.body.insertBefore(this.lightbox.createModal(), scriptDOM);
   }
 
   loadEventListeners() {
@@ -43,5 +45,7 @@ export class PhotographerPage {
     this.dropdown.attachEventListeners(medias);
     medias.attachLikesEventListener();
     this.contactModal.attachEventListeners(contactBtn);
+    const figureGroup = document.getElementById(medias.id);
+    this.lightbox.attachEventListeners(figureGroup, this.container);
   }
 }

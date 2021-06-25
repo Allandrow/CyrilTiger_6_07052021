@@ -658,10 +658,10 @@ header nav {
   }
 }
 
-.gallery-modal {
+.lightbox-modal {
   background: #fff;
 }
-.gallery-modal section {
+.lightbox-modal section {
   background: #fff;
   display: flex;
   align-items: center;
@@ -669,26 +669,26 @@ header nav {
   max-width: 100%;
   height: 100%;
 }
-.gallery-modal .close {
+.lightbox-modal .close {
   right: 1rem;
 }
-.gallery-modal .close::after, .gallery-modal .close::before {
+.lightbox-modal .close::after, .lightbox-modal .close::before {
   background-color: #901c1c;
 }
-.gallery-modal__control {
+.lightbox-modal__control {
   background: 0;
   border: 0;
   color: #901c1c;
   cursor: pointer;
   padding: 0;
 }
-.gallery-modal__control img {
+.lightbox-modal__control img {
   min-width: 1rem;
 }
-.gallery-modal__control:nth-of-type(2) img {
+.lightbox-modal__control:nth-of-type(2) img {
   transform: rotate(180deg);
 }
-.gallery-modal .medias {
+.lightbox-modal .medias {
   margin: 0 1rem;
   position: relative;
   width: 1200px;
@@ -698,54 +698,54 @@ header nav {
   align-items: center;
   height: 100%;
 }
-.gallery-modal .medias .media {
+.lightbox-modal .medias .media {
   display: none;
   animation-duration: 350ms;
   position: absolute;
   max-width: 1200px;
 }
-.gallery-modal .medias .media.nextMedia {
+.lightbox-modal .medias .media.nextMedia {
   animation-name: nextSlide;
 }
-.gallery-modal .medias .media.previousMedia {
+.lightbox-modal .medias .media.previousMedia {
   animation-name: prevSlide;
 }
-.gallery-modal .medias .media.outLeft {
+.lightbox-modal .medias .media.outLeft {
   animation-name: slideOutLeft;
 }
-.gallery-modal .medias .media.outRight {
+.lightbox-modal .medias .media.outRight {
   animation-name: slideOutRight;
 }
-.gallery-modal .medias .media.visible {
+.lightbox-modal .medias .media.visible {
   display: block;
 }
-.gallery-modal .medias img,
-.gallery-modal .medias video {
+.lightbox-modal .medias img,
+.lightbox-modal .medias video {
   object-fit: contain;
   max-height: 800px;
 }
-.gallery-modal h2 {
+.lightbox-modal h2 {
   font-weight: 400;
 }
 @media (min-width: 60rem) {
-  .gallery-modal__control img {
+  .lightbox-modal__control img {
     width: 2rem;
   }
-  .gallery-modal .medias img,
-.gallery-modal .medias video {
+  .lightbox-modal .medias img,
+.lightbox-modal .medias video {
     max-width: 1200px;
   }
-  .gallery-modal .close {
+  .lightbox-modal .close {
     top: 2.25rem;
   }
-  .gallery-modal .close::after, .gallery-modal .close::before {
+  .lightbox-modal .close::after, .lightbox-modal .close::before {
     width: 3rem;
     height: 5px;
   }
-  .gallery-modal .close::after {
+  .lightbox-modal .close::after {
     margin-top: -5px;
   }
-  .gallery-modal p {
+  .lightbox-modal p {
     font-size: 1.5rem;
   }
 }
