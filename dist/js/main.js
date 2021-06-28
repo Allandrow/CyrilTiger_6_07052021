@@ -19,7 +19,7 @@ const createPhotographerListWithMedias = (json) => {
 
   for (const photographer of json.photographers) {
     const medias = json.media.filter((media) => media.photographerId === photographer.id);
-    const photographerMedias = new MediasList(medias, 'js-figureGroup');
+    const photographerMedias = new MediasList('js-figureGroup', medias);
     const photographerWithMedias = new Photographer(photographer, photographerMedias);
     photographerList.push(photographerWithMedias);
   }
@@ -58,7 +58,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
       sort: utils.sortByTitle,
     },
   ];
-  const dropdown = new DropDown(dropdownLabels, dropdownMethods, 'js-sortContainer');
+  const dropdown = new DropDown('js-sortContainer', dropdownLabels, dropdownMethods);
   const photographersList = new PhotographersList(createPhotographerListWithMedias(json));
 
   if (!isFinite(id)) {

@@ -55,10 +55,10 @@ const onChange = (btn, optionList, option, sortMethods, mediasList) => {
 };
 
 export class DropDown {
-  constructor(dropdownLabels, dropdownSortMethods, containerID) {
+  constructor(containerID, dropdownLabels, dropdownSortMethods) {
+    this.id = containerID;
     this.optionNames = dropdownLabels;
     this.optionMethods = dropdownSortMethods;
-    this.id = containerID;
   }
 
   createDropdown() {

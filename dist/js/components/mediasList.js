@@ -90,9 +90,9 @@ const updateTotalLikes = (operation) => {
 };
 
 export class MediasList {
-  constructor(medias, containerID) {
-    this.medias = medias;
+  constructor(containerID, medias) {
     this.id = containerID;
+    this.medias = medias;
   }
 
   createFigureGroup() {
