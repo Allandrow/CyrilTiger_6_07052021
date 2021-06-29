@@ -3,6 +3,7 @@ export class Dropdown {
     this.options = options;
     this.selectBtn = this.createSelectBtn();
     this.selectList = this.createSelectList();
+    this.selectOptions = Array.from(this.selectList.childNodes);
   }
 
   expandListBox() {
@@ -91,10 +92,21 @@ export class Dropdown {
     return select;
   }
 
-  getSelectOptions() {
-    const selectItems = [];
-    const listItems = this.selectList.childNodes;
-    listItems.forEach((item) => selectItems.push(item));
-    return selectItems;
+  onChange(option) {
+    // Find option that is already selected
+    const selectedOption = this.selectOptions.find(
+      (option) => option.getAttribute('aria-selected') === 'true'
+    );
+    // If option is same as selected, return
+    if (option === selectedOption) {
+      return;
+    }
+    // Otherwise, change aria attributes of options + parent ul element
+    selectedOption.removeAttribute('aria-selected');
+    option.setAttribute('aria-selected', 'true');
+    this.selectList.setAttribute('aria-activedescendant', option.id);
+
+    this.selectBtn.innerText = option.innerText;
+    this.collapseListBox();
   }
 }

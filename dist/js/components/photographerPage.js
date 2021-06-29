@@ -102,7 +102,7 @@ export class PhotographerPage {
   getPhotographerPage() {
     // Object initialization
     const select = this.initSelect();
-    const selectOptions = select.getSelectOptions();
+    const selectOptions = select.selectOptions;
     const sortMethods = [
       {
         value: 'popularity',
@@ -131,8 +131,10 @@ export class PhotographerPage {
 
     // DOM events
     selectOptions.forEach((option) => {
-      // Ici changement de l'état du bouton select (via une méthode dans dropdown.js)
-      // Sorting des medias via comparaison entre l'id de l'option et sortMethods pour appliquer la bonne méthode de sort
+      option.addEventListener('click', () => {
+        select.onChange(option);
+        // Sorting des medias via comparaison entre l'id de l'option et sortMethods pour appliquer la bonne méthode de sort
+      });
     });
   }
 }
