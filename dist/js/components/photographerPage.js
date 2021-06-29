@@ -85,17 +85,14 @@ export class PhotographerPage {
       {
         value: 'popularity',
         label: 'Popularité',
-        // sort:,
       },
       {
         value: 'date',
         label: 'Date',
-        // sort:,
       },
       {
         value: 'title',
         label: 'Titre',
-        // sort:,
       },
     ];
     const dropdown = new Dropdown(options);
@@ -106,7 +103,20 @@ export class PhotographerPage {
     // Object initialization
     const select = this.initSelect();
     const selectOptions = select.getSelectOptions();
-
+    const sortMethods = [
+      {
+        value: 'popularity',
+        sort: utils.sortByPopularity,
+      },
+      {
+        value: 'date',
+        sort: utils.sortByDate,
+      },
+      {
+        value: 'title',
+        sort: utils.sortByTitle,
+      },
+    ];
     // Add Photographer name to page title
     document.title += ` - ${this.photographer.name}`;
 
@@ -120,6 +130,9 @@ export class PhotographerPage {
     this.container.append(header, main);
 
     // DOM events
-    selectOptions.forEach((option) => console.log(option));
+    selectOptions.forEach((option) => {
+      // Ici changement de l'état du bouton select (via une méthode dans dropdown.js)
+      // Sorting des medias via comparaison entre l'id de l'option et sortMethods pour appliquer la bonne méthode de sort
+    });
   }
 }
