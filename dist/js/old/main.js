@@ -8,27 +8,27 @@ import { PhotographerPage } from './components/photographerPage.js';
 import { PhotographersList } from './components/photographersList.js';
 import * as utils from './utils/utils.js';
 
-const getJSON = async () => {
-  const data = await fetch('dist/js/data/fisheyedata.json');
-  const json = await data.json();
-  return json;
-};
+// const getJSON = async () => {
+//   const data = await fetch('dist/js/data/fisheyedata.json');
+//   const json = await data.json();
+//   return json;
+// };
 
-const createPhotographerListWithMedias = (json) => {
-  const photographerList = [];
+// const createPhotographerListWithMedias = (json) => {
+//   const photographerList = [];
 
-  for (const photographer of json.photographers) {
-    const medias = json.media.filter((media) => media.photographerId === photographer.id);
-    const photographerMedias = new MediasList('js-figureGroup', medias);
-    const photographerWithMedias = new Photographer(photographer, photographerMedias);
-    photographerList.push(photographerWithMedias);
-  }
-  return photographerList;
-};
+//   for (const photographer of json.photographers) {
+//     const medias = json.media.filter((media) => media.photographerId === photographer.id);
+//     const photographerMedias = new MediasList('js-figureGroup', medias);
+//     const photographerWithMedias = new Photographer(photographer, photographerMedias);
+//     photographerList.push(photographerWithMedias);
+//   }
+//   return photographerList;
+// };
 
 const displayPageByURLQuery = (json, URLQuery) => {
-  const URLParams = new URLSearchParams(URLQuery);
-  const id = parseInt(URLParams.get('id'));
+  // const URLParams = new URLSearchParams(URLQuery);
+  // const id = parseInt(URLParams.get('id'));
   const container = document.getElementById('js-container');
   const dropdownLabels = [
     {
@@ -59,11 +59,11 @@ const displayPageByURLQuery = (json, URLQuery) => {
     },
   ];
   const dropdown = new DropDown('js-sortContainer', dropdownLabels, dropdownMethods);
-  const photographersList = new PhotographersList(createPhotographerListWithMedias(json));
+  // const photographersList = new PhotographersList(createPhotographerListWithMedias(json));
 
   if (!isFinite(id)) {
-    const homepage = new Homepage(container, photographersList);
-    homepage.appendContentToContainer();
+    // const homepage = new Homepage(container, photographersList);
+    // homepage.appendContentToContainer();
     homepage.attachEventListeners();
   } else {
     const photographer = utils.getPhotographerFromList(id, photographersList);
@@ -82,11 +82,11 @@ const displayPageByURLQuery = (json, URLQuery) => {
   }
 };
 
-const onLoad = async () => {
-  const json = await getJSON();
-  const URLQuery = window.location.search;
+// const onLoad = async () => {
+//   const json = await getJSON();
+//   const URLQuery = window.location.search;
 
-  displayPageByURLQuery(json, URLQuery);
-};
+//   displayPageByURLQuery(json, URLQuery);
+// };
 
-document.addEventListener('DOMContentLoaded', onLoad);
+// document.addEventListener('DOMContentLoaded', onLoad);

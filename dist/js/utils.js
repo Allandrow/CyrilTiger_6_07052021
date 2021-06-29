@@ -56,7 +56,7 @@ export const getPhotographerFromList = (id, photographerList) => {
 export const getPhotographTagSet = (photographers) => {
   const tagSet = new Set();
   photographers.forEach((photographer) => {
-    photographer.infos.tags.forEach((tag) => {
+    photographer.tags.forEach((tag) => {
       tagSet.add(uppercaseFirstLetter(tag));
     });
   });
