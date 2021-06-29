@@ -18,14 +18,14 @@ export class PhotographerPage {
   }
 
   appendContenttoContainer() {
-    document.title += ` - ${this.photographer.infos.name}`;
+    // document.title += ` - ${this.photographer.infos.name}`;
 
-    const header = createHeader();
+    // const header = createHeader();
 
-    const main = document.createElement('main');
-    main.id = 'js-main';
+    // const main = document.createElement('main');
+    // main.id = 'js-main';
 
-    const infosSection = this.photographer.createInfosSection('photograph-header');
+    // const infosSection = this.photographer.createInfosSection('photograph-header');
     const select = this.dropdown.createDropdown();
     const figureGroup = this.photographer.mediasList.createFigureGroup();
     main.append(infosSection, select, figureGroup);

@@ -41,16 +41,8 @@ export const createTagList = (tags) => {
   return ul;
 };
 
-export const uppercaseFirstLetter = (string) => {
+const uppercaseFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-export const getPhotographerFromList = (id, photographerList) => {
-  const photographer = photographerList.photographers.find(
-    (photographer) => photographer.infos.id === id
-  );
-
-  return photographer;
 };
 
 export const getPhotographTagSet = (photographers) => {
@@ -69,8 +61,7 @@ export const isSameTagText = (tag, tagClicked) => {
 
 export const getMediaLikes = (medias) => {
   const mediaLikes = medias.map((media) => media.likes);
-
-  return mediaLikes.reduce((acc, curr) => acc + curr);
+  return mediaLikes.reduce((total, likes) => total + likes);
 };
 
 export const isImage = (media) => media.image !== undefined;

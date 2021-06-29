@@ -1,9 +1,18 @@
 import { Homepage } from './components/homepage.js';
+import { PhotographerPage } from './components/photographerPage.js';
 
 const getJSON = async () => {
   const data = await fetch('dist/js/data/fisheyedata.json');
   const json = await data.json();
   return json;
+};
+
+// return photographer related to ID in json with his medias added to the object
+const getPhotographerWithMedias = (json, id) => {
+  const photographer = json.photographers.find((photographer) => photographer.id === id);
+  const medias = json.media.filter((media) => media.photographerId === id);
+  photographer.medias = medias;
+  return photographer;
 };
 
 // Depending if url contains a photographer ID or not, display homepage or photographer page
@@ -16,7 +25,9 @@ const displayPageByURLQuery = (json, URLQuery) => {
     const homepage = new Homepage(json.photographers);
     homepage.getHomepage();
   } else {
-    // photographerPage object
+    const photographerWithMedias = getPhotographerWithMedias(json, id);
+    const photographerPage = new PhotographerPage(photographerWithMedias);
+    photographerPage.getPhotographerPage();
   }
 };
 

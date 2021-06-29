@@ -1,29 +1,29 @@
-const expandListBox = (btn) => {
-  btn.setAttribute('aria-expanded', 'true');
-  btn.nextElementSibling.classList.add('open');
-};
+// const expandListBox = (btn) => {
+//   btn.setAttribute('aria-expanded', 'true');
+//   btn.nextElementSibling.classList.add('open');
+// };
 
-const collapseListBox = (btn) => {
-  btn.setAttribute('aria-expanded', 'false');
-  btn.nextElementSibling.classList.remove('open');
-};
+// const collapseListBox = (btn) => {
+//   btn.setAttribute('aria-expanded', 'false');
+//   btn.nextElementSibling.classList.remove('open');
+// };
 
-const createSelectLI = (value, label) => {
-  const li = document.createElement('li');
-  li.id = value;
-  li.setAttribute('role', 'option');
-  li.setAttribute('data-sort', value);
-  li.setAttribute('aria-selected', 'false');
-  li.setAttribute('aria-labelledBy', `${value}Btn`);
+// const createSelectLI = (value, label) => {
+//   const li = document.createElement('li');
+//   li.id = value;
+//   li.setAttribute('role', 'option');
+//   li.setAttribute('data-sort', value);
+//   li.setAttribute('aria-selected', 'false');
+//   li.setAttribute('aria-labelledBy', `${value}Btn`);
 
-  const button = document.createElement('button');
-  button.id = `${value}Btn`;
-  button.appendChild(document.createTextNode(label));
+//   const button = document.createElement('button');
+//   button.id = `${value}Btn`;
+//   button.appendChild(document.createTextNode(label));
 
-  li.appendChild(button);
+//   li.appendChild(button);
 
-  return li;
-};
+//   return li;
+// };
 
 const changeOptionsAriaValues = (previousOption, newOption) => {
   previousOption.setAttribute('aria-selected', 'false');
@@ -61,43 +61,43 @@ export class DropDown {
     this.optionMethods = dropdownSortMethods;
   }
 
-  createDropdown() {
-    const select = document.createElement('div');
-    select.id = this.id;
-    select.classList.add('select-group');
+  // createDropdown() {
+  //   const select = document.createElement('div');
+  //   select.id = this.id;
+  //   select.classList.add('select-group');
 
-    const label = document.createElement('label');
-    label.setAttribute('for', 'js-sort');
-    label.id = 'ariaLabel';
-    label.appendChild(document.createTextNode('Trier par'));
+  //   const label = document.createElement('label');
+  //   label.setAttribute('for', 'js-sort');
+  //   label.id = 'ariaLabel';
+  //   label.appendChild(document.createTextNode('Trier par'));
 
-    const divSelect = document.createElement('div');
-    divSelect.classList.add('select');
+  //   const divSelect = document.createElement('div');
+  //   divSelect.classList.add('select');
 
-    const btn = document.createElement('button');
-    btn.id = 'js-sort';
-    btn.setAttribute('role', 'button');
-    btn.classList.add('btn', 'js-sort');
-    btn.setAttribute('aria-haspopup', 'listbox');
-    btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-labelledBy', 'ariaLabel');
-    btn.appendChild(document.createTextNode(this.optionNames[0].label));
+  //   const btn = document.createElement('button');
+  //   btn.id = 'js-sort';
+  //   btn.setAttribute('role', 'button');
+  //   btn.classList.add('btn', 'js-sort');
+  //   btn.setAttribute('aria-haspopup', 'listbox');
+  //   btn.setAttribute('aria-expanded', 'false');
+  //   btn.setAttribute('aria-labelledBy', 'ariaLabel');
+  //   btn.appendChild(document.createTextNode(this.optionNames[0].label));
 
-    const ul = document.createElement('ul');
-    ul.classList.add('js-select');
-    ul.setAttribute('role', 'listbox');
+  //   const ul = document.createElement('ul');
+  //   ul.classList.add('js-select');
+  //   ul.setAttribute('role', 'listbox');
 
-    this.optionNames.forEach((option) => {
-      ul.appendChild(createSelectLI(option.value, option.label));
-    });
+  //   this.optionNames.forEach((option) => {
+  //     ul.appendChild(createSelectLI(option.value, option.label));
+  //   });
 
-    ul.firstElementChild.setAttribute('aria-selected', 'true');
-    ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
+  //   ul.firstElementChild.setAttribute('aria-selected', 'true');
+  //   ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
 
-    divSelect.append(btn, ul);
-    select.append(label, divSelect);
-    return select;
-  }
+  //   divSelect.append(btn, ul);
+  //   select.append(label, divSelect);
+  //   return select;
+  // }
 
   attachEventListeners(mediasList) {
     const container = document.getElementById(this.id);
@@ -105,15 +105,15 @@ export class DropDown {
     const selectList = container.querySelector('.js-select');
     const selectListItems = container.querySelectorAll('.js-select li');
 
-    sortBtn.addEventListener('mouseenter', () => {
-      expandListBox(sortBtn);
-    });
-    selectList.addEventListener('mouseleave', () => {
-      collapseListBox(sortBtn);
-    });
-    sortBtn.addEventListener('focus', () => {
-      expandListBox(sortBtn);
-    });
+    // sortBtn.addEventListener('mouseenter', () => {
+    //   expandListBox(sortBtn);
+    // });
+    // selectList.addEventListener('mouseleave', () => {
+    //   collapseListBox(sortBtn);
+    // });
+    // sortBtn.addEventListener('focus', () => {
+    //   expandListBox(sortBtn);
+    // });
     selectListItems.forEach((option) => {
       option.addEventListener('click', () => {
         onChange(sortBtn, selectListItems, option, this.optionMethods, mediasList);

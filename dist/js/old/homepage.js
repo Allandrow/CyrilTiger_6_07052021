@@ -29,21 +29,21 @@ const createBackTopBtn = () => {
 };
 
 const handleTagClick = (articles, tags, targetedTag) => {
-  const activeTags = [];
+  // const activeTags = [];
   // Parse each tag and toggle active class if tag already has it or if tag is same text value as targetedTag
-  tags.forEach((tag) => {
-    if (tag.classList.contains('active') || utils.isSameTagText(tag, targetedTag)) {
-      tag.classList.toggle('active');
-    }
-    if (tag.classList.contains('active')) {
-      activeTags.push(tag);
-    }
-  });
+  // tags.forEach((tag) => {
+  //   if (tag.classList.contains('active') || utils.isSameTagText(tag, targetedTag)) {
+  //     tag.classList.toggle('active');
+  //   }
+  //   if (tag.classList.contains('active')) {
+  //     activeTags.push(tag);
+  //   }
+  // });
 
-  if (activeTags.length === 0) {
-    articles.forEach((article) => article.classList.remove('hidden'));
-    return;
-  }
+  // if (activeTags.length === 0) {
+  //   articles.forEach((article) => article.classList.remove('hidden'));
+  //   return;
+  // }
 
   articles.forEach((article) => {
     article.classList.add('hidden');
@@ -63,28 +63,28 @@ export class Homepage {
     this.photographers = photographerList;
   }
 
-  appendContentToContainer() {
-    // const header = createHeader(this.photographers);
-    // const photographerListDOM = this.photographers.createPhotographerList();
-    const backTopBtn = createBackTopBtn();
-    this.container.append(header, photographerListDOM, backTopBtn);
-  }
+  // appendContentToContainer() {
+  // const header = createHeader(this.photographers);
+  // const photographerListDOM = this.photographers.createPhotographerList();
+  // const backTopBtn = createBackTopBtn();
+  // this.container.append(header, photographerListDOM, backTopBtn);
+  // }
 
   attachEventListeners() {
-    const html = document.querySelector('html');
+    // const html = document.querySelector('html');
     const tags = this.container.querySelectorAll('.tag');
     const articles = this.container.querySelectorAll('.article');
-    const btn = this.container.querySelector('#js-backToTop');
+    // const btn = this.container.querySelector('#js-backToTop');
 
-    window.addEventListener('scroll', () => {
-      html.scrollTop <= 400
-        ? btn.classList.add('hidden')
-        : btn.classList.remove('hidden');
-    });
+    // window.addEventListener('scroll', () => {
+    //   html.scrollTop <= 400
+    //     ? btn.classList.add('hidden')
+    //     : btn.classList.remove('hidden');
+    // });
 
-    btn.addEventListener('click', () => {
-      html.scrollTop = 0;
-    });
+    // btn.addEventListener('click', () => {
+    //   html.scrollTop = 0;
+    // });
 
     tags.forEach((tag) =>
       tag.addEventListener('click', () => handleTagClick(articles, tags, tag))

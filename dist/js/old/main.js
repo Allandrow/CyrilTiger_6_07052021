@@ -29,7 +29,7 @@ import * as utils from './utils/utils.js';
 const displayPageByURLQuery = (json, URLQuery) => {
   // const URLParams = new URLSearchParams(URLQuery);
   // const id = parseInt(URLParams.get('id'));
-  const container = document.getElementById('js-container');
+  // const container = document.getElementById('js-container');
   const dropdownLabels = [
     {
       value: 'popularity',
@@ -64,9 +64,9 @@ const displayPageByURLQuery = (json, URLQuery) => {
   if (!isFinite(id)) {
     // const homepage = new Homepage(container, photographersList);
     // homepage.appendContentToContainer();
-    homepage.attachEventListeners();
+    // homepage.attachEventListeners();
   } else {
-    const photographer = utils.getPhotographerFromList(id, photographersList);
+    // const photographer = utils.getPhotographerFromList(id, photographersList);
     const contactModal = new FormModal('contact-modal', photographer.infos.name);
     const lightboxModal = new LightboxModal('lightbox-modal');
     const photographerPage = new PhotographerPage(
