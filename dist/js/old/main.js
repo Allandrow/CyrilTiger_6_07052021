@@ -1,12 +1,12 @@
-import { DropDown } from './components/dropdown.js';
-import { FormModal } from './components/formModal.js';
-import { Homepage } from './components/homepage.js';
-import { LightboxModal } from './components/lightboxModal.js';
-import { MediasList } from './components/mediasList.js';
-import { Photographer } from './components/photographer.js';
-import { PhotographerPage } from './components/photographerPage.js';
-import { PhotographersList } from './components/photographersList.js';
-import * as utils from './utils/utils.js';
+// import { DropDown } from './components/dropdown.js';
+// import { FormModal } from './components/formModal.js';
+// import { Homepage } from './components/homepage.js';
+// import { LightboxModal } from './components/lightboxModal.js';
+// import { MediasList } from './components/mediasList.js';
+// import { Photographer } from './components/photographer.js';
+// import { PhotographerPage } from './components/photographerPage.js';
+// import { PhotographersList } from './components/photographersList.js';
+// import * as utils from './utils/utils.js';
 
 // const getJSON = async () => {
 //   const data = await fetch('dist/js/data/fisheyedata.json');
@@ -26,7 +26,7 @@ import * as utils from './utils/utils.js';
 //   return photographerList;
 // };
 
-const displayPageByURLQuery = (json, URLQuery) => {
+// const displayPageByURLQuery = (json, URLQuery) => {
   // const URLParams = new URLSearchParams(URLQuery);
   // const id = parseInt(URLParams.get('id'));
   // const container = document.getElementById('js-container');
@@ -61,24 +61,24 @@ const displayPageByURLQuery = (json, URLQuery) => {
   // const dropdown = new DropDown('js-sortContainer', dropdownLabels, dropdownMethods);
   // const photographersList = new PhotographersList(createPhotographerListWithMedias(json));
 
-  if (!isFinite(id)) {
+  // if (!isFinite(id)) {
     // const homepage = new Homepage(container, photographersList);
     // homepage.appendContentToContainer();
     // homepage.attachEventListeners();
-  } else {
+  // } else {
     // const photographer = utils.getPhotographerFromList(id, photographersList);
-    const contactModal = new FormModal('contact-modal', photographer.infos.name);
+    // const contactModal = new FormModal('contact-modal', photographer.infos.name);
     const lightboxModal = new LightboxModal('lightbox-modal');
-    const photographerPage = new PhotographerPage(
-      container,
-      photographer,
-      dropdown,
-      contactModal,
-      lightboxModal
-    );
-    photographerPage.appendContenttoContainer();
+    // const photographerPage = new PhotographerPage(
+    //   container,
+    //   photographer,
+    //   dropdown,
+    //   contactModal,
+    //   lightboxModal
+    // );
+    // photographerPage.appendContenttoContainer();
     photographerPage.insertModalsInDOM();
-    photographerPage.loadEventListeners();
+    // photographerPage.loadEventListeners();
   }
 };
 

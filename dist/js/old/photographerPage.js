@@ -8,16 +8,16 @@
 //   return header;
 // };
 
-export class PhotographerPage {
-  constructor(containerDOM, photographer, dropdown, contactModal, lightboxModal) {
-    this.container = containerDOM;
-    this.photographer = photographer;
-    this.dropdown = dropdown;
-    this.contactModal = contactModal;
-    this.lightbox = lightboxModal;
-  }
+// export class PhotographerPage {
+//   constructor(containerDOM, photographer, dropdown, contactModal, lightboxModal) {
+//     this.container = containerDOM;
+//     this.photographer = photographer;
+//     this.dropdown = dropdown;
+//     this.contactModal = contactModal;
+//     this.lightbox = lightboxModal;
+//   }
 
-  appendContenttoContainer() {
+  // appendContenttoContainer() {
     // document.title += ` - ${this.photographer.infos.name}`;
     // const header = createHeader();
     // const main = document.createElement('main');
@@ -27,7 +27,7 @@ export class PhotographerPage {
     // const figureGroup = this.photographer.mediasList.createFigureGroup();
     // main.append(infosSection, select, figureGroup);
     // this.container.append(header, main);
-  }
+  // }
 
   insertModalsInDOM() {
     const scriptDOM = document.querySelector('script');
@@ -36,12 +36,12 @@ export class PhotographerPage {
   }
 
   loadEventListeners() {
-    const medias = this.photographer.mediasList;
-    const contactBtn = document.getElementById('js-contactForm');
-    this.dropdown.attachEventListeners(medias);
-    medias.attachLikesEventListener();
+    // const medias = this.photographer.mediasList;
+    // const contactBtn = document.getElementById('js-contactForm');
+    // this.dropdown.attachEventListeners(medias);
+    // medias.attachLikesEventListener();
     this.contactModal.attachEventListeners(contactBtn);
-    const figureGroup = document.getElementById(medias.id);
+    // const figureGroup = document.getElementById(medias.id);
     this.lightbox.attachEventListeners(figureGroup, this.container);
   }
-}
+// }

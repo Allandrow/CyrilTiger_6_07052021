@@ -1,91 +1,91 @@
-const createFormLabel = (id, text, type = 'text') => {
-  const label = document.createElement('label');
-  label.setAttribute('for', id);
+// const createFormLabel = (id, text, type = 'text') => {
+//   const label = document.createElement('label');
+//   label.setAttribute('for', id);
 
-  const input = document.createElement('input');
-  input.setAttribute('type', type);
-  input.id = id;
-  input.classList.add('js-focusable', 'js-input');
-  input.required = true;
+//   const input = document.createElement('input');
+//   input.setAttribute('type', type);
+//   input.id = id;
+//   input.classList.add('js-focusable', 'js-input');
+//   input.required = true;
 
-  label.append(document.createTextNode(text), input);
+//   label.append(document.createTextNode(text), input);
 
-  return label;
-};
+//   return label;
+// };
 
 export class FormModal {
-  constructor(id, name) {
-    this.id = id;
-    this.name = name;
-  }
+  // constructor(id, name) {
+  //   this.id = id;
+  //   this.name = name;
+  // }
 
-  createModal() {
-    const div = document.createElement('div');
-    div.id = this.id;
-    div.classList.add('modal-window', this.id);
-    div.setAttribute('role', 'dialog');
+  // createModal() {
+  //   const div = document.createElement('div');
+  //   div.id = this.id;
+  //   div.classList.add('modal-window', this.id);
+  //   div.setAttribute('role', 'dialog');
 
-    const section = document.createElement('section');
+  //   const section = document.createElement('section');
 
-    const title = document.createElement('h1');
-    title.id = 'modal-title';
-    title.appendChild(document.createTextNode('Contactez-moi'));
+  //   const title = document.createElement('h1');
+  //   title.id = 'modal-title';
+  //   title.appendChild(document.createTextNode('Contactez-moi'));
 
-    const span = document.createElement('span');
-    span.appendChild(document.createTextNode(this.name));
+  //   const span = document.createElement('span');
+  //   span.appendChild(document.createTextNode(this.name));
 
-    title.appendChild(span);
+  //   title.appendChild(span);
 
-    div.setAttribute('aria-labelledby', title.id);
+  //   div.setAttribute('aria-labelledby', title.id);
 
-    const form = document.createElement('form');
+  //   const form = document.createElement('form');
 
-    const firstNameInput = createFormLabel('formFirstName', 'Prénom');
-    const lastNameInput = createFormLabel('formLastName', 'Nom');
-    const emailInput = createFormLabel('formEmail', 'Email', 'email');
+  //   const firstNameInput = createFormLabel('formFirstName', 'Prénom');
+  //   const lastNameInput = createFormLabel('formLastName', 'Nom');
+  //   const emailInput = createFormLabel('formEmail', 'Email', 'email');
 
-    const textAreaLabel = document.createElement('label');
-    textAreaLabel.setAttribute('for', 'formMessage');
+  //   const textAreaLabel = document.createElement('label');
+  //   textAreaLabel.setAttribute('for', 'formMessage');
 
-    const textArea = document.createElement('textarea');
-    textArea.id = 'formMessage';
-    textArea.classList.add('js-focusable', 'js-input');
-    textArea.required = true;
+  //   const textArea = document.createElement('textarea');
+  //   textArea.id = 'formMessage';
+  //   textArea.classList.add('js-focusable', 'js-input');
+  //   textArea.required = true;
 
-    textAreaLabel.append(document.createTextNode('Votre message'), textArea);
+  //   textAreaLabel.append(document.createTextNode('Votre message'), textArea);
 
-    const button = document.createElement('button');
-    button.id = 'js-submit';
-    button.classList.add('js-focusable');
-    button.appendChild(document.createTextNode('Envoyer'));
+  //   const button = document.createElement('button');
+  //   button.id = 'js-submit';
+  //   button.classList.add('js-focusable');
+  //   button.appendChild(document.createTextNode('Envoyer'));
 
-    form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
+  //   form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
 
-    const closeBtn = document.createElement('button');
-    closeBtn.classList.add('close', 'js-focusable');
+  //   const closeBtn = document.createElement('button');
+  //   closeBtn.classList.add('close', 'js-focusable');
 
-    section.append(title, form, closeBtn);
+  //   section.append(title, form, closeBtn);
 
-    div.appendChild(section);
+  //   div.appendChild(section);
 
-    return div;
-  }
+  //   return div;
+  // }
 
-  openModal(container, btn) {
-    const modal = document.getElementById(this.id);
-    modal.classList.add('open');
-    container.setAttribute('aria-hidden', 'true');
+  // openModal(container, btn) {
+  // const modal = document.getElementById(this.id);
+  //   modal.classList.add('open');
+  //   container.setAttribute('aria-hidden', 'true');
 
-    btn.setAttribute('aria-expanded', 'true');
-  }
+  //   btn.setAttribute('aria-expanded', 'true');
+  // }
 
-  closeModal(container, btn) {
-    const modal = document.getElementById(this.id);
-    modal.classList.remove('open');
-    container.setAttribute('aria-hidden', 'false');
-    btn.setAttribute('aria-expanded', 'false');
-    btn.focus();
-  }
+  // closeModal(container, btn) {
+  //   const modal = document.getElementById(this.id);
+  //   modal.classList.remove('open');
+  //   container.setAttribute('aria-hidden', 'false');
+  //   btn.setAttribute('aria-expanded', 'false');
+  //   btn.focus();
+  // }
 
   attachEventListeners(btn) {
     const modal = document.getElementById(this.id);
@@ -93,21 +93,21 @@ export class FormModal {
     const form = modal.querySelector('form');
     const inputs = modal.querySelectorAll('.js-input');
 
-    btn.addEventListener('click', () => {
-      this.openModal(modal, btn);
-    });
+    // btn.addEventListener('click', () => {
+    //   this.openModal(modal, btn);
+    // });
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      inputs.forEach((input) => {
-        console.log(input.value);
-      });
-      this.closeModal(modal, btn);
-    });
+    // form.addEventListener('submit', (e) => {
+    //   e.preventDefault();
+    //   inputs.forEach((input) => {
+    //     console.log(input.value);
+    //   });
+    //   this.closeModal(modal, btn);
+    // });
 
-    closeBtn.addEventListener('click', () => {
-      this.closeModal(modal, btn);
-    });
+    // closeBtn.addEventListener('click', () => {
+    //   this.closeModal(modal, btn);
+    // });
 
     window.addEventListener('click', (e) => {
       if (modal.classList.contains('open')) {

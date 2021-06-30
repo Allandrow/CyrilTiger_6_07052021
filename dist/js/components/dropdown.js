@@ -88,6 +88,13 @@ export class Dropdown {
     this.selectList.addEventListener('mouseleave', () => {
       this.collapseListBox();
     });
+    this.selectList.childNodes.forEach((listItem) => {
+      listItem.addEventListener('focusout', () => {
+        if (listItem === this.selectList.lastChild) {
+          this.collapseListBox();
+        }
+      });
+    });
 
     return select;
   }

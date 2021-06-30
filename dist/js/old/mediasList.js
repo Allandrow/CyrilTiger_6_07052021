@@ -1,4 +1,4 @@
-import * as utils from '../utils/utils.js';
+// import * as utils from '../utils/utils.js';
 
 // const createPicture = (media) => {
 //   const { photographerId, image, description } = media;
@@ -80,60 +80,60 @@ import * as utils from '../utils/utils.js';
 //   return figure;
 // };
 
-const updateTotalLikes = (operation) => {
-  const totalLikesCountElement = document.querySelector('.meta-infos__likes span');
-  let totalLikesCount = parseInt(totalLikesCountElement.innerText);
+// const updateTotalLikes = (operation) => {
+//   const totalLikesCountElement = document.querySelector('.meta-infos__likes span');
+//   let totalLikesCount = parseInt(totalLikesCountElement.innerText);
 
-  operation === 'add' ? totalLikesCount++ : totalLikesCount--;
+//   operation === 'add' ? totalLikesCount++ : totalLikesCount--;
 
-  totalLikesCountElement.innerText = totalLikesCount;
-};
+//   totalLikesCountElement.innerText = totalLikesCount;
+// };
 
-export class MediasList {
-  constructor(containerID, medias) {
-    this.id = containerID;
-    this.medias = medias;
-  }
+// export class MediasList {
+//   constructor(containerID, medias) {
+//     this.id = containerID;
+//     this.medias = medias;
+//   }
 
-  // createFigureGroup() {
-  //   const figureGroup = document.createElement('figure');
-  //   figureGroup.id = this.id;
-  //   figureGroup.setAttribute('role', 'group');
-  //   figureGroup.classList.add('figure-group');
+// createFigureGroup() {
+//   const figureGroup = document.createElement('figure');
+//   figureGroup.id = this.id;
+//   figureGroup.setAttribute('role', 'group');
+//   figureGroup.classList.add('figure-group');
 
-  //   // const sortedMedias = this.medias.sort((a, b) => b.likes - a.likes);
+//   // const sortedMedias = this.medias.sort((a, b) => b.likes - a.likes);
 
-  //   sortedMedias.forEach((media) => {
-  //     figureGroup.appendChild(createFigure(media));
-  //   });
+//   sortedMedias.forEach((media) => {
+//     figureGroup.appendChild(createFigure(media));
+//   });
 
-  //   return figureGroup;
-  // }
+//   return figureGroup;
+// }
 
-  attachLikesEventListener() {
-    const container = document.getElementById(this.id);
-    const figures = Array.from(container.querySelectorAll('figure'));
-    const likeBtns = container.querySelectorAll('.js-like');
+//   attachLikesEventListener() {
+//     const container = document.getElementById(this.id);
+//     const figures = Array.from(container.querySelectorAll('figure'));
+//     const likeBtns = container.querySelectorAll('.js-like');
 
-    likeBtns.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        const likeFigure = btn.closest('.figure');
-        let likeCount = parseInt(likeFigure.getAttribute('data-likes'));
+//     likeBtns.forEach((btn) =>
+//       btn.addEventListener('click', () => {
+//         const likeFigure = btn.closest('.figure');
+//         let likeCount = parseInt(likeFigure.getAttribute('data-likes'));
 
-        if (btn.getAttribute('data-liked') === 'true') {
-          likeCount--;
-          btn.setAttribute('data-liked', 'false');
-          updateTotalLikes('substract');
-        } else {
-          likeCount++;
-          btn.setAttribute('data-liked', 'true');
-          updateTotalLikes('add');
-        }
+//         if (btn.getAttribute('data-liked') === 'true') {
+//           likeCount--;
+//           btn.setAttribute('data-liked', 'false');
+//           updateTotalLikes('substract');
+//         } else {
+//           likeCount++;
+//           btn.setAttribute('data-liked', 'true');
+//           updateTotalLikes('add');
+//         }
 
-        likeFigure.setAttribute('data-likes', likeCount);
-        btn.previousElementSibling.textContent = likeCount;
-      })
-    );
-    updateTotalLikes(container, figures);
-  }
-}
+//         likeFigure.setAttribute('data-likes', likeCount);
+//         btn.previousElementSibling.textContent = likeCount;
+//       })
+//     );
+//     updateTotalLikes(container, figures);
+//   }
+// }

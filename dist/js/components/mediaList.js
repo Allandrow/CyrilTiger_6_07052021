@@ -43,7 +43,7 @@ export class MediaList {
     return mediaElement;
   }
 
-  createFigcatption(title, likes) {
+  createFigcaption(title, likes) {
     const figcaption = document.createElement('figcaption');
 
     const span = document.createElement('span');
@@ -98,7 +98,7 @@ export class MediaList {
     link.setAttribute('href', path);
     link.appendChild(mediaElement);
 
-    const caption = this.createFigcatption(title, likes);
+    const caption = this.createFigcaption(title, likes);
 
     figure.append(link, caption);
     figure.setAttribute('data-likes', likes);

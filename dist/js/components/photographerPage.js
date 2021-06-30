@@ -1,4 +1,5 @@
 import * as utils from '../utils.js';
+import { ContactModal } from './contactModal.js';
 import { Dropdown } from './dropdown.js';
 import { MediaList } from './mediaList.js';
 
@@ -7,6 +8,7 @@ export class PhotographerPage {
     this.photographer = photographer;
     this.container = document.getElementById('js-container');
     this.totalLikesDOM = this.createTotalLikesElement();
+    this.contactModal = this.initContactModal();
   }
 
   createHeader() {
@@ -23,6 +25,24 @@ export class PhotographerPage {
     const likes = utils.getMediaLikes(this.photographer.medias);
     span.appendChild(document.createTextNode(likes));
     return span;
+  }
+
+  createContactBtn() {
+    const btn = document.createElement('button');
+    btn.classList.add('button');
+    btn.id = 'js-contactForm';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.appendChild(document.createTextNode('Contactez-moi'));
+
+    btn.addEventListener('click', () => {
+      this.container.setAttribute('aria-hidden', 'true');
+      btn.setAttribute('aria-expanded', 'true');
+      this.contactModal.toggleModal();
+    });
+
+    this.contactModalMutationObserver(btn);
+
+    return btn;
   }
 
   createPhotographerInfosSection() {
@@ -72,11 +92,7 @@ export class PhotographerPage {
 
     const ul = utils.createTagList(tags);
 
-    const btn = document.createElement('button');
-    btn.classList.add('button');
-    btn.id = 'js-contactForm';
-    btn.setAttribute('aria-expanded', 'false');
-    btn.appendChild(document.createTextNode('Contactez-moi'));
+    const btn = this.createContactBtn();
 
     div.append(title, paragraph, likesAndPriceDiv, ul, btn);
 
@@ -113,8 +129,47 @@ export class PhotographerPage {
     return mediaList;
   }
 
+  initContactModal() {
+    const contactModal = new ContactModal(this.photographer.name);
+    return contactModal;
+  }
+
   updateTotalLikes(figures) {
-    this.totalLikesDOM.textContent = utils.getFigureLikes(Array.from(figures.childNodes));
+    this.totalLikesDOM.textContent = utils.getFigureLikes(figures);
+  }
+
+  insertModalsInDOM() {
+    const scriptDOM = document.querySelector('script');
+
+    document.body.insertBefore(this.contactModal.modal, scriptDOM);
+  }
+
+  likesMutationObserver(figuresContainer) {
+    // Mutation observer on like change in figure
+    // On mutation, update total likes value
+    const figures = Array.from(figuresContainer.childNodes);
+
+    figures.forEach((likeBtn) => {
+      const observer = new MutationObserver(() => {
+        this.updateTotalLikes(figures);
+      });
+      const observerConfig = { attributes: true };
+      observer.observe(likeBtn, observerConfig);
+    });
+  }
+
+  contactModalMutationObserver(btn) {
+    const config = { attributes: true, attributeOldValue: true };
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.oldValue.includes('open')) {
+          btn.setAttribute('aria-expanded', 'false');
+          this.container.removeAttribute('aria-hidden');
+          btn.focus();
+        }
+      });
+    });
+    observer.observe(this.contactModal.modal, config);
   }
 
   getPhotographerPage() {
@@ -150,10 +205,13 @@ export class PhotographerPage {
     const main = document.createElement('main');
     main.id = 'js-main';
     const photographerInfosSection = this.createPhotographerInfosSection();
-    const figures = mediaList.getMediaList();
-    main.append(photographerInfosSection, select.getDropdown(), figures);
+    const figuresContainer = mediaList.getMediaList();
+    main.append(photographerInfosSection, select.getDropdown(), figuresContainer);
 
     this.container.append(header, main);
+
+    // Add modals to DOM
+    this.insertModalsInDOM();
 
     // DOM events
     selectOptions.forEach((option) => {
@@ -165,16 +223,8 @@ export class PhotographerPage {
       });
     });
 
-    // Mutation observer on like change in figure
-    // On mutation, update total likes value
-    const figureLikeBtns = document.querySelectorAll('.figure');
-
-    figureLikeBtns.forEach((likeBtn) => {
-      const observer = new MutationObserver(() => {
-        this.updateTotalLikes(figures);
-      });
-      const observerConfig = { attributes: true };
-      observer.observe(likeBtn, observerConfig);
-    });
+    // Likes event observer
+    this.likesMutationObserver(figuresContainer);
+    // Contact modal event observer
   }
 }
