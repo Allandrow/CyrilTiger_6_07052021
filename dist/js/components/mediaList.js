@@ -61,6 +61,20 @@ export class MediaList {
     button.appendChild(img);
     div.append(likesSpan, button);
     figcaption.append(span, div);
+
+    // Like incrementation event
+    button.addEventListener('click', () => {
+      const figure = button.closest('figure');
+      const currentLikes = parseInt(likesSpan.textContent);
+
+      if (currentLikes === likes) {
+        figure.setAttribute('data-likes', currentLikes + 1);
+        likesSpan.textContent = currentLikes + 1;
+      } else {
+        figure.setAttribute('data-likes', likes);
+        likesSpan.textContent = likes;
+      }
+    });
     return figcaption;
   }
 

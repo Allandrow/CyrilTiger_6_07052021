@@ -64,6 +64,13 @@ export const getMediaLikes = (medias) => {
   return mediaLikes.reduce((total, likes) => total + likes);
 };
 
+export const getFigureLikes = (figures) => {
+  const figureLikes = figures.map((figure) =>
+    parseInt(figure.getAttribute('data-likes'))
+  );
+  return figureLikes.reduce((total, likes) => total + likes);
+};
+
 export const isImage = (media) => media.image !== undefined;
 
 export const sortFigureByPopularity = (a, b) => {

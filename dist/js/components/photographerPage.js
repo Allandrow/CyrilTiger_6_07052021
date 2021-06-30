@@ -6,6 +6,7 @@ export class PhotographerPage {
   constructor(photographer) {
     this.photographer = photographer;
     this.container = document.getElementById('js-container');
+    this.totalLikesDOM = this.createTotalLikesElement();
   }
 
   createHeader() {
@@ -14,6 +15,14 @@ export class PhotographerPage {
     header.appendChild(utils.createLogo());
 
     return header;
+  }
+
+  createTotalLikesElement() {
+    const span = document.createElement('span');
+    span.setAttribute('tabindex', '0');
+    const likes = utils.getMediaLikes(this.photographer.medias);
+    span.appendChild(document.createTextNode(likes));
+    return span;
   }
 
   createPhotographerInfosSection() {
@@ -51,10 +60,7 @@ export class PhotographerPage {
     const likesDiv = document.createElement('div');
     likesDiv.classList.add('meta-infos__likes');
 
-    const span = document.createElement('span');
-    span.setAttribute('tabindex', '0');
-    const likes = utils.getMediaLikes(this.photographer.medias);
-    span.appendChild(document.createTextNode(likes));
+    const span = this.totalLikesDOM;
 
     const img = utils.createIMG('like-icon-black.svg', 'likes');
     likesDiv.append(span, img);
@@ -101,10 +107,14 @@ export class PhotographerPage {
   }
 
   initMediaList() {
-    // sort medias for iniital render according to first options : popularity
+    // sort medias for iniital render according to first option : popularity
     const sortedMedias = this.photographer.medias.sort(utils.sortMediaByPopularity);
     const mediaList = new MediaList(sortedMedias);
     return mediaList;
+  }
+
+  updateTotalLikes(figures) {
+    this.totalLikesDOM.textContent = utils.getFigureLikes(Array.from(figures.childNodes));
   }
 
   getPhotographerPage() {
@@ -153,6 +163,18 @@ export class PhotographerPage {
         mediaList.sortFigures(sortMethod.figureSort);
         mediaList.sortMedias(sortMethod.mediaSort);
       });
+    });
+
+    // Mutation observer on like change in figure
+    // On mutation, update total likes value
+    const figureLikeBtns = document.querySelectorAll('.figure');
+
+    figureLikeBtns.forEach((likeBtn) => {
+      const observer = new MutationObserver(() => {
+        this.updateTotalLikes(figures);
+      });
+      const observerConfig = { attributes: true };
+      observer.observe(likeBtn, observerConfig);
     });
   }
 }
