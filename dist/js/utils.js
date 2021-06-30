@@ -66,20 +66,44 @@ export const getMediaLikes = (medias) => {
 
 export const isImage = (media) => media.image !== undefined;
 
-export const sortByPopularity = (a, b) => {
+export const sortFigureByPopularity = (a, b) => {
   return parseInt(b.getAttribute('data-likes')) - parseInt(a.getAttribute('data-likes'));
 };
 
-export const sortByDate = (a, b) => {
+export const sortMediaByPopularity = (a, b) => {
+  return b.likes - a.likes;
+};
+
+export const sortFigureByDate = (a, b) => {
   const firstDate = new Date(a.getAttribute('data-date'));
   const secondDate = new Date(b.getAttribute('data-date'));
 
   return firstDate - secondDate;
 };
 
-export const sortByTitle = (a, b) => {
+export const sortMediaByDate = (a, b) => {
+  const firstDate = new Date(a.date);
+  const secondDate = new Date(b.date);
+
+  return firstDate - secondDate;
+};
+
+export const sortFigureByTitle = (a, b) => {
   const firstTitle = a.getAttribute('data-title').toLowerCase();
   const secondTitle = b.getAttribute('data-title').toLowerCase();
+
+  if (firstTitle < secondTitle) {
+    return -1;
+  }
+  if (firstTitle > secondTitle) {
+    return 1;
+  }
+  return 0;
+};
+
+export const sortMediaByTitle = (a, b) => {
+  const firstTitle = a.title.toLowerCase();
+  const secondTitle = b.title.toLowerCase();
 
   if (firstTitle < secondTitle) {
     return -1;

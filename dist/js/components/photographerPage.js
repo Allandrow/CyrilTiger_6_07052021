@@ -1,5 +1,6 @@
 import * as utils from '../utils.js';
 import { Dropdown } from './dropdown.js';
+import { MediaList } from './mediaList.js';
 
 export class PhotographerPage {
   constructor(photographer) {
@@ -99,24 +100,38 @@ export class PhotographerPage {
     return dropdown;
   }
 
+  initMediaList() {
+    // sort medias for iniital render according to first options : popularity
+    const sortedMedias = this.photographer.medias.sort(utils.sortMediaByPopularity);
+    const mediaList = new MediaList(sortedMedias);
+    return mediaList;
+  }
+
   getPhotographerPage() {
-    // Object initialization
+    // dropdown initialization
     const select = this.initSelect();
     const selectOptions = select.selectOptions;
     const sortMethods = [
       {
         value: 'popularity',
-        sort: utils.sortByPopularity,
+        figureSort: utils.sortFigureByPopularity,
+        mediaSort: utils.sortMediaByPopularity,
       },
       {
         value: 'date',
-        sort: utils.sortByDate,
+        figureSort: utils.sortFigureByDate,
+        mediaSort: utils.sortMediaByDate,
       },
       {
         value: 'title',
-        sort: utils.sortByTitle,
+        figureSort: utils.sortFigureByTitle,
+        mediaSort: utils.sortMediaByTitle,
       },
     ];
+
+    // mediaList initialization
+    const mediaList = this.initMediaList();
+
     // Add Photographer name to page title
     document.title += ` - ${this.photographer.name}`;
 
@@ -125,15 +140,18 @@ export class PhotographerPage {
     const main = document.createElement('main');
     main.id = 'js-main';
     const photographerInfosSection = this.createPhotographerInfosSection();
-    main.append(photographerInfosSection, select.getDropdown());
+    const figures = mediaList.getMediaList();
+    main.append(photographerInfosSection, select.getDropdown(), figures);
 
     this.container.append(header, main);
 
     // DOM events
     selectOptions.forEach((option) => {
       option.addEventListener('click', () => {
+        const sortMethod = sortMethods.find((method) => method.value === option.id);
         select.onChange(option);
-        // Sorting des medias via comparaison entre l'id de l'option et sortMethods pour appliquer la bonne méthode de sort
+        mediaList.sortFigures(sortMethod.figureSort);
+        mediaList.sortMedias(sortMethod.mediaSort);
       });
     });
   }

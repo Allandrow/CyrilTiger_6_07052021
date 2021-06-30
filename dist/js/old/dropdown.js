@@ -25,99 +25,95 @@
 //   return li;
 // };
 
-const changeOptionsAriaValues = (previousOption, newOption) => {
-  previousOption.setAttribute('aria-selected', 'false');
-  newOption.setAttribute('aria-selected', 'true');
-  newOption.closest('ul').setAttribute('aria-activedescendant', newOption.id);
-};
+// const changeOptionsAriaValues = (previousOption, newOption) => {
+//   previousOption.setAttribute('aria-selected', 'false');
+//   newOption.setAttribute('aria-selected', 'true');
+//   newOption.closest('ul').setAttribute('aria-activedescendant', newOption.id);
+// };
 
-const onChange = (btn, optionList, option, sortMethods, mediasList) => {
-  const options = Array.from(optionList);
-  const selectedOption = options.find(
-    (option) => option.getAttribute('aria-selected') === 'true'
-  );
-  const figureGroup = document.getElementById(mediasList.id);
-  const figures = Array.from(figureGroup.querySelectorAll('figure'));
+// const onChange = (btn, optionList, option, sortMethods, mediasList) => {
+// const options = Array.from(optionList);
+// const selectedOption = options.find(
+//   (option) => option.getAttribute('aria-selected') === 'true'
+// );
+// const figureGroup = document.getElementById(mediasList.id);
+// const figures = Array.from(figureGroup.querySelectorAll('figure'));
+// if (option !== selectedOption) {
+//   changeOptionsAriaValues(selectedOption, option);
+//   btn.innerText = option.innerText;
+// }
+// const sortMethod = sortMethods.find((method) => method.value === option.id);
+// figures.sort(sortMethod.sort);
+// for (const figure of figures) {
+//   figureGroup.appendChild(figure);
+// }
+// collapseListBox(btn);
+// };
 
-  if (option !== selectedOption) {
-    changeOptionsAriaValues(selectedOption, option);
-    btn.innerText = option.innerText;
-  }
-  const sortMethod = sortMethods.find((method) => method.value === option.id);
+// export class DropDown {
+//   constructor(containerID, dropdownLabels, dropdownSortMethods) {
+//     this.id = containerID;
+//     this.optionNames = dropdownLabels;
+//     this.optionMethods = dropdownSortMethods;
+//   }
 
-  figures.sort(sortMethod.sort);
+// createDropdown() {
+//   const select = document.createElement('div');
+//   select.id = this.id;
+//   select.classList.add('select-group');
 
-  for (const figure of figures) {
-    figureGroup.appendChild(figure);
-  }
+//   const label = document.createElement('label');
+//   label.setAttribute('for', 'js-sort');
+//   label.id = 'ariaLabel';
+//   label.appendChild(document.createTextNode('Trier par'));
 
-  collapseListBox(btn);
-};
+//   const divSelect = document.createElement('div');
+//   divSelect.classList.add('select');
 
-export class DropDown {
-  constructor(containerID, dropdownLabels, dropdownSortMethods) {
-    this.id = containerID;
-    this.optionNames = dropdownLabels;
-    this.optionMethods = dropdownSortMethods;
-  }
+//   const btn = document.createElement('button');
+//   btn.id = 'js-sort';
+//   btn.setAttribute('role', 'button');
+//   btn.classList.add('btn', 'js-sort');
+//   btn.setAttribute('aria-haspopup', 'listbox');
+//   btn.setAttribute('aria-expanded', 'false');
+//   btn.setAttribute('aria-labelledBy', 'ariaLabel');
+//   btn.appendChild(document.createTextNode(this.optionNames[0].label));
 
-  // createDropdown() {
-  //   const select = document.createElement('div');
-  //   select.id = this.id;
-  //   select.classList.add('select-group');
+//   const ul = document.createElement('ul');
+//   ul.classList.add('js-select');
+//   ul.setAttribute('role', 'listbox');
 
-  //   const label = document.createElement('label');
-  //   label.setAttribute('for', 'js-sort');
-  //   label.id = 'ariaLabel';
-  //   label.appendChild(document.createTextNode('Trier par'));
+//   this.optionNames.forEach((option) => {
+//     ul.appendChild(createSelectLI(option.value, option.label));
+//   });
 
-  //   const divSelect = document.createElement('div');
-  //   divSelect.classList.add('select');
+//   ul.firstElementChild.setAttribute('aria-selected', 'true');
+//   ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
 
-  //   const btn = document.createElement('button');
-  //   btn.id = 'js-sort';
-  //   btn.setAttribute('role', 'button');
-  //   btn.classList.add('btn', 'js-sort');
-  //   btn.setAttribute('aria-haspopup', 'listbox');
-  //   btn.setAttribute('aria-expanded', 'false');
-  //   btn.setAttribute('aria-labelledBy', 'ariaLabel');
-  //   btn.appendChild(document.createTextNode(this.optionNames[0].label));
+//   divSelect.append(btn, ul);
+//   select.append(label, divSelect);
+//   return select;
+// }
 
-  //   const ul = document.createElement('ul');
-  //   ul.classList.add('js-select');
-  //   ul.setAttribute('role', 'listbox');
+// attachEventListeners(mediasList) {
+//   const container = document.getElementById(this.id);
+//   const sortBtn = container.querySelector('.js-sort');
+//   const selectList = container.querySelector('.js-select');
+//   const selectListItems = container.querySelectorAll('.js-select li');
 
-  //   this.optionNames.forEach((option) => {
-  //     ul.appendChild(createSelectLI(option.value, option.label));
-  //   });
-
-  //   ul.firstElementChild.setAttribute('aria-selected', 'true');
-  //   ul.setAttribute('aria-activedescendant', ul.firstElementChild.getAttribute('id'));
-
-  //   divSelect.append(btn, ul);
-  //   select.append(label, divSelect);
-  //   return select;
-  // }
-
-  attachEventListeners(mediasList) {
-    const container = document.getElementById(this.id);
-    const sortBtn = container.querySelector('.js-sort');
-    const selectList = container.querySelector('.js-select');
-    const selectListItems = container.querySelectorAll('.js-select li');
-
-    // sortBtn.addEventListener('mouseenter', () => {
-    //   expandListBox(sortBtn);
-    // });
-    // selectList.addEventListener('mouseleave', () => {
-    //   collapseListBox(sortBtn);
-    // });
-    // sortBtn.addEventListener('focus', () => {
-    //   expandListBox(sortBtn);
-    // });
-    selectListItems.forEach((option) => {
-      option.addEventListener('click', () => {
-        onChange(sortBtn, selectListItems, option, this.optionMethods, mediasList);
-      });
-    });
-  }
-}
+// sortBtn.addEventListener('mouseenter', () => {
+//   expandListBox(sortBtn);
+// });
+// selectList.addEventListener('mouseleave', () => {
+//   collapseListBox(sortBtn);
+// });
+// sortBtn.addEventListener('focus', () => {
+//   expandListBox(sortBtn);
+// });
+// selectListItems.forEach((option) => {
+//   option.addEventListener('click', () => {
+//     onChange(sortBtn, selectListItems, option, this.optionMethods, mediasList);
+//   });
+// });
+// }
+// }

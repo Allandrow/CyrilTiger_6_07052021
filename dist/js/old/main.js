@@ -30,35 +30,35 @@ const displayPageByURLQuery = (json, URLQuery) => {
   // const URLParams = new URLSearchParams(URLQuery);
   // const id = parseInt(URLParams.get('id'));
   // const container = document.getElementById('js-container');
-  const dropdownLabels = [
-    {
-      value: 'popularity',
-      label: 'Popularité',
-    },
-    {
-      value: 'date',
-      label: 'Date',
-    },
-    {
-      value: 'title',
-      label: 'Titre',
-    },
-  ];
-  const dropdownMethods = [
-    {
-      value: 'popularity',
-      sort: utils.sortByPopularity,
-    },
-    {
-      value: 'date',
-      sort: utils.sortByDate,
-    },
-    {
-      value: 'title',
-      sort: utils.sortByTitle,
-    },
-  ];
-  const dropdown = new DropDown('js-sortContainer', dropdownLabels, dropdownMethods);
+  // const dropdownLabels = [
+  //   {
+  //     value: 'popularity',
+  //     label: 'Popularité',
+  //   },
+  //   {
+  //     value: 'date',
+  //     label: 'Date',
+  //   },
+  //   {
+  //     value: 'title',
+  //     label: 'Titre',
+  //   },
+  // ];
+  // const dropdownMethods = [
+  //   {
+  //     value: 'popularity',
+  //     sort: utils.sortByPopularity,
+  //   },
+  //   {
+  //     value: 'date',
+  //     sort: utils.sortByDate,
+  //   },
+  //   {
+  //     value: 'title',
+  //     sort: utils.sortByTitle,
+  //   },
+  // ];
+  // const dropdown = new DropDown('js-sortContainer', dropdownLabels, dropdownMethods);
   // const photographersList = new PhotographersList(createPhotographerListWithMedias(json));
 
   if (!isFinite(id)) {
