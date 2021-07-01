@@ -81,11 +81,48 @@ export class ContactModal {
     btn.classList.add('close', 'js-focusable');
 
     btn.addEventListener('click', () => {
-      this.observer.addCallback(this.closeModal.bind(this));
       this.onClose();
     });
 
     return btn;
+  }
+
+  contactModalKeyEvents(e) {
+    const modalFocusableElements = Array.from(
+      this.modal.querySelectorAll('.js-focusable')
+    );
+    const firstFocusElement = modalFocusableElements[0];
+    const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
+    const isTabPressed = e.key === 'Tab' || e.code === 'Tab';
+    const isEscapePressed = e.key === 'Escape' || e.code === 'Escape';
+    const activeElement = document.activeElement;
+
+    if (!(isTabPressed || isEscapePressed)) {
+      return;
+    }
+    if (isEscapePressed) {
+      this.onClose();
+    }
+    if (isTabPressed) {
+      if (e.shiftKey) {
+        if (activeElement === firstFocusElement) {
+          e.preventDefault();
+          lastFocusElement.focus();
+          return;
+        }
+      } else {
+        if (activeElement === lastFocusElement) {
+          e.preventDefault();
+          firstFocusElement.focus();
+          return;
+        }
+      }
+      if (!modalFocusableElements.includes(activeElement)) {
+        e.preventDefault();
+        firstFocusElement.focus();
+        return;
+      }
+    }
   }
 
   createModal() {
@@ -100,6 +137,22 @@ export class ContactModal {
 
     section.append(title, form, closeBtn);
     div.appendChild(section);
+
+    // Events Listeners
+    // Close modal when clicking outside of it
+    window.addEventListener('click', (e) => {
+      if (this.modal.classList.contains('open')) {
+        if (e.target.closest('section') === null) {
+          this.onClose();
+        }
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (this.modal.classList.contains('open')) {
+        this.contactModalKeyEvents(e);
+      }
+    });
     return div;
   }
 
@@ -112,7 +165,8 @@ export class ContactModal {
   }
 
   onClose() {
+    this.observer.addCallback(this.closeModal.bind(this));
     this.observer.fire();
-    this.observer.clearEvents();
+    this.observer.clearCallbacks();
   }
 }

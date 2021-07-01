@@ -13,158 +13,158 @@
 //   return label;
 // };
 
-export class FormModal {
-  // constructor(id, name) {
-  //   this.id = id;
-  //   this.name = name;
-  // }
+// export class FormModal {
+// constructor(id, name) {
+//   this.id = id;
+//   this.name = name;
+// }
 
-  // createModal() {
-  //   const div = document.createElement('div');
-  //   div.id = this.id;
-  //   div.classList.add('modal-window', this.id);
-  //   div.setAttribute('role', 'dialog');
+// createModal() {
+//   const div = document.createElement('div');
+//   div.id = this.id;
+//   div.classList.add('modal-window', this.id);
+//   div.setAttribute('role', 'dialog');
 
-  //   const section = document.createElement('section');
+//   const section = document.createElement('section');
 
-  //   const title = document.createElement('h1');
-  //   title.id = 'modal-title';
-  //   title.appendChild(document.createTextNode('Contactez-moi'));
+//   const title = document.createElement('h1');
+//   title.id = 'modal-title';
+//   title.appendChild(document.createTextNode('Contactez-moi'));
 
-  //   const span = document.createElement('span');
-  //   span.appendChild(document.createTextNode(this.name));
+//   const span = document.createElement('span');
+//   span.appendChild(document.createTextNode(this.name));
 
-  //   title.appendChild(span);
+//   title.appendChild(span);
 
-  //   div.setAttribute('aria-labelledby', title.id);
+//   div.setAttribute('aria-labelledby', title.id);
 
-  //   const form = document.createElement('form');
+//   const form = document.createElement('form');
 
-  //   const firstNameInput = createFormLabel('formFirstName', 'Prénom');
-  //   const lastNameInput = createFormLabel('formLastName', 'Nom');
-  //   const emailInput = createFormLabel('formEmail', 'Email', 'email');
+//   const firstNameInput = createFormLabel('formFirstName', 'Prénom');
+//   const lastNameInput = createFormLabel('formLastName', 'Nom');
+//   const emailInput = createFormLabel('formEmail', 'Email', 'email');
 
-  //   const textAreaLabel = document.createElement('label');
-  //   textAreaLabel.setAttribute('for', 'formMessage');
+//   const textAreaLabel = document.createElement('label');
+//   textAreaLabel.setAttribute('for', 'formMessage');
 
-  //   const textArea = document.createElement('textarea');
-  //   textArea.id = 'formMessage';
-  //   textArea.classList.add('js-focusable', 'js-input');
-  //   textArea.required = true;
+//   const textArea = document.createElement('textarea');
+//   textArea.id = 'formMessage';
+//   textArea.classList.add('js-focusable', 'js-input');
+//   textArea.required = true;
 
-  //   textAreaLabel.append(document.createTextNode('Votre message'), textArea);
+//   textAreaLabel.append(document.createTextNode('Votre message'), textArea);
 
-  //   const button = document.createElement('button');
-  //   button.id = 'js-submit';
-  //   button.classList.add('js-focusable');
-  //   button.appendChild(document.createTextNode('Envoyer'));
+//   const button = document.createElement('button');
+//   button.id = 'js-submit';
+//   button.classList.add('js-focusable');
+//   button.appendChild(document.createTextNode('Envoyer'));
 
-  //   form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
+//   form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
 
-  //   const closeBtn = document.createElement('button');
-  //   closeBtn.classList.add('close', 'js-focusable');
+//   const closeBtn = document.createElement('button');
+//   closeBtn.classList.add('close', 'js-focusable');
 
-  //   section.append(title, form, closeBtn);
+//   section.append(title, form, closeBtn);
 
-  //   div.appendChild(section);
+//   div.appendChild(section);
 
-  //   return div;
-  // }
+//   return div;
+// }
 
-  // openModal(container, btn) {
-  // const modal = document.getElementById(this.id);
-  //   modal.classList.add('open');
-  //   container.setAttribute('aria-hidden', 'true');
+// openModal(container, btn) {
+// const modal = document.getElementById(this.id);
+//   modal.classList.add('open');
+//   container.setAttribute('aria-hidden', 'true');
 
-  //   btn.setAttribute('aria-expanded', 'true');
-  // }
+//   btn.setAttribute('aria-expanded', 'true');
+// }
 
-  // closeModal(container, btn) {
-  //   const modal = document.getElementById(this.id);
-  //   modal.classList.remove('open');
-  //   container.setAttribute('aria-hidden', 'false');
-  //   btn.setAttribute('aria-expanded', 'false');
-  //   btn.focus();
-  // }
+// closeModal(container, btn) {
+//   const modal = document.getElementById(this.id);
+//   modal.classList.remove('open');
+//   container.setAttribute('aria-hidden', 'false');
+//   btn.setAttribute('aria-expanded', 'false');
+//   btn.focus();
+// }
 
-  attachEventListeners(btn) {
-    const modal = document.getElementById(this.id);
-    const closeBtn = modal.querySelector('.close');
-    const form = modal.querySelector('form');
-    const inputs = modal.querySelectorAll('.js-input');
+// attachEventListeners(btn) {
+//   const modal = document.getElementById(this.id);
+//   const closeBtn = modal.querySelector('.close');
+//   const form = modal.querySelector('form');
+//   const inputs = modal.querySelectorAll('.js-input');
 
-    // btn.addEventListener('click', () => {
-    //   this.openModal(modal, btn);
-    // });
+// btn.addEventListener('click', () => {
+//   this.openModal(modal, btn);
+// });
 
-    // form.addEventListener('submit', (e) => {
-    //   e.preventDefault();
-    //   inputs.forEach((input) => {
-    //     console.log(input.value);
-    //   });
-    //   this.closeModal(modal, btn);
-    // });
+// form.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   inputs.forEach((input) => {
+//     console.log(input.value);
+//   });
+//   this.closeModal(modal, btn);
+// });
 
-    // closeBtn.addEventListener('click', () => {
-    //   this.closeModal(modal, btn);
-    // });
+// closeBtn.addEventListener('click', () => {
+//   this.closeModal(modal, btn);
+// });
 
-    window.addEventListener('click', (e) => {
-      if (modal.classList.contains('open')) {
-        if (e.target === modal) {
-          if (e.target.closest('section') === null) {
-            this.closeModal(modal, btn);
-          }
-        }
-      }
-    });
+// window.addEventListener('click', (e) => {
+//   if (modal.classList.contains('open')) {
+//     if (e.target === modal) {
+//       if (e.target.closest('section') === null) {
+//         this.closeModal(modal, btn);
+//       }
+//     }
+//   }
+// });
 
-    window.addEventListener('keydown', (e) => {
-      if (modal.classList.contains('open')) {
-        this.contactModalKeyEvents(e, btn);
-      }
-    });
-  }
+//   window.addEventListener('keydown', (e) => {
+//     if (modal.classList.contains('open')) {
+//       this.contactModalKeyEvents(e, btn);
+//     }
+//   });
+// }
 
-  contactModalKeyEvents(e, btn) {
-    const modal = document.getElementById(this.id);
+// contactModalKeyEvents(e, btn) {
+//   const modal = document.getElementById(this.id);
 
-    // Get a list of all focusable elements within modal
-    const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
-    // Save first and last focusable elements
-    const firstFocusElement = modalFocusableElements[0];
-    const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
+// Get a list of all focusable elements within modal
+// const modalFocusableElements = Array.from(modal.querySelectorAll('.js-focusable'));
+// Save first and last focusable elements
+// const firstFocusElement = modalFocusableElements[0];
+// const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
 
-    const isTabPressed = e.key === 'Tab' || e.code === 'Tab';
-    const isEscapePressed = e.key === 'escape' || e.code === 'Escape';
+// const isTabPressed = e.key === 'Tab' || e.code === 'Tab';
+// const isEscapePressed = e.key === 'escape' || e.code === 'Escape';
 
-    if (!(isTabPressed || isEscapePressed)) {
-      return;
-    }
-    // Escape key closes modal if inside
-    if (isEscapePressed) {
-      this.closeModal(modal, btn);
-      return;
-    }
-    // If Tab key
-    if (isTabPressed) {
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusElement) {
-          e.preventDefault();
-          lastFocusElement.focus();
-          return;
-        }
-      } else {
-        if (document.activeElement === lastFocusElement) {
-          e.preventDefault();
-          firstFocusElement.focus();
-          return;
-        }
-      }
-      if (!modalFocusableElements.includes(document.activeElement)) {
-        e.preventDefault();
-        firstFocusElement.focus();
-      }
-    }
-  }
-}
+// if (!(isTabPressed || isEscapePressed)) {
+//   return;
+// }
+// // Escape key closes modal if inside
+// if (isEscapePressed) {
+//   this.closeModal(modal, btn);
+//   return;
+// }
+// If Tab key
+//     if (isTabPressed) {
+//       if (e.shiftKey) {
+//         if (document.activeElement === firstFocusElement) {
+//           e.preventDefault();
+//           lastFocusElement.focus();
+//           return;
+//         }
+//       } else {
+//         if (document.activeElement === lastFocusElement) {
+//           e.preventDefault();
+//           firstFocusElement.focus();
+//           return;
+//         }
+//       }
+//       if (!modalFocusableElements.includes(document.activeElement)) {
+//         e.preventDefault();
+//         firstFocusElement.focus();
+//       }
+//     }
+//   }
+// }

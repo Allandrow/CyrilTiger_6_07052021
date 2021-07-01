@@ -7,7 +7,7 @@ export class Observer {
     this.callbacks.push(fn);
   }
 
-  clearEvents() {
+  clearCallbacks() {
     while (this.callbacks.length > 0) {
       this.callbacks.pop();
     }
