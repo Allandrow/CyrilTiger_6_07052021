@@ -30,8 +30,8 @@
   // }
 
   insertModalsInDOM() {
-    const scriptDOM = document.querySelector('script');
-    document.body.insertBefore(this.contactModal.createModal(), scriptDOM);
+    // const scriptDOM = document.querySelector('script');
+    // document.body.insertBefore(this.contactModal.createModal(), scriptDOM);
     document.body.insertBefore(this.lightbox.createModal(), scriptDOM);
   }
 

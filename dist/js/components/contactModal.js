@@ -1,7 +1,10 @@
+import { Observer } from './observer.js';
+
 export class ContactModal {
   constructor(name) {
     this.name = name;
     this.modal = this.createModal();
+    this.observer = new Observer();
   }
 
   createModalSkeleton() {
@@ -67,7 +70,7 @@ export class ContactModal {
       inputs.forEach((input) => {
         console.log(input.value);
       });
-      this.toggleModal();
+      this.closeModal();
     });
 
     return form;
@@ -78,7 +81,8 @@ export class ContactModal {
     btn.classList.add('close', 'js-focusable');
 
     btn.addEventListener('click', () => {
-      this.toggleModal();
+      this.observer.addCallback(this.closeModal.bind(this));
+      this.onClose();
     });
 
     return btn;
@@ -99,7 +103,16 @@ export class ContactModal {
     return div;
   }
 
-  toggleModal() {
-    this.modal.classList.toggle('open');
+  openModal() {
+    this.modal.classList.add('open');
+  }
+
+  closeModal() {
+    this.modal.classList.remove('open');
+  }
+
+  onClose() {
+    this.observer.fire();
+    this.observer.clearEvents();
   }
 }

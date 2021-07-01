@@ -66,6 +66,7 @@ export class MediaList {
     button.addEventListener('click', () => {
       const figure = button.closest('figure');
       const currentLikes = parseInt(likesSpan.textContent);
+      const totalLikesDOM = document.querySelector('.meta-infos__likes span');
 
       if (currentLikes === likes) {
         figure.setAttribute('data-likes', currentLikes + 1);
@@ -74,6 +75,9 @@ export class MediaList {
         figure.setAttribute('data-likes', likes);
         likesSpan.textContent = likes;
       }
+      totalLikesDOM.textContent = utils.getFigureLikes(
+        Array.from(this.container.childNodes)
+      );
     });
     return figcaption;
   }

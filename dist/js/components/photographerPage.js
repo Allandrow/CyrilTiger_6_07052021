@@ -37,10 +37,18 @@ export class PhotographerPage {
     btn.addEventListener('click', () => {
       this.container.setAttribute('aria-hidden', 'true');
       btn.setAttribute('aria-expanded', 'true');
-      this.contactModal.toggleModal();
-    });
+      this.contactModal.openModal();
 
-    this.contactModalMutationObserver(btn);
+      const giveBtnFocus = () => {
+        btn.focus();
+      };
+
+      const removeARIAHiddenFromContainer = () => {
+        this.container.removeAttribute('aria-hidden');
+      };
+      this.contactModal.observer.addCallback(giveBtnFocus);
+      this.contactModal.observer.addCallback(removeARIAHiddenFromContainer);
+    });
 
     return btn;
   }
@@ -144,34 +152,6 @@ export class PhotographerPage {
     document.body.insertBefore(this.contactModal.modal, scriptDOM);
   }
 
-  likesMutationObserver(figuresContainer) {
-    // Mutation observer on like change in figure
-    // On mutation, update total likes value
-    const figures = Array.from(figuresContainer.childNodes);
-
-    figures.forEach((likeBtn) => {
-      const observer = new MutationObserver(() => {
-        this.updateTotalLikes(figures);
-      });
-      const observerConfig = { attributes: true };
-      observer.observe(likeBtn, observerConfig);
-    });
-  }
-
-  contactModalMutationObserver(btn) {
-    const config = { attributes: true, attributeOldValue: true };
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.oldValue.includes('open')) {
-          btn.setAttribute('aria-expanded', 'false');
-          this.container.removeAttribute('aria-hidden');
-          btn.focus();
-        }
-      });
-    });
-    observer.observe(this.contactModal.modal, config);
-  }
-
   getPhotographerPage() {
     // dropdown initialization
     const select = this.initSelect();
@@ -222,9 +202,5 @@ export class PhotographerPage {
         mediaList.sortMedias(sortMethod.mediaSort);
       });
     });
-
-    // Likes event observer
-    this.likesMutationObserver(figuresContainer);
-    // Contact modal event observer
   }
 }
