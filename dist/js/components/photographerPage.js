@@ -1,6 +1,7 @@
 import * as utils from '../utils.js';
 import { ContactModal } from './contactModal.js';
 import { Dropdown } from './dropdown.js';
+import { LightboxModal } from './lightboxModal.js';
 import { MediaList } from './mediaList.js';
 
 export class PhotographerPage {
@@ -9,6 +10,7 @@ export class PhotographerPage {
     this.container = document.getElementById('js-container');
     this.totalLikesDOM = this.createTotalLikesElement();
     this.contactModal = this.initContactModal();
+    this.lightboxModal = this.initLightboxModal();
   }
 
   createHeader() {
@@ -46,8 +48,8 @@ export class PhotographerPage {
       const removeARIAHiddenFromContainer = () => {
         this.container.removeAttribute('aria-hidden');
       };
-      this.contactModal.observer.addCallback(giveBtnFocus);
-      this.contactModal.observer.addCallback(removeARIAHiddenFromContainer);
+      this.contactModal.closingCallbacks.push(giveBtnFocus);
+      this.contactModal.closingCallbacks.push(removeARIAHiddenFromContainer);
     });
 
     return btn;
@@ -142,14 +144,16 @@ export class PhotographerPage {
     return contactModal;
   }
 
-  updateTotalLikes(figures) {
-    this.totalLikesDOM.textContent = utils.getFigureLikes(figures);
+  initLightboxModal() {
+    const lightboxModal = new LightboxModal();
+    return lightboxModal;
   }
 
   insertModalsInDOM() {
     const scriptDOM = document.querySelector('script');
 
     document.body.insertBefore(this.contactModal.modal, scriptDOM);
+    document.body.insertBefore(this.lightboxModal.modal, scriptDOM);
   }
 
   getPhotographerPage() {
@@ -186,8 +190,8 @@ export class PhotographerPage {
     main.id = 'js-main';
     const photographerInfosSection = this.createPhotographerInfosSection();
     const figuresContainer = mediaList.getMediaList();
+    const figures = figuresContainer.querySelectorAll('figure a');
     main.append(photographerInfosSection, select.getDropdown(), figuresContainer);
-
     this.container.append(header, main);
 
     // Add modals to DOM
@@ -200,6 +204,23 @@ export class PhotographerPage {
         select.onChange(option);
         mediaList.sortFigures(sortMethod.figureSort);
         mediaList.sortMedias(sortMethod.mediaSort);
+      });
+    });
+    figures.forEach((figure) => {
+      figure.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const giveFigureFocus = () => {
+          figure.focus();
+        };
+        const removeARIAHiddenFromContainer = () => {
+          this.container.removeAttribute('aria-hidden');
+        };
+        this.lightboxModal.closingCallbacks.push(giveFigureFocus);
+        this.lightboxModal.closingCallbacks.push(removeARIAHiddenFromContainer);
+        this.container.setAttribute('aria-hidden', 'true');
+        this.lightboxModal.openModal();
+        this.lightboxModal.populateMedias(this.photographer.medias, e);
       });
     });
   }

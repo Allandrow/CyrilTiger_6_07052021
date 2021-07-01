@@ -1,10 +1,8 @@
-import { Observer } from './observer.js';
-
 export class ContactModal {
   constructor(name) {
     this.name = name;
     this.modal = this.createModal();
-    this.observer = new Observer();
+    this.closingCallbacks = [];
   }
 
   createModalSkeleton() {
@@ -81,7 +79,7 @@ export class ContactModal {
     btn.classList.add('close', 'js-focusable');
 
     btn.addEventListener('click', () => {
-      this.onClose();
+      this.closeModal();
     });
 
     return btn;
@@ -101,7 +99,7 @@ export class ContactModal {
       return;
     }
     if (isEscapePressed) {
-      this.onClose();
+      this.closeModal();
     }
     if (isTabPressed) {
       if (e.shiftKey) {
@@ -143,7 +141,7 @@ export class ContactModal {
     window.addEventListener('click', (e) => {
       if (this.modal.classList.contains('open')) {
         if (e.target.closest('section') === null) {
-          this.onClose();
+          this.closeModal();
         }
       }
     });
@@ -162,11 +160,9 @@ export class ContactModal {
 
   closeModal() {
     this.modal.classList.remove('open');
-  }
-
-  onClose() {
-    this.observer.addCallback(this.closeModal.bind(this));
-    this.observer.fire();
-    this.observer.clearCallbacks();
+    while (this.closingCallbacks.length > 0) {
+      this.closingCallbacks[0].call();
+      this.closingCallbacks.shift();
+    }
   }
 }

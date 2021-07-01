@@ -40,7 +40,7 @@
     // const contactBtn = document.getElementById('js-contactForm');
     // this.dropdown.attachEventListeners(medias);
     // medias.attachLikesEventListener();
-    this.contactModal.attachEventListeners(contactBtn);
+    // this.contactModal.attachEventListeners(contactBtn);
     // const figureGroup = document.getElementById(medias.id);
     this.lightbox.attachEventListeners(figureGroup, this.container);
   }

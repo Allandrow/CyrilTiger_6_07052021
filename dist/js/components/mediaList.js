@@ -24,6 +24,7 @@ export class MediaList {
     source.setAttribute('srcset', `dist/img/${photographerId}/${image}`);
 
     const img = utils.createIMG(`min/${photographerId}/${image}`, description);
+    img.setAttribute('data-id', media.id);
 
     picture.append(source, img);
     return picture;
@@ -34,6 +35,7 @@ export class MediaList {
 
     const mediaElement = document.createElement('video');
     mediaElement.setAttribute('title', description);
+    mediaElement.setAttribute('data-id', media.id);
 
     const source = document.createElement('source');
     source.setAttribute('src', `dist/img/${photographerId}/${video}`);
@@ -101,7 +103,6 @@ export class MediaList {
 
     link.setAttribute('href', path);
     link.appendChild(mediaElement);
-
     const caption = this.createFigcaption(title, likes);
 
     figure.append(link, caption);
