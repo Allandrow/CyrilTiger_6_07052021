@@ -30,6 +30,65 @@ export class LightboxModal {
     return img;
   }
 
+  getNextMedia(medias, currentMedia) {
+    const currentMediaIndex = medias.indexOf(currentMedia);
+
+    if (medias[currentMediaIndex + 1] === undefined) {
+      return medias[0];
+    }
+    return medias[currentMediaIndex + 1];
+  }
+
+  getPreviousMedia(medias, currentMedia) {
+    const currentMediaIndex = medias.indexOf(currentMedia);
+
+    if (medias[currentMediaIndex - 1] === undefined) {
+      return medias[medias.length - 1];
+    }
+    return medias[currentMediaIndex - 1];
+  }
+
+  changeVisibleMedia(direction) {
+    const medias = Array.from(this.mediaContainer.querySelectorAll('.media'));
+    const currentMedia = medias.find((media) => media.classList.contains('visible'));
+    const nextMedia = this.getNextMedia(medias, currentMedia);
+    const previousMedia = this.getPreviousMedia(medias, currentMedia);
+    const animationClassNames = [
+      'outRight',
+      'outLeft',
+      'nextMedia',
+      'previousMedia',
+      'visible',
+    ];
+
+    previousMedia.classList.remove(...animationClassNames);
+    nextMedia.classList.remove(...animationClassNames);
+    if (direction === 'next') {
+      const newVisibleMedia = nextMedia;
+      currentMedia.classList.add('outLeft');
+      newVisibleMedia.classList.add('visible', 'nextMedia');
+      newVisibleMedia.addEventListener('animationend', () => {
+        if (currentMedia.classList.contains('outLeft')) {
+          currentMedia.classList.remove('visible');
+        }
+        currentMedia.classList.remove('outLeft');
+        newVisibleMedia.classList.remove('nextMedia');
+      });
+    }
+    if (direction === 'previous') {
+      const newVisibleMedia = previousMedia;
+      currentMedia.classList.add('outRight');
+      newVisibleMedia.classList.add('visible', 'previousMedia');
+      newVisibleMedia.addEventListener('animationend', () => {
+        if (currentMedia.classList.contains('outRight')) {
+          currentMedia.classList.remove('visible');
+        }
+        currentMedia.classList.remove('outRight');
+        newVisibleMedia.classList.remove('previousMedia');
+      });
+    }
+  }
+
   populateMedias(medias, e) {
     while (this.mediaContainer.firstChild) {
       this.mediaContainer.removeChild(this.mediaContainer.firstChild);
@@ -97,10 +156,10 @@ export class LightboxModal {
       }
     }
     if (isLeftPressed) {
-      console.log('PREVIOUS');
+      this.changeVisibleMedia('previous');
     }
     if (isRightPressed) {
-      console.log('NEXT');
+      this.changeVisibleMedia('next');
     }
   }
 
@@ -147,11 +206,11 @@ export class LightboxModal {
     });
 
     prevBtn.addEventListener('click', () => {
-      console.log('PREVIOUS');
+      this.changeVisibleMedia('previous');
     });
 
     nextBtn.addEventListener('click', () => {
-      console.log('NEXT');
+      this.changeVisibleMedia('next');
     });
 
     return div;
