@@ -7,29 +7,6 @@ export class LightboxModal {
     this.mediaContainer = this.modal.querySelector('.medias');
   }
 
-  createVideo(media) {
-    const { description, photographerId, video } = media;
-    const videoElement = document.createElement('video');
-    videoElement.setAttribute('title', description);
-    videoElement.controls = true;
-
-    const source = document.createElement('source');
-    source.setAttribute('src', `dist/img/${photographerId}/${video}`);
-    source.setAttribute('type', 'video/mp4');
-    videoElement.appendChild(source);
-    return videoElement;
-  }
-
-  createIMG(media) {
-    const { description, photographerId, image } = media;
-
-    const img = document.createElement('img');
-    img.setAttribute('src', `dist/img/${photographerId}/${image}`);
-    img.setAttribute('alt', description);
-
-    return img;
-  }
-
   getNextMedia(medias, currentMedia) {
     const currentMediaIndex = medias.indexOf(currentMedia);
 
@@ -94,26 +71,28 @@ export class LightboxModal {
       this.mediaContainer.removeChild(this.mediaContainer.firstChild);
     }
     for (const media of medias) {
+      const { video, photographerId, image, description, title } = media;
       const targetMediaId = parseInt(e.target.getAttribute('data-id'));
       const figure = document.createElement('figure');
       figure.classList.add('media');
       if (media.id === targetMediaId) {
         figure.classList.add('visible');
       }
-      if (media.video !== undefined) {
-        const video = this.createVideo(media);
-        figure.appendChild(video);
+      if (video !== undefined) {
+        const mediaElement = utils.createVideo(media);
+        mediaElement.controls = true;
+        figure.appendChild(mediaElement);
       } else {
-        const img = this.createIMG(media);
+        const img = utils.createIMG(`${photographerId}/${image}`, description);
         figure.appendChild(img);
       }
 
-      const title = document.createElement('h2');
-      title.setAttribute('tabindex', '0');
-      title.classList.add('js-focusable');
-      title.appendChild(document.createTextNode(media.title));
+      const heading = document.createElement('h2');
+      heading.setAttribute('tabindex', '0');
+      heading.classList.add('js-focusable');
+      heading.appendChild(document.createTextNode(title));
 
-      figure.appendChild(title);
+      figure.appendChild(heading);
 
       this.mediaContainer.appendChild(figure);
     }

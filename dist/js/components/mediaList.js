@@ -30,21 +30,6 @@ export class MediaList {
     return picture;
   }
 
-  createVideo(media) {
-    const { photographerId, video, description } = media;
-
-    const mediaElement = document.createElement('video');
-    mediaElement.setAttribute('title', description);
-    mediaElement.setAttribute('data-id', media.id);
-
-    const source = document.createElement('source');
-    source.setAttribute('src', `dist/img/${photographerId}/${video}`);
-    source.setAttribute('type', 'video/mp4');
-
-    mediaElement.appendChild(source);
-    return mediaElement;
-  }
-
   createFigcaption(title, likes) {
     const figcaption = document.createElement('figcaption');
 
@@ -98,7 +83,8 @@ export class MediaList {
       mediaElement = this.createPicture(media);
     } else {
       path = `dist/img/${photographerId}/${video}`;
-      mediaElement = this.createVideo(media);
+      mediaElement = utils.createVideo(media);
+      mediaElement.setAttribute('data-id', media.id);
     }
 
     link.setAttribute('href', path);

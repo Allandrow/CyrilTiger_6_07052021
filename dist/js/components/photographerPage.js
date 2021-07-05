@@ -9,23 +9,26 @@ export class PhotographerPage {
     this.photographer = photographer;
     this.container = document.getElementById('js-container');
     this.totalLikesDOM = this.createTotalLikesElement();
-    this.contactModal = this.initContactModal();
-    this.lightboxModal = this.initLightboxModal();
+    this.contactModal = new ContactModal(this.photographer.name);
+    this.lightboxModal = new LightboxModal();
   }
 
   createHeader() {
     const header = document.createElement('header');
     header.setAttribute('role', 'banner');
     header.appendChild(utils.createLogo());
-
     return header;
   }
 
   createTotalLikesElement() {
     const span = document.createElement('span');
     span.setAttribute('tabindex', '0');
-    const likes = utils.getMediaLikes(this.photographer.medias);
-    span.appendChild(document.createTextNode(likes));
+
+    const medias = this.photographer.medias;
+    const mediaLikes = medias.map((media) => media.likes);
+    const totalLikes = mediaLikes.reduce((total, likes) => total + likes);
+
+    span.appendChild(document.createTextNode(totalLikes));
     return span;
   }
 
@@ -41,6 +44,7 @@ export class PhotographerPage {
       btn.setAttribute('aria-expanded', 'true');
       this.contactModal.openModal();
 
+      // Callbacks given to contact modal for closing event
       const giveBtnFocus = () => {
         btn.focus();
       };
@@ -139,16 +143,6 @@ export class PhotographerPage {
     return mediaList;
   }
 
-  initContactModal() {
-    const contactModal = new ContactModal(this.photographer.name);
-    return contactModal;
-  }
-
-  initLightboxModal() {
-    const lightboxModal = new LightboxModal();
-    return lightboxModal;
-  }
-
   insertModalsInDOM() {
     const scriptDOM = document.querySelector('script');
 
@@ -180,7 +174,8 @@ export class PhotographerPage {
 
     // mediaList initialization
     const mediaList = this.initMediaList();
-
+    const figuresContainer = mediaList.getMediaList();
+    const figures = figuresContainer.querySelectorAll('figure a');
     // Add Photographer name to page title
     document.title += ` - ${this.photographer.name}`;
 
@@ -189,8 +184,7 @@ export class PhotographerPage {
     const main = document.createElement('main');
     main.id = 'js-main';
     const photographerInfosSection = this.createPhotographerInfosSection();
-    const figuresContainer = mediaList.getMediaList();
-    const figures = figuresContainer.querySelectorAll('figure a');
+
     main.append(photographerInfosSection, select.getDropdown(), figuresContainer);
     this.container.append(header, main);
 
@@ -198,6 +192,7 @@ export class PhotographerPage {
     this.insertModalsInDOM();
 
     // DOM events
+    // When click on select option, sort figures in DOM + medias in mediasList accordingly
     selectOptions.forEach((option) => {
       option.addEventListener('click', () => {
         const sortMethod = sortMethods.find((method) => method.value === option.id);
@@ -206,10 +201,12 @@ export class PhotographerPage {
         mediaList.sortMedias(sortMethod.mediaSort);
       });
     });
+    // When click on figure, open lightbox and add medias
     figures.forEach((figure) => {
       figure.addEventListener('click', (e) => {
         e.preventDefault();
 
+        // Callbacks given to lightbox for closing events
         const giveFigureFocus = () => {
           figure.focus();
         };
@@ -218,6 +215,7 @@ export class PhotographerPage {
         };
         this.lightboxModal.closingCallbacks.push(giveFigureFocus);
         this.lightboxModal.closingCallbacks.push(removeARIAHiddenFromContainer);
+
         this.container.setAttribute('aria-hidden', 'true');
         this.lightboxModal.openModal();
         this.lightboxModal.populateMedias(this.photographer.medias, e);

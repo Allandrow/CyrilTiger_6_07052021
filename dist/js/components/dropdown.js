@@ -89,6 +89,7 @@ export class Dropdown {
       this.collapseListBox();
     });
     this.selectList.childNodes.forEach((listItem) => {
+      // TODO : tune this to check activeElement somehow
       listItem.addEventListener('focusout', () => {
         if (listItem === this.selectList.lastChild) {
           this.collapseListBox();

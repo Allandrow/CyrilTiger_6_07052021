@@ -6,6 +6,20 @@ export const createIMG = (path, alt = '') => {
   return img;
 };
 
+export const createVideo = (media) => {
+  const { photographerId, video, description } = media;
+
+  const mediaElement = document.createElement('video');
+  mediaElement.setAttribute('title', description);
+
+  const source = document.createElement('source');
+  source.setAttribute('src', `dist/img/${photographerId}/${video}`);
+  source.setAttribute('type', 'video/mp4');
+
+  mediaElement.appendChild(source);
+  return mediaElement;
+};
+
 export const createLogo = () => {
   const logo = document.createElement('a');
   logo.href = 'index.html';
@@ -39,29 +53,6 @@ export const createTagList = (tags) => {
   }
 
   return ul;
-};
-
-const uppercaseFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-export const getPhotographTagSet = (photographers) => {
-  const tagSet = new Set();
-  photographers.forEach((photographer) => {
-    photographer.tags.forEach((tag) => {
-      tagSet.add(uppercaseFirstLetter(tag));
-    });
-  });
-  return tagSet;
-};
-
-export const isSameTagText = (tag, tagClicked) => {
-  return tag.textContent.toLowerCase() === tagClicked.textContent.toLowerCase();
-};
-
-export const getMediaLikes = (medias) => {
-  const mediaLikes = medias.map((media) => media.likes);
-  return mediaLikes.reduce((total, likes) => total + likes);
 };
 
 export const getFigureLikes = (figures) => {

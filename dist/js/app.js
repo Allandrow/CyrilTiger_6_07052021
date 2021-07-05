@@ -2,9 +2,13 @@ import { Homepage } from './components/homepage.js';
 import { PhotographerPage } from './components/photographerPage.js';
 
 const getJSON = async () => {
-  const data = await fetch('dist/js/data/fisheyedata.json');
-  const json = await data.json();
-  return json;
+  try {
+    const data = await fetch('dist/js/data/fisheyedata.json');
+    const json = await data.json();
+    return [json, null];
+  } catch (error) {
+    return [null, error];
+  }
 };
 
 // return photographer related to ID in json with his medias added to the object
@@ -20,7 +24,6 @@ const displayPageByURLQuery = (json, URLQuery) => {
   const URLParams = new URLSearchParams(URLQuery);
   const id = parseInt(URLParams.get('id'));
 
-  //no id = homepage
   if (!isFinite(id)) {
     const homepage = new Homepage(json.photographers);
     homepage.getHomepage();
@@ -32,7 +35,10 @@ const displayPageByURLQuery = (json, URLQuery) => {
 };
 
 const onLoad = async () => {
-  const json = await getJSON();
+  const [json, error] = await getJSON();
+  if (error) {
+    console.log('onLoad ~ error', error);
+  }
   const URLQuery = window.location.search;
 
   displayPageByURLQuery(json, URLQuery);

@@ -6,6 +6,17 @@ export class Homepage {
     this.container = document.getElementById('js-container');
   }
 
+  getPhotographTagSet(photographers) {
+    const tagSet = new Set();
+    photographers.forEach((photographer) => {
+      photographer.tags.forEach((tag) => {
+        const tagUppercased = tag.charAt(0).toUpperCase() + tag.slice(1);
+        tagSet.add(tagUppercased);
+      });
+    });
+    return tagSet;
+  }
+
   createHeader() {
     const header = document.createElement('header');
     header.setAttribute('role', 'banner');
@@ -17,7 +28,7 @@ export class Homepage {
     const nav = document.createElement('nav');
     nav.ariaLabel = 'photographer categories';
 
-    const tagSet = utils.getPhotographTagSet(this.photographers);
+    const tagSet = this.getPhotographTagSet(this.photographers);
     const ul = utils.createTagList(tagSet);
     nav.appendChild(ul);
     header.append(title, nav);
@@ -101,10 +112,12 @@ export class Homepage {
     const articles = this.container.querySelectorAll('article');
     const activeTags = [];
 
-    // Remove active class on tag if it had it, otherwise add active class if tag has same text as target
+    // Toggle active class if tag is the same text as target
     // Then if tag has active class, add to array
     tags.forEach((tag) => {
-      if (tag.classList.contains('active') || utils.isSameTagText(tag, targetedTag)) {
+      const isSameTagText =
+        tag.textContent.toLowerCase() === targetedTag.textContent.toLowerCase();
+      if (isSameTagText) {
         tag.classList.toggle('active');
       }
       if (tag.classList.contains('active')) {
