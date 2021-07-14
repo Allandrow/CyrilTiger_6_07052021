@@ -8,6 +8,7 @@ export class LightboxModal {
   }
 
   getNextMedia(medias, currentMedia) {
+    // return next media in list or if there is none, the first
     const currentMediaIndex = medias.indexOf(currentMedia);
 
     if (medias[currentMediaIndex + 1] === undefined) {
@@ -17,6 +18,7 @@ export class LightboxModal {
   }
 
   getPreviousMedia(medias, currentMedia) {
+    // return previous media in list or if there is none, the last
     const currentMediaIndex = medias.indexOf(currentMedia);
 
     if (medias[currentMediaIndex - 1] === undefined) {
@@ -26,14 +28,18 @@ export class LightboxModal {
   }
 
   changeVisibleMedia(direction) {
+    // Slide animation to change visible media in lightbox// Slide animation to change visible media in lightbox
     const medias = Array.from(this.mediaContainer.querySelectorAll('.media'));
     const currentMedia = medias.find((media) => media.classList.contains('visible'));
     const nextMedia = this.getNextMedia(medias, currentMedia);
     const previousMedia = this.getPreviousMedia(medias, currentMedia);
     const animationClassNames = ['outRight', 'outLeft', 'nextMedia', 'previousMedia', 'visible'];
 
+    // Remove previous classes to prevent animations stacking
     previousMedia.classList.remove(...animationClassNames);
     nextMedia.classList.remove(...animationClassNames);
+
+    // slide animation depending of direction
     if (direction === 'next') {
       const newVisibleMedia = nextMedia;
       currentMedia.classList.add('outLeft');

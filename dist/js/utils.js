@@ -1,3 +1,5 @@
+// Utility functions usually used in multiples classes
+
 export const createIMG = (path, alt = '') => {
   const img = document.createElement('img');
   img.setAttribute('src', `dist/img/${path}`);
@@ -56,9 +58,7 @@ export const createTagList = (tags) => {
 };
 
 export const getFigureLikes = (figures) => {
-  const figureLikes = figures.map((figure) =>
-    parseInt(figure.getAttribute('data-likes'))
-  );
+  const figureLikes = figures.map((figure) => parseInt(figure.getAttribute('data-likes')));
   return figureLikes.reduce((total, likes) => total + likes);
 };
 
