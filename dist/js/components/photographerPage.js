@@ -175,7 +175,7 @@ export class PhotographerPage {
     // mediaList initialization
     const mediaList = this.initMediaList();
     const figuresContainer = mediaList.getMediaList();
-    const figures = figuresContainer.querySelectorAll('figure a');
+
     // Add Photographer name to page title
     document.title += ` - ${this.photographer.name}`;
 
@@ -202,6 +202,7 @@ export class PhotographerPage {
       });
     });
     // When click on figure, open lightbox and add medias
+    const figures = figuresContainer.querySelectorAll('figure a');
     figures.forEach((figure) => {
       figure.addEventListener('click', (e) => {
         e.preventDefault();

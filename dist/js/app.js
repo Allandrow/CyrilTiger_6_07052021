@@ -35,6 +35,7 @@ const displayPageByURLQuery = (json, URLQuery) => {
 };
 
 const onLoad = async () => {
+  // fetch json file, if error logs error
   const [json, error] = await getJSON();
   if (error) {
     console.log('onLoad ~ error', error);

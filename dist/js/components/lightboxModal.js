@@ -30,13 +30,7 @@ export class LightboxModal {
     const currentMedia = medias.find((media) => media.classList.contains('visible'));
     const nextMedia = this.getNextMedia(medias, currentMedia);
     const previousMedia = this.getPreviousMedia(medias, currentMedia);
-    const animationClassNames = [
-      'outRight',
-      'outLeft',
-      'nextMedia',
-      'previousMedia',
-      'visible',
-    ];
+    const animationClassNames = ['outRight', 'outLeft', 'nextMedia', 'previousMedia', 'visible'];
 
     previousMedia.classList.remove(...animationClassNames);
     nextMedia.classList.remove(...animationClassNames);
@@ -103,9 +97,7 @@ export class LightboxModal {
     const isEscapePressed = e.key === 'Escape' || e.code === 'Escape';
     const isLeftPressed = e.key === 'ArrowLeft' || e.code === 'ArrowLeft';
     const isRightPressed = e.key === 'ArrowRight' || e.code === 'ArrowRight';
-    const modalFocusableElements = Array.from(
-      this.modal.querySelectorAll('.js-focusable')
-    );
+    const modalFocusableElements = Array.from(this.modal.querySelectorAll('.js-focusable'));
     const firstFocusElement = modalFocusableElements[0];
     const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
     const focusedElement = document.activeElement;
@@ -170,14 +162,14 @@ export class LightboxModal {
     const closeBtn = document.createElement('button');
     closeBtn.classList.add('close', 'js-focusable');
 
-    closeBtn.addEventListener('click', () => {
-      this.closeModal();
-    });
-
     section.append(prevBtn, mediaBlock, nextBtn, closeBtn);
     div.appendChild(section);
 
     // Event Listeners
+    closeBtn.addEventListener('click', () => {
+      this.closeModal();
+    });
+
     window.addEventListener('keydown', (e) => {
       if (this.modal.classList.contains('open')) {
         this.lightBoxModalKeyEvents(e);

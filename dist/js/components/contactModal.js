@@ -86,15 +86,15 @@ export class ContactModal {
   }
 
   contactModalKeyEvents(e) {
-    const modalFocusableElements = Array.from(
-      this.modal.querySelectorAll('.js-focusable')
-    );
+    const modalFocusableElements = Array.from(this.modal.querySelectorAll('.js-focusable'));
     const firstFocusElement = modalFocusableElements[0];
     const lastFocusElement = modalFocusableElements[modalFocusableElements.length - 1];
     const isTabPressed = e.key === 'Tab' || e.code === 'Tab';
     const isEscapePressed = e.key === 'Escape' || e.code === 'Escape';
     const activeElement = document.activeElement;
 
+    // Close modal when pressing escape key
+    // Tabulation key loops through inputs and buttons in modal
     if (!(isTabPressed || isEscapePressed)) {
       return;
     }
@@ -159,6 +159,8 @@ export class ContactModal {
   }
 
   closeModal() {
+    // fires callbacks stored when opening modal to close it
+    // alters aria roles and focus in the page outside modal
     this.modal.classList.remove('open');
     while (this.closingCallbacks.length > 0) {
       this.closingCallbacks[0].call();

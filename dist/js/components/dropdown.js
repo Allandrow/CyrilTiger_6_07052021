@@ -102,8 +102,9 @@ export class Dropdown {
   onChange(option) {
     // Find option that is already selected
     const selectedOption = this.selectOptions.find(
-      (option) => option.getAttribute('aria-selected') === 'true'
+      (option) => option.getAttribute('aria-selected') === 'true',
     );
+
     if (option === selectedOption) {
       return;
     }
