@@ -82,7 +82,7 @@ export class Homepage {
     main.classList.add('article-list');
 
     this.photographers.forEach((photographer) =>
-      main.appendChild(this.createPhotographerArticle(photographer))
+      main.appendChild(this.createPhotographerArticle(photographer)),
     );
 
     return main;
@@ -96,9 +96,7 @@ export class Homepage {
     button.appendChild(document.createTextNode('Passer au contenu'));
 
     window.addEventListener('scroll', () => {
-      html.scrollTop <= 400
-        ? button.classList.add('hidden')
-        : button.classList.remove('hidden');
+      html.scrollTop <= 400 ? button.classList.add('hidden') : button.classList.remove('hidden');
     });
 
     button.addEventListener('click', () => {
@@ -115,10 +113,11 @@ export class Homepage {
     // Toggle active class if tag is the same text as target
     // Then if tag has active class, add to array
     tags.forEach((tag) => {
-      const isSameTagText =
-        tag.textContent.toLowerCase() === targetedTag.textContent.toLowerCase();
+      const isSameTagText = tag.textContent.toLowerCase() === targetedTag.textContent.toLowerCase();
       if (isSameTagText) {
         tag.classList.toggle('active');
+      } else {
+        tag.classList.remove('active');
       }
       if (tag.classList.contains('active')) {
         activeTags.push(tag);
@@ -153,7 +152,7 @@ export class Homepage {
     tags.forEach((tag) =>
       tag.addEventListener('click', () => {
         this.filterPhotographByTag(tags, tag);
-      })
+      }),
     );
   }
 }
