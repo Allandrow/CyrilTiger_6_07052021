@@ -62,15 +62,13 @@ export class MediaList {
         figure.setAttribute('data-likes', likes);
         likesSpan.textContent = likes;
       }
-      totalLikesDOM.textContent = utils.getFigureLikes(
-        Array.from(this.container.childNodes)
-      );
+      totalLikesDOM.textContent = utils.getFigureLikes(Array.from(this.container.childNodes));
     });
     return figcaption;
   }
 
   createFigure(media) {
-    const { photographerId, image, video, title, likes, date } = media;
+    const { photographerId, id, image, video, title, likes, date } = media;
     const figure = document.createElement('figure');
     figure.classList.add('figure');
 
@@ -88,6 +86,7 @@ export class MediaList {
     }
 
     link.setAttribute('href', path);
+    link.setAttribute('data-id', id);
     link.appendChild(mediaElement);
     const caption = this.createFigcaption(title, likes);
 

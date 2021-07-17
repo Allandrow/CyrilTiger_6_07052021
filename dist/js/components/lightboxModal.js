@@ -70,9 +70,11 @@ export class LightboxModal {
     while (this.mediaContainer.firstChild) {
       this.mediaContainer.removeChild(this.mediaContainer.firstChild);
     }
+    const targetMediaId = parseInt(e.target.getAttribute('data-id'));
+    console.log(e.target);
     for (const media of medias) {
       const { video, photographerId, image, description, title } = media;
-      const targetMediaId = parseInt(e.target.getAttribute('data-id'));
+      console.log(targetMediaId);
       const figure = document.createElement('figure');
       figure.classList.add('media');
       if (media.id === targetMediaId) {
