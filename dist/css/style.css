@@ -703,7 +703,7 @@ header nav {
   display: none;
   animation-duration: 350ms;
   position: absolute;
-  max-width: 1200px;
+  max-width: 100%;
 }
 .lightbox-modal .medias .media.nextMedia {
   animation-name: nextSlide;
