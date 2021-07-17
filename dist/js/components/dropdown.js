@@ -105,10 +105,6 @@ export class Dropdown {
       (option) => option.getAttribute('aria-selected') === 'true',
     );
 
-    if (option === selectedOption) {
-      return;
-    }
-    // Otherwise, change aria attributes of options + parent ul element
     selectedOption.removeAttribute('aria-selected');
     option.setAttribute('aria-selected', 'true');
     this.selectList.setAttribute('aria-activedescendant', option.id);

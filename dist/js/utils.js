@@ -76,14 +76,14 @@ export const sortFigureByDate = (a, b) => {
   const firstDate = new Date(a.getAttribute('data-date'));
   const secondDate = new Date(b.getAttribute('data-date'));
 
-  return firstDate - secondDate;
+  return secondDate - firstDate;
 };
 
 export const sortMediaByDate = (a, b) => {
   const firstDate = new Date(a.date);
   const secondDate = new Date(b.date);
 
-  return firstDate - secondDate;
+  return secondDate - firstDate;
 };
 
 export const sortFigureByTitle = (a, b) => {
