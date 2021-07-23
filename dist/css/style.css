@@ -623,6 +623,7 @@ header nav {
   color: #000;
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 .contact-modal .close::before, .contact-modal .close::after {
   background-color: #fff;
