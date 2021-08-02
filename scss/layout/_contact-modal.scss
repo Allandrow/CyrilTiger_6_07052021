@@ -21,8 +21,9 @@
 
   @include mq($medium) {
     section {
-      height: 900px;
+      height: 780px;
       width: 670px;
+      margin-top: 3.25rem;
     }
 
     h1 {

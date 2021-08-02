@@ -633,8 +633,9 @@ header nav {
 }
 @media (min-width: 60rem) {
   .contact-modal section {
-    height: 900px;
+    height: 780px;
     width: 670px;
+    margin-top: 3.25rem;
   }
   .contact-modal h1 {
     font-size: 4rem;
