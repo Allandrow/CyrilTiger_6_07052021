@@ -619,6 +619,7 @@ header nav {
 
 .contact-modal {
   background-color: rgba(196, 196, 196, 0.4);
+  overflow-y: auto;
 }
 .contact-modal section {
   background: #db8876;

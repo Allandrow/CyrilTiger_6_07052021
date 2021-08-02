@@ -2,6 +2,7 @@
 
 .contact-modal {
   background-color: rgba($color-base-400, 0.4);
+  overflow-y: auto;
 
   section {
     background: $color-primary-200;

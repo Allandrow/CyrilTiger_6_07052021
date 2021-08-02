@@ -41,7 +41,6 @@ export class ContactModal {
   createForm() {
     const form = document.createElement('form');
 
-    const firstNameInput = this.createFormLabel('formfirstName', 'Prénom');
     const lastNameInput = this.createFormLabel('formLastName', 'Nom');
     const emailInput = this.createFormLabel('formEmail', 'Email', 'email');
 
@@ -60,7 +59,7 @@ export class ContactModal {
     button.classList.add('js-focusable');
     button.appendChild(document.createTextNode('Envoyer'));
 
-    form.append(firstNameInput, lastNameInput, emailInput, textAreaLabel, button);
+    form.append(lastNameInput, emailInput, textAreaLabel, button);
 
     const inputs = form.querySelectorAll('.js-input');
     form.addEventListener('submit', (e) => {
