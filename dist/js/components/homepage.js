@@ -82,7 +82,7 @@ export class Homepage {
     main.classList.add('article-list');
 
     this.photographers.forEach((photographer) =>
-      main.appendChild(this.createPhotographerArticle(photographer)),
+      main.appendChild(this.createPhotographerArticle(photographer))
     );
 
     return main;
@@ -96,7 +96,7 @@ export class Homepage {
     button.appendChild(document.createTextNode('Passer au contenu'));
 
     window.addEventListener('scroll', () => {
-      html.scrollTop <= 400 ? button.classList.add('hidden') : button.classList.remove('hidden');
+      html.scrollTop <= 200 ? button.classList.add('hidden') : button.classList.remove('hidden');
     });
 
     button.addEventListener('click', () => {
@@ -152,7 +152,7 @@ export class Homepage {
     tags.forEach((tag) =>
       tag.addEventListener('click', () => {
         this.filterPhotographByTag(tags, tag);
-      }),
+      })
     );
   }
 }
